@@ -1,0 +1,170 @@
+{
+  "name": "Andrei Murashev",
+  "email": "andreymurashev@gmail.com",
+  "address": "Tbilisi, Georgia",
+  "role": "Senior Frontend Developer",
+  "linkedIn": "amurashev",
+  "photo": "https://media.licdn.com/dms/image/D4E03AQFFVz41ZGatmA/profile-displayphoto-shrink_800_800/0/1698440063126?e=1727913600&v=beta&t=6m_pH-I4bgMUqFBlkyR4FjDrqfQwI7tUQmOSO7jJNz4",
+  "shortDescription": "Hello! 👋 I am developer with 10+ years experience (7 of them as remote-worker). I like frontend because I like to see result of my work and I am addicted to create interesting interfaces 😏",
+  "summary": [
+    "8+ years business application experience and customer-facing products",
+    "Strong knowledge of JavaScript (ES6) and TypeScript;",
+    "Strong knowledge of CSS, flex and grid layout, responsive design",
+    "Strong ReactJS experience",
+    "Experience in developing high-performance websites using Next.js and Node js (Express.js)",
+    "Experience with CSS frameworks (Tailwind CSS, Styled-components, css-modules)",
+    "Experience with Payment systems (Adyen, ChargeBee, Stripe)",
+    "Experience working with Design Systems (Ant)",
+    "Experience with CI/CD pipelines using GitHub Actions",
+    "Strong Git skills, experience working with the mono-repository and code review processes",
+    "Experience with Agile Principles (Scrum) and Shape Up (Basecamp) methodologies",
+    "Unit and integration tests: Experience with Jest, Storybook",
+    "Experience working with REST APIs, GraphQL APIs, WebSockets",
+    "Experience with React Query, React Hook Form libraries",
+    "General knowledge of common web security best practices and vulnerabilities (XSS, CSRF, etc.)",
+    "Knowledge of server-side rendering techniques and architectures",
+    "Knowledge of how to measure and optimise performance",
+    "Experience with build and deployment tools (Vercel)",
+    "Familiar with concepts like SOLID, KISS and Clean Code",
+    "Familiar with A/B Testing strategy (GrowthBook)"
+  ],
+  "personalQualities": [
+    "Responsibility: I'm not afraid to take any responsibilities, but I am completely aware and understand how many responsibilities I can conduct that it do not slow down my work performance",
+    "Respecting Deadlines: Based on my experience I can predict how much time required for specific task. Meeting a deadline for me it is personal challenge",
+    "Effective Communication and ensuring a harmonious working atmosphere: I strive to maintain warm and friendly communication with all team members, I am ready to help anyone (or find someone who can help) and do not shy to ask questions",
+    "Work efficiency and Business orientation: I always try to resolve a task the fastest and most convenient method, be oriented on business logic, try to predict these changes on code base and be focused on delivering value",
+    "Autonomy and Discipline",
+    "Love solving complex problems with practical, efficient solutions",
+    "Prefer simple solutions over complex ones (KISS)",
+    "Ability to work well both autonomously and as a part of a team."
+  ],
+  "languages": [
+    {
+      "label": "RU",
+      "level": 5
+    },
+    {
+      "label": "EN",
+      "level": 3
+    },
+    {
+      "label": "ES",
+      "level": 2
+    }
+  ],
+  "education": [
+    {
+      "year": 2011,
+      "school": "Pskov State University ",
+      "country": "Russia",
+      "field": "Computer Science and Engineering",
+      "degree": "Bachelor of Science"
+    }
+  ],
+  "employment": [
+    {
+      "company": "StarOfService",
+      "position": "Senior Frontend Developer",
+      "location": "Paris, France",
+      "locationType": "remote",
+      "shortDescription": "Participation in development of the front-end part of marketplace service. Long list of responsibilities during 7 years period. Long story short: pivot role in FE department",
+      "responsibilities": [
+        "Development of FE part of application: implementation of features by Product manager's specifications",
+        "Conducting releases of FE part of application",
+        "Mentorship and onboarding: Active participation of code reviewing of another developers, mentoring new participants of FE team",
+        "Tech leadership: participation in planning of FE application architecture, Participation in development of component for micro-services architecture, Migration from legacy applications to new ones",
+        "Interaction with different teams (Design team, Data team, QA team, Product team, l18n team)",
+        "Participation in: sprint planning, technical design, demo meetings"
+      ],
+      "skills": [
+        "TypeScript",
+        "JavaScript",
+        "React.js",
+        "Next.js",
+        "Node.js",
+        "Express.js",
+        "GraphQL",
+        "React Hooks",
+        "react-query",
+        "RadixUi",
+        "Jest",
+        "ESLint",
+        "CSS",
+        "Tailwind CSS",
+        "Css-modules",
+        "Styled-components",
+        "Responsive Web Design",
+        "Git",
+        "React JS",
+        "Adyen",
+        "A/B Testing",
+        "User Experience (UX)",
+        "Agile Methodologies",
+        "Problem Solving"
+      ],
+      "startDate": "04/17",
+      "endDate": "07/24"
+    },
+    {
+      "company": "LabelUp",
+      "position": "Senior Frontend Developer",
+      "location": "St Petersburg City, Russia",
+      "locationType": "on-site",
+      "shortDescription": "Development of FE part of application from scratch. Interaction within engineering team (2 BE, 1 FE, 1 Mobile developer)",
+      "responsibilities": [
+        "Development of FE part of application",
+        "Development of FE application architecture",
+        "Participation in development of component for micro-services architecture",
+        "Conducting releases of FE part of application",
+        "Interaction with Back-end team",
+        "Interaction with product team on all specification related questions"
+      ],
+      "skills": [
+        "ES 2015",
+        "React JS",
+        "Redux",
+        "Sass",
+        "CSS-Modules",
+        "Webpack"
+      ],
+      "startDate": "06/16",
+      "endDate": "03/17"
+    },
+    {
+      "company": "Calvera",
+      "position": "Middle Frontend Developer",
+      "location": "St Petersburg City, Russia",
+      "locationType": "on-site",
+      "shortDescription": "Participation of development of FE part of company services. Interaction with FE and BE development teams",
+      "skills": [
+        "ES 2015",
+        "React JS",
+        "Redux",
+        "Sass",
+        "CSS-Modules",
+        "Webpack"
+      ],
+      "startDate": "10/15",
+      "endDate": "05/16"
+    },
+    {
+      "company": "PERCo",
+      "position": "Junior Frontend Developer",
+      "location": "St Petersburg City, Russia",
+      "locationType": "on-site",
+      "shortDescription": "Implementation of FE part of access control and management system",
+      "description": "<ul><li>Implementation of FE part of access control and management system</li><li>Interaction with the FE and BE development team</li></ul>",
+      "startDate": "08/13",
+      "endDate": "10/15"
+    },
+    {
+      "company": "Altera",
+      "position": "Web-master",
+      "location": "St Petersburg City, Russia",
+      "locationType": "on-site",
+      "description": "",
+      "startDate": "11/12",
+      "endDate": "08/13"
+    }
+  ]
+}
