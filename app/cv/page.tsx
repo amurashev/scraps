@@ -1,3 +1,5 @@
+import classNames from 'classnames'
+
 import Languages from './components/languages'
 import TopSection from './components/topSection'
 import EmploymentItem from './components/employmentItem'
@@ -14,8 +16,14 @@ export default function CV() {
 
         <hr />
 
-        <div className="w-full flex flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0">
-          <div className="md:w-1/2">
+        <div
+          className={classNames(
+            'w-full flex flex-col space-y-4',
+            'md:flex-row md:space-x-4 md:space-y-0',
+            'print:flex-row print:space-x-4 print:space-y-0',
+          )}
+        >
+          <div className="md:w-1/2 print:w-1/2">
             <Section label="Summary">
               <ul className="list-disc pl-4">
                 {person.summary.map((item) => (
@@ -25,7 +33,7 @@ export default function CV() {
             </Section>
           </div>
 
-          <div className="md:w-1/2">
+          <div className="md:w-1/2 print:w-1/2">
             <Section label="Personal qualities">
               <ul className="list-disc pl-4">
                 {person.personalQualities.map((item) => (

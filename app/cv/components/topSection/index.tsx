@@ -1,3 +1,5 @@
+import classNames from 'classnames'
+
 import Image from 'next/image'
 
 import { Person } from '../../types'
@@ -60,18 +62,30 @@ function TopSection({ person }: { person: Person }) {
   const linkedInLink = getLinkedInLink(person.linkedIn)
 
   return (
-    <div className="flex flex-col justify-start space-y-4 md:flex-row md:space-x-4 md:space-y-0">
-      <Image src={person.photo} width={230} height={230} alt={person.name} className='h-full' />
+    <div
+      className={classNames(
+        'flex flex-col justify-start space-y-4',
+        'md:flex-row md:space-x-4 md:space-y-0',
+        'print:flex-row print:space-x-4 print:space-y-0',
+      )}
+    >
+      <Image
+        src={person.photo}
+        width={230}
+        height={230}
+        alt={person.name}
+        className="h-full"
+      />
       <div className="space-y-2">
         <h1 className="text-3xl font-bold">{person.name}</h1>
         <div className="space-y-0">
           <h2 className="text-1xl font-bold">{person.role}</h2>
-          <div className="text-muted-foreground">{person.address}</div>
+          <address className="text-muted-foreground">{person.address}</address>
         </div>
 
         <p>{person.shortDescription}</p>
 
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 print:hidden">
           <a
             href={linkedInLink}
             target="_blank"

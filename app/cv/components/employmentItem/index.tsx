@@ -50,7 +50,7 @@ const EmploymentItem = ({
       {!hasFullText && hasDetails && (
         <a
           href="#"
-          className="text-link"
+          className="text-link print:hidden"
           onClick={(e) => {
             e.preventDefault()
             setHasFullText(true)
