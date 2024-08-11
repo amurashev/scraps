@@ -10,6 +10,7 @@ const pages = [
   { label: 'CV', href: '/cv' },
   { label: 'Login', href: '/login' },
   { label: 'Questionnaire', href: '/questionnaire' },
+  { label: 'Life bars', href: '/life' },
 ]
 
 function NavLinks() {
