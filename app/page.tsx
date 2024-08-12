@@ -6,29 +6,7 @@ import {
 } from '@/components/ui/card'
 import Link from 'next/link'
 
-const pages = [
-  {
-    title: 'CV',
-    description: "Minimalist page that shows CV of it's developer",
-    href: '/cv',
-  },
-  {
-    title: 'Questionnaire',
-    description:
-      'An example of page with questionnaire. Myers-Briggs Type Indicator is used as example',
-    href: '/questionnaire',
-  },
-  {
-    title: 'Life bars',
-    description: 'Simple page to present the life cycle as a graph.',
-    href: '/life',
-  },
-  {
-    title: 'Login page',
-    description: 'Example of minimalistic login page',
-    href: '/login',
-  },
-]
+import pages from '@/constants/pages'
 
 export default function Home() {
   return (

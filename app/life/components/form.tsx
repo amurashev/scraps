@@ -31,29 +31,43 @@ const Form = ({
         />
       </div>
 
-      <div className="space-y-2 flex flex-col flex-1">
+      <div className="space-y-2 flex flex-col flex-1 gap-1">
         <Label htmlFor="password">Expected life expectancy</Label>
-        <div className="flex items-center h-[40px]">
-          <Slider
-            id="lifeCycle"
-            defaultValue={[lifeCycle]}
-            max={100}
-            step={1}
-            onValueCommit={(value) => onChangeLifeCycle(value[0])}
-          />
+        <div>
+          <div className="flex items-center h-[24px]">
+            <Slider
+              id="lifeCycle"
+              defaultValue={[lifeCycle]}
+              max={100}
+              min={18}
+              step={1}
+              onValueCommit={(value) => onChangeLifeCycle(value[0])}
+            />
+          </div>
+          <div className="flex justify-between">
+            <span className="font-bold">18</span>
+            <span className="font-bold">100</span>
+          </div>
         </div>
       </div>
 
       <div className="space-y-2 flex flex-col flex-1">
         <Label htmlFor="password">Expected number of active years</Label>
-        <div className="flex items-center h-[40px]">
-          <Slider
-            id="activeCycle"
-            defaultValue={[activeCycle]}
-            max={100}
-            step={1}
-            onValueCommit={(value) => onChangeActiveCycle(value[0])}
-          />
+        <div>
+          <div className="flex items-center h-[24px]">
+            <Slider
+              id="lifeCycle"
+              defaultValue={[activeCycle]}
+              max={100}
+              min={18}
+              step={1}
+              onValueCommit={(value) => onChangeActiveCycle(value[0])}
+            />
+          </div>
+          <div className="flex justify-between">
+            <span className="font-bold">18</span>
+            <span className="font-bold">100</span>
+          </div>
         </div>
       </div>
     </div>

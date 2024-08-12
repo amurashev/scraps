@@ -14,7 +14,7 @@ function Life() {
 
   return (
     <div className="w-full flex flex-col md:flex-row md:space-x-8">
-      <div className="md:w-[260px] flex-shrink-0">
+      <div className="md:w-[280px] flex-shrink-0">
         <Form
           date={birthday}
           activeCycle={activeCycle}

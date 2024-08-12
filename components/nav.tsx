@@ -5,13 +5,7 @@ import Link from 'next/link'
 
 import { Button } from './ui/button'
 
-const pages = [
-  { label: 'Index', href: '/' },
-  { label: 'CV', href: '/cv' },
-  { label: 'Login', href: '/login' },
-  { label: 'Questionnaire', href: '/questionnaire' },
-  { label: 'Life bars', href: '/life' },
-]
+import pages from '@/constants/pages'
 
 function NavLinks() {
   const pathname = usePathname()
@@ -27,7 +21,7 @@ function NavLinks() {
             }`}
             href={item.href}
           >
-            {item.label}
+            {item.title}
           </Link>
         ))}
       </nav>
