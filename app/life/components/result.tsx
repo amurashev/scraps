@@ -82,7 +82,7 @@ const Result = ({
             type = 'green'
           }
 
-          return <Bar key={key} type={type} />
+          return <Bar key={item.date.toDateString()} type={type} />
         })}
       </div>
     </div>

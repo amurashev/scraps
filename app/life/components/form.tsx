@@ -1,8 +1,6 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
 import { DatePicker } from '@/components/ui/date-picker'
-import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Slider } from '@/components/ui/slider'
 
@@ -37,10 +35,11 @@ const Form = ({
         <Label htmlFor="password">Expected life expectancy</Label>
         <div className="flex items-center h-[40px]">
           <Slider
+            id="lifeCycle"
             defaultValue={[lifeCycle]}
             max={100}
             step={1}
-            onValueChange={(value) => onChangeLifeCycle(value[0])}
+            onValueCommit={(value) => onChangeLifeCycle(value[0])}
           />
         </div>
       </div>
@@ -49,10 +48,11 @@ const Form = ({
         <Label htmlFor="password">Expected number of active years</Label>
         <div className="flex items-center h-[40px]">
           <Slider
+            id="activeCycle"
             defaultValue={[activeCycle]}
             max={100}
             step={1}
-            onValueChange={(value) => onChangeActiveCycle(value[0])}
+            onValueCommit={(value) => onChangeActiveCycle(value[0])}
           />
         </div>
       </div>

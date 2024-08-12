@@ -3,6 +3,7 @@ const nextConfig = {
   images: {
     domains: ['media.licdn.com'],
   },
-};
+  reactStrictMode: false,
+}
 
-export default nextConfig;
+export default nextConfig

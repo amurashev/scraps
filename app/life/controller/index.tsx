@@ -10,7 +10,7 @@ import Result from '../components/result'
 
 function Life() {
   const [state, dispatch] = useReducer(reducer, defaultState)
-  const { birthday, activeCycle, lifeCycle } = state
+  const { birthday, lifeCycle, activeCycle } = state
 
   return (
     <div className="w-full flex flex-col md:flex-row md:space-x-8">
