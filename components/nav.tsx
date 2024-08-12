@@ -18,7 +18,7 @@ function NavLinks() {
 
   return (
     <header className="flex sticky px-4 py-3 top-0 z-50 w-full bg-background/95 backdrop-blur border-0 border-b-[1px] border-solid border-border/50 print:hidden">
-      <nav className="flex flex-1 items-center gap-6">
+      <nav className="hidden md:flex flex-1 items-center gap-6">
         {pages.map((item) => (
           <Link
             key={item.href}
@@ -31,6 +31,9 @@ function NavLinks() {
           </Link>
         ))}
       </nav>
+      <div className='flex flex-1 items-center flex-grow md:hidden'>
+        Menu
+      </div>
       <Button
         id="colorMode"
         onClick={(e) => {
