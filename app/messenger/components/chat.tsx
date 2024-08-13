@@ -3,15 +3,18 @@ import classNames from 'classnames'
 import { format } from 'date-fns'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 
 const Chat = ({
   firstName,
   lastName,
   avatarUrl,
+  onShowDetails,
 }: {
   firstName: string
   lastName: string
   avatarUrl: string
+  onShowDetails: () => void
 }) => {
   return (
     <div
@@ -32,6 +35,9 @@ const Chat = ({
           </div>
 
           <div className="text-muted-foreground text-sm">Online</div>
+        </div>
+        <div>
+          <Button onClick={onShowDetails}>Details</Button>
         </div>
       </div>
     </div>

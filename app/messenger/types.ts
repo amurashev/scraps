@@ -20,8 +20,15 @@ export type Conversation = {
 }
 
 export type State = {
+  ui: {
+    hasDetailsBlock: boolean
+    mobileScreen: 'list' | 'chat' | 'details'
+  }
   selectedConversationId?: string
   conversations: Conversation[]
 }
 
-export type Action = { type: 'setActiveConversation'; id: string }
+export type Action =
+  | { type: 'setActiveConversation'; id: string | undefined }
+  | { type: 'toggleDetailsBlock' }
+  | { type: 'changeMobileScreen', screen: State['ui']['mobileScreen'] }

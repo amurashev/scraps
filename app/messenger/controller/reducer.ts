@@ -5,7 +5,24 @@ function reducer(state: State, action: Action): State {
     case 'setActiveConversation': {
       return { ...state, selectedConversationId: action.id }
     }
-
+    case 'toggleDetailsBlock': {
+      return {
+        ...state,
+        ui: {
+          ...state.ui,
+          hasDetailsBlock: !state.ui.hasDetailsBlock,
+        },
+      }
+    }
+    case 'changeMobileScreen': {
+      return {
+        ...state,
+        ui: {
+          ...state.ui,
+          mobileScreen: action.screen,
+        },
+      }
+    }
     default: {
       return state
     }
