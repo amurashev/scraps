@@ -1,62 +1,44 @@
 [
   {
     "id": "1",
-    "user": {
-      "id": "1",
-      "firstName": "User name with",
-      "lastName": "Very long string",
-      "isOnline": true,
-      "lastOnlineDate": "2024-08-12T18:00:53+02:00",
-      "avatarUrl": "https://xsgames.co/randomusers/assets/avatars/male/1.jpg"
-    },
+    "userId": "1",
     "unreadCount": 4,
-    "body": {
+    "lastMessage": {
+      "id": "1",
       "date": "2024-08-12T18:00:53+02:00",
       "text": "This is new landing page, What do you think?",
-      "status": "unread"
-    },
-    "senderId": "1",
-    "deliveredTo": [],
-    "readBy": []
+      "type": "text",
+      "senderId": "1",
+      "deliveredTo": [],
+      "readBy": []
+    }
   },
   {
     "id": "2",
-    "user": {
-      "id": "1",
-      "firstName": "Simple",
-      "lastName": "User",
-      "isOnline": true,
-      "lastOnlineDate": "2024-08-12T18:00:53+02:00",
-      "avatarUrl": "https://xsgames.co/randomusers/assets/avatars/male/11.jpg"
-    },
-    "unreadCount": 4,
-    "body": {
+    "userId": "2",
+    "unreadCount": 1,
+    "lastMessage": {
+      "id": "2",
       "date": "2024-08-12T16:15:53+02:00",
       "text": "Have a nice week bro!",
-      "status": "unread"
-    },
-    "senderId": "1",
-    "deliveredTo": [],
-    "readBy": []
+      "type": "text",
+      "senderId": "1",
+      "deliveredTo": [],
+      "readBy": []
+    }
   },
   {
     "id": "3",
-    "user": {
-      "id": "1",
-      "firstName": "Lorem",
-      "lastName": "Ipsum",
-      "isOnline": true,
-      "lastOnlineDate": "2024-08-12T18:00:53+02:00",
-      "avatarUrl": "https://xsgames.co/randomusers/assets/avatars/male/22.jpg"
-    },
-    "unreadCount": 4,
-    "body": {
+    "userId": "3",
+    "unreadCount": 6,
+    "lastMessage": {
+      "id": "3",
       "date": "2024-08-12T13:44:53+02:00",
-      "text": "Thank you! 🙏 That was great ",
-      "status": "unread"
-    },
-    "senderId": "1",
-    "deliveredTo": [],
-    "readBy": []
+      "text": "Thank you! 🙏 That was great",
+      "type": "text",
+      "senderId": "1",
+      "deliveredTo": [],
+      "readBy": []
+    }
   }
 ]

@@ -2,15 +2,17 @@
 
 import { Input } from '@/components/ui/input'
 
-import ConversationCard from './conversationCard'
+import ConversationCard, { ConversationCardSkeleton } from './conversationCard'
 
-import { State } from '../types'
+import { Conversation } from '../types'
 
 const SideBar = ({
+  hasInitialConversations,
   conversations,
   onConversationClick,
 }: {
-  conversations: State['conversations']
+  hasInitialConversations: boolean
+  conversations: Conversation[]
   onConversationClick: (id: string) => void
 }) => {
   return (
@@ -20,19 +22,29 @@ const SideBar = ({
         <Input placeholder="Search" />
       </div>
       <div>
-        {conversations.map((item) => {
-          return (
-            <div key={item.id} onClick={() => onConversationClick(item.id)}>
-              <ConversationCard
-                firstName={item.user.firstName}
-                lastName={item.user.lastName}
-                avatarUrl={item.user.avatarUrl}
-                textMessage={item.body.text}
-                date={item.body.date}
-              />
-            </div>
-          )
-        })}
+        {!hasInitialConversations ? (
+          <>
+            {Array.from({ length: 5 }, (_, i) => i + 1).map((_, key) => (
+              <ConversationCardSkeleton key={key} />
+            ))}
+          </>
+        ) : (
+          <>
+            {conversations.map((item) => {
+              return (
+                <div key={item.id} onClick={() => onConversationClick(item.id)}>
+                  <ConversationCard
+                    firstName={item.user.firstName}
+                    lastName={item.user.lastName}
+                    avatarUrl={item.user.avatarUrl}
+                    textMessage={item.lastMessage.text}
+                    date={item.lastMessage.date}
+                  />
+                </div>
+              )
+            })}
+          </>
+        )}
       </div>
     </>
   )

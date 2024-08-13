@@ -1,14 +1,19 @@
-import { Conversation, State } from '../types'
-
-import conversations from '../data/conversations.json'
+import { State } from '../types'
 
 const defaultState: State = {
+  selectedConversationId: undefined,
   ui: {
     hasDetailsBlock: false,
     mobileScreen: 'list',
   },
-  selectedConversationId: undefined,
-  conversations: conversations as Conversation[],
+  conversations: {
+    data: [],
+    areFetched: false,
+  },
+  messages: {
+    data: [],
+    areFetched: false,
+  }
 }
 
 export default defaultState

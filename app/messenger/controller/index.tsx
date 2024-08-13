@@ -4,22 +4,40 @@ import { useEffect, useReducer } from 'react'
 import classNames from 'classnames'
 
 import defaultState from './state'
-import reducer from './reducer'
+import reducer from './reducers'
 
-import Chat from '../components/chat'
+import Center from '../components/center'
 import UserDetails from '../components/userDetails'
 import SideBar from '../components/sidebar'
 import EmptyChat from '../components/emptyChat'
 
+import { MessengerPageContext } from './context'
+import { getConversations, getMessages } from './requests'
+
 function Messenger() {
   const [state, dispatch] = useReducer(reducer, defaultState)
 
-  const { conversations, selectedConversationId, ui } = state
+  const { conversations, messages, selectedConversationId, ui } = state
   const { hasDetailsBlock, mobileScreen } = ui
 
   const selectedConversation = selectedConversationId
-    ? conversations.find((item) => item.id === selectedConversationId)
+    ? conversations.data.find((item) => item.id === selectedConversationId)
     : undefined
+
+  const sendMessage = (message: string) => {
+    console.warn('sendMessage', message)
+  }
+
+  const conversationClick = async (id: string) => {
+    dispatch({ type: 'setActiveConversation', id })
+    dispatch({ type: 'changeMobileScreen', screen: 'chat' })
+    dispatch({ type: 'setMessagesFetchStatus', value: false })
+
+    const messages = await getMessages(id)
+
+    dispatch({ type: 'addMessages', payload: messages })
+    dispatch({ type: 'setMessagesFetchStatus', value: true })
+  }
 
   const goBack = () => {
     dispatch({ type: 'setActiveConversation', id: undefined })
@@ -37,7 +55,19 @@ function Messenger() {
     dispatch({ type: 'changeMobileScreen', screen: 'details' })
   }
 
+  const fetchConversations = async () => {
+    const conversations = await getConversations()
+
+    if (conversations.length) {
+      dispatch({ type: 'addConversations', payload: conversations })
+    }
+
+    dispatch({ type: 'setInitialConversationFetchStatus', value: true })
+  }
+
   useEffect(() => {
+    fetchConversations()
+
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') goBack()
     })
@@ -46,69 +76,76 @@ function Messenger() {
   console.warn('Messenger', state)
 
   return (
-    <div className="w-full h-[calc(100vh-60px)] grid grid-cols-12">
-      <div
-        className={classNames(
-          'bg-background h-full col-span-12 border-0 border-r-[1px] border-border',
-          'md:col-span-3',
-          {
-            hidden: mobileScreen !== 'list',
-            'md:block': true,
-          }
-        )}
-      >
-        <SideBar
-          conversations={conversations}
-          onConversationClick={(id) => {
-            dispatch({ type: 'setActiveConversation', id })
-            dispatch({ type: 'changeMobileScreen', screen: 'chat' })
-          }}
-        />
-      </div>
-      <div
-        className={classNames('bg-background h-full col-span-12', {
-          'md:col-span-6': hasDetailsBlock,
-          'md:col-span-9': !hasDetailsBlock,
-
-          hidden: mobileScreen !== 'chat',
-          'md:block': true,
-        })}
-      >
-        {selectedConversation ? (
-          <Chat
-            firstName={selectedConversation.user.firstName}
-            lastName={selectedConversation.user.lastName}
-            avatarUrl={selectedConversation.user.avatarUrl}
-            onShowDetails={showDetails}
-            onBack={goBack}
-          />
-        ) : (
-          <EmptyChat />
-        )}
-      </div>
-
-      {hasDetailsBlock && (
+    <MessengerPageContext.Provider
+      value={{
+        opponent: selectedConversation ? selectedConversation.user : undefined,
+      }}
+    >
+      <div className="w-full h-[calc(100vh-60px)] grid grid-cols-12">
         <div
           className={classNames(
-            'bg-background border-0 border-l-[1px] border-border h-full col-span-12',
+            'bg-background h-full col-span-12 border-0 border-r-[1px] border-border',
             'md:col-span-3',
             {
-              hidden: mobileScreen !== 'details',
+              hidden: mobileScreen !== 'list',
               'md:block': true,
             }
           )}
         >
-          {selectedConversation && (
-            <UserDetails
+          <SideBar
+            hasInitialConversations={conversations.areFetched}
+            conversations={conversations.data}
+            onConversationClick={conversationClick}
+          />
+        </div>
+        <div
+          className={classNames('bg-background h-full col-span-12', {
+            'md:col-span-6': hasDetailsBlock,
+            'md:col-span-9': !hasDetailsBlock,
+
+            hidden: mobileScreen !== 'chat',
+            'md:block': true,
+          })}
+        >
+          {selectedConversation ? (
+            <Center
               firstName={selectedConversation.user.firstName}
               lastName={selectedConversation.user.lastName}
               avatarUrl={selectedConversation.user.avatarUrl}
-              onBack={hideMobileDetails}
+              messages={messages.data}
+              areMessagesFetched={messages.areFetched}
+              onShowDetails={showDetails}
+              onBack={goBack}
+              onSend={sendMessage}
             />
+          ) : (
+            <EmptyChat />
           )}
         </div>
-      )}
-    </div>
+
+        {hasDetailsBlock && (
+          <div
+            className={classNames(
+              'bg-background border-0 border-l-[1px] border-border h-full col-span-12',
+              'md:col-span-3',
+              {
+                hidden: mobileScreen !== 'details',
+                'md:block': true,
+              }
+            )}
+          >
+            {selectedConversation && (
+              <UserDetails
+                firstName={selectedConversation.user.firstName}
+                lastName={selectedConversation.user.lastName}
+                avatarUrl={selectedConversation.user.avatarUrl}
+                onBack={hideMobileDetails}
+              />
+            )}
+          </div>
+        )}
+      </div>
+    </MessengerPageContext.Provider>
   )
 }
 

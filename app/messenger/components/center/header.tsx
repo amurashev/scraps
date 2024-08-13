@@ -5,7 +5,7 @@ import { FaChevronLeft, FaIdCardClip } from 'react-icons/fa6'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { IconButton } from '@/components/ui/icon-button'
 
-const Chat = ({
+const Header = ({
   firstName,
   lastName,
   avatarUrl,
@@ -19,11 +19,7 @@ const Chat = ({
   onBack: () => void
 }) => {
   return (
-    <div
-      className={classNames(
-        'w-full px-4 h-[60px] flex items-center space-x-3 border-0 border-b-[1px] border-border'
-      )}
-    >
+    <div className={classNames('w-full px-4 flex items-center space-x-3')}>
       <div className="flex flex-shrink-0 space-x-1">
         <IconButton onClick={onBack}>
           <FaChevronLeft size={18} />
@@ -49,4 +45,4 @@ const Chat = ({
   )
 }
 
-export default Chat
+export default Header

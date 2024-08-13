@@ -1,0 +1,23 @@
+{
+  "1": {
+    "firstName": "User name with",
+    "lastName": "Very long string",
+    "isOnline": true,
+    "lastOnlineDate": "2024-08-12T18:00:53+02:00",
+    "avatarUrl": "https://xsgames.co/randomusers/assets/avatars/male/1.jpg"
+  },
+  "2": {
+    "firstName": "Simple",
+    "lastName": "User",
+    "isOnline": true,
+    "lastOnlineDate": "2024-08-12T18:00:53+02:00",
+    "avatarUrl": "https://xsgames.co/randomusers/assets/avatars/male/11.jpg"
+  },
+  "3": {
+    "firstName": "Lorem",
+    "lastName": "Ipsum",
+    "isOnline": true,
+    "lastOnlineDate": "2024-08-12T18:00:53+02:00",
+    "avatarUrl": "https://xsgames.co/randomusers/assets/avatars/male/22.jpg"
+  }
+}

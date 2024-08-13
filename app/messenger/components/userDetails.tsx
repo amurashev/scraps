@@ -16,6 +16,7 @@ const UserDetails = ({
   avatarUrl: string
   onBack: () => void
 }) => {
+
   return (
     <div>
       <div className="border-0 px-4 h-[60px] flex items-center border-b-[1px] border-border md:hidden">
