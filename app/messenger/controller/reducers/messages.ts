@@ -16,6 +16,10 @@ function conversationsReducer(
       return { ...state, data: action.payload }
     }
 
+    case 'addMessage': {
+      return { ...state, data: [...state.data, action.payload] }
+    }
+
     default: {
       return state
     }

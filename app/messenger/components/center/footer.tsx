@@ -1,10 +1,23 @@
 import classNames from 'classnames'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { VirtuosoHandle } from 'react-virtuoso'
 
 import { Button } from '@/components/ui/button'
 
-const Footer = ({ onSend }: { onSend: (message: string) => void }) => {
+const Footer = ({
+  chatRef,
+  onSend,
+}: {
+  chatRef: { current: VirtuosoHandle | null }
+  onSend: (message: string) => void
+}) => {
   const [message, setMessage] = useState('')
+
+  const sendMessage = () => {
+    onSend(message)
+    chatRef.current?.scrollToIndex(100000)
+    setMessage('')
+  }
 
   return (
     <div className="px-4 w-full flex items-center gap-2">
@@ -19,15 +32,14 @@ const Footer = ({ onSend }: { onSend: (message: string) => void }) => {
         type="email"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-      />
-      <Button
-        onClick={() => {
-          onSend(message)
-          setMessage('')
+        onKeyUp={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault()
+            sendMessage()
+          }
         }}
-      >
-        Send
-      </Button>
+      />
+      <Button onClick={sendMessage}>Send</Button>
     </div>
   )
 }

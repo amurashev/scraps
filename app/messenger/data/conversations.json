@@ -1,7 +1,7 @@
 [
   {
-    "id": "1",
-    "userId": "1",
+    "id": "2",
+    "userId": "2",
     "unreadCount": 4,
     "lastMessage": {
       "id": "1",
@@ -14,22 +14,22 @@
     }
   },
   {
-    "id": "2",
-    "userId": "2",
+    "id": "3",
+    "userId": "3",
     "unreadCount": 1,
     "lastMessage": {
       "id": "2",
       "date": "2024-08-12T16:15:53+02:00",
       "text": "Have a nice week bro!",
       "type": "text",
-      "senderId": "1",
+      "senderId": "2",
       "deliveredTo": [],
       "readBy": []
     }
   },
   {
-    "id": "3",
-    "userId": "3",
+    "id": "4",
+    "userId": "4",
     "unreadCount": 6,
     "lastMessage": {
       "id": "3",

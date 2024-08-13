@@ -12,7 +12,7 @@ import SideBar from '../components/sidebar'
 import EmptyChat from '../components/emptyChat'
 
 import { MessengerPageContext } from './context'
-import { getConversations, getMessages } from './requests'
+import { getConversations, getMessages, sendMessage } from './requests'
 
 function Messenger() {
   const [state, dispatch] = useReducer(reducer, defaultState)
@@ -24,8 +24,12 @@ function Messenger() {
     ? conversations.data.find((item) => item.id === selectedConversationId)
     : undefined
 
-  const sendMessage = (message: string) => {
-    console.warn('sendMessage', message)
+  const onMessageSend = async (text: string) => {
+    const newMessage = await sendMessage(text)
+    dispatch({
+      type: 'addMessage',
+      payload: newMessage,
+    })
   }
 
   const conversationClick = async (id: string) => {
@@ -116,7 +120,7 @@ function Messenger() {
               areMessagesFetched={messages.areFetched}
               onShowDetails={showDetails}
               onBack={goBack}
-              onSend={sendMessage}
+              onSend={onMessageSend}
             />
           ) : (
             <EmptyChat />

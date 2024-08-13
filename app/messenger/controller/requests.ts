@@ -9,15 +9,23 @@ export const getConversations = async (): Promise<Conversation[]> => {
   await sleep(1000)
 
   return conversations.map((conversation) => {
+    const lastMessage = conversation.lastMessage
+    const sender = users[lastMessage.senderId as keyof typeof users]
+    const user = users[conversation.userId as keyof typeof users]
+
     return {
       ...conversation,
       lastMessage: {
-        ...conversation.lastMessage,
-        type: conversation.lastMessage.type as Message['type'],
+        ...lastMessage,
+        type: lastMessage.type as Message['type'],
+        sender: {
+          id: lastMessage.senderId,
+          ...sender,
+        },
       },
       user: {
-        ...users[conversation.userId as keyof typeof users],
         id: conversation.userId,
+        ...user,
       },
     }
   })
@@ -29,6 +37,53 @@ export const getMessages = async (
   await sleep(1500)
 
   const conversation = conversations.find((item) => item.id === conversationId)
+  const lastMessage = conversation?.lastMessage
+  const sender = users[lastMessage?.senderId as keyof typeof users]
 
-  return [conversation?.lastMessage as Message]
+  const message = {
+    ...conversation?.lastMessage,
+    sender: {
+      id: lastMessage?.senderId,
+      ...sender,
+    },
+  } as Message
+
+  return [
+    {
+      id: '2',
+      date: '2024-08-12T16:15:53+02:00',
+      text: 'Have a nice week bro!',
+      type: 'text',
+      senderId: '2',
+      sender: {
+        id: '2',
+        ...users['2'],
+      },
+      deliveredTo: [],
+      readBy: [],
+    },
+    message,
+  ]
+}
+
+export const sendMessage = async (text: string): Promise<Message> => {
+  await sleep(500)
+
+  return {
+    id: '2',
+    date: '2024-08-12T16:15:53+02:00',
+    text: text,
+    type: 'text',
+    senderId: '1',
+    sender: {
+      id: '1',
+      firstName: 'Current',
+      lastName: 'User',
+      isOnline: true,
+      lastOnlineDate: '2024-08-12T18:00:53+02:00',
+      avatarUrl: 'https://xsgames.co/randomusers/assets/avatars/male/1.jpg',
+    },
+    deliveredTo: [],
+    readBy: [],
+  }
 }

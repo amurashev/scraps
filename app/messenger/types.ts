@@ -1,3 +1,12 @@
+type User = {
+  id: string
+  firstName: string
+  lastName: string
+  isOnline: boolean
+  lastOnlineDate: string
+  avatarUrl: string
+}
+
 export type Message = {
   id: string
   date: string
@@ -6,15 +15,7 @@ export type Message = {
   senderId: string
   deliveredTo: string[]
   readBy: string[]
-}
-
-type User = {
-  id: string
-  firstName: string
-  lastName: string
-  isOnline: boolean
-  lastOnlineDate: string
-  avatarUrl: string
+  sender: User
 }
 
 export type Conversation = {
@@ -52,3 +53,4 @@ export type Action =
   // Messages
   | { type: 'setMessagesFetchStatus'; value: boolean }
   | { type: 'addMessages'; payload: Message[] }
+  | { type: 'addMessage'; payload: Message }

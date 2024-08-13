@@ -2531,6 +2531,11 @@ react-style-singleton@^2.2.1:
     invariant "^2.2.4"
     tslib "^2.0.0"
 
+react-virtuoso@^4.10.0:
+  version "4.10.0"
+  resolved "https://registry.yarnpkg.com/react-virtuoso/-/react-virtuoso-4.10.0.tgz#1b4bf38671b690661f2fde8c9d974174d80d4913"
+  integrity sha512-CyxU5TYMH4bw2cybH0bNqN/yIg2q2Vd0kbs92tQc5ResZALAIzIVJY4JL6BHgJFQjwrLhCYrFwKq0p+lvBgA0w==
+
 react@^18:
   version "18.3.1"
   resolved "https://registry.yarnpkg.com/react/-/react-18.3.1.tgz#49ab892009c53933625bd16b2533fc754cab2891"
