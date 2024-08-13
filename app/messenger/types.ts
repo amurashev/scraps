@@ -31,4 +31,5 @@ export type State = {
 export type Action =
   | { type: 'setActiveConversation'; id: string | undefined }
   | { type: 'toggleDetailsBlock' }
+  | { type: 'hideDetailsBlock' }
   | { type: 'changeMobileScreen', screen: State['ui']['mobileScreen'] }

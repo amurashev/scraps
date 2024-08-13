@@ -17,20 +17,33 @@ function Messenger() {
   const { conversations, selectedConversationId, ui } = state
   const { hasDetailsBlock, mobileScreen } = ui
 
-  console.warn('Messenger', state)
-
   const selectedConversation = selectedConversationId
     ? conversations.find((item) => item.id === selectedConversationId)
     : undefined
 
+  const goBack = () => {
+    dispatch({ type: 'setActiveConversation', id: undefined })
+    dispatch({ type: 'changeMobileScreen', screen: 'list' })
+    dispatch({ type: 'hideDetailsBlock' })
+  }
+
+  const hideMobileDetails = () => {
+    dispatch({ type: 'hideDetailsBlock' })
+    dispatch({ type: 'changeMobileScreen', screen: 'chat' })
+  }
+
+  const showDetails = () => {
+    dispatch({ type: 'toggleDetailsBlock' })
+    dispatch({ type: 'changeMobileScreen', screen: 'details' })
+  }
+
   useEffect(() => {
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') {
-        dispatch({ type: 'setActiveConversation', id: undefined })
-        dispatch({ type: 'changeMobileScreen', screen: 'list' })
-      }
+      if (e.key === 'Escape') goBack()
     })
   }, [])
+
+  console.warn('Messenger', state)
 
   return (
     <div className="w-full h-[calc(100vh-60px)] grid grid-cols-12">
@@ -66,7 +79,8 @@ function Messenger() {
             firstName={selectedConversation.user.firstName}
             lastName={selectedConversation.user.lastName}
             avatarUrl={selectedConversation.user.avatarUrl}
-            onShowDetails={() => dispatch({ type: 'toggleDetailsBlock' })}
+            onShowDetails={showDetails}
+            onBack={goBack}
           />
         ) : (
           <EmptyChat />
@@ -89,6 +103,7 @@ function Messenger() {
               firstName={selectedConversation.user.firstName}
               lastName={selectedConversation.user.lastName}
               avatarUrl={selectedConversation.user.avatarUrl}
+              onBack={hideMobileDetails}
             />
           )}
         </div>

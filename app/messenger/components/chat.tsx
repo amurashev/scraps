@@ -1,44 +1,49 @@
 import classNames from 'classnames'
 
-import { format } from 'date-fns'
+import { FaChevronLeft, FaIdCardClip } from 'react-icons/fa6'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
+import { IconButton } from '@/components/ui/icon-button'
 
 const Chat = ({
   firstName,
   lastName,
   avatarUrl,
   onShowDetails,
+  onBack,
 }: {
   firstName: string
   lastName: string
   avatarUrl: string
   onShowDetails: () => void
+  onBack: () => void
 }) => {
   return (
     <div
       className={classNames(
-        'w-full px-6 py-3 border-0 border-b-[1px] border-border'
+        'w-full px-4 h-[60px] flex items-center space-x-3 border-0 border-b-[1px] border-border'
       )}
     >
-      <div className="flex items-center space-x-3">
-        <div className="flex-shrink-0">
-          <Avatar>
-            <AvatarImage src={avatarUrl} />
-            <AvatarFallback>{'AA'}</AvatarFallback>
-          </Avatar>
+      <div className="flex flex-shrink-0 space-x-1">
+        <IconButton onClick={onBack}>
+          <FaChevronLeft size={18} />
+        </IconButton>
+        <Avatar>
+          <AvatarImage src={avatarUrl} />
+          <AvatarFallback>{'AA'}</AvatarFallback>
+        </Avatar>
+      </div>
+      <div className="flex-grow min-w-[1px] pt-0">
+        <div className="font-bold text-1xl flex-grow truncate min-w-[1px] leading-5">
+          {firstName} {lastName}
         </div>
-        <div className="flex-grow min-w-[1px] pt-0">
-          <div className="font-bold text-1xl flex-grow truncate min-w-[1px] leading-5">
-            {firstName} {lastName}
-          </div>
 
-          <div className="text-muted-foreground text-sm">Online</div>
-        </div>
-        <div>
-          <Button onClick={onShowDetails}>Details</Button>
-        </div>
+        <div className="text-muted-foreground text-sm">Online</div>
+      </div>
+      <div>
+        <IconButton onClick={onShowDetails}>
+          <FaIdCardClip size={18} />
+        </IconButton>
       </div>
     </div>
   )

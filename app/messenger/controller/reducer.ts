@@ -14,6 +14,15 @@ function reducer(state: State, action: Action): State {
         },
       }
     }
+    case 'hideDetailsBlock': {
+      return {
+        ...state,
+        ui: {
+          ...state.ui,
+          hasDetailsBlock: false,
+        },
+      }
+    }
     case 'changeMobileScreen': {
       return {
         ...state,

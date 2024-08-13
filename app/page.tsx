@@ -14,7 +14,11 @@ export default function Home() {
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
         <div className="grid md:grid-cols-3 gap-4">
           {pages.map((item) => (
-            <Link key={item.href} href={item.href} className="h-full block md:flex">
+            <Link
+              key={item.href}
+              href={item.href}
+              className="h-full block md:grid"
+            >
               <Card>
                 <CardHeader>
                   <CardTitle>{item.title}</CardTitle>
