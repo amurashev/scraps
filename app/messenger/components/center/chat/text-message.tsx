@@ -42,7 +42,7 @@ const TextMessage = ({
         </div>
       )}
       <div
-        className={classNames('space-y-1 flex flex-col', {
+        className={classNames('space-y-1 flex flex-col min-w-[1px]', {
           'items-start': !isYour,
           'items-end': isYour,
           'pr-[40px]': isNext,
@@ -64,7 +64,7 @@ const TextMessage = ({
             </time>
           </div>
         )}
-        <div className="inline-block text-muted-foreground bg-muted rounded-sm p-2">
+        <div className="w-full text-muted-foreground bg-muted rounded-sm p-2">
           <p className="break-words">{text}</p>
         </div>
       </div>

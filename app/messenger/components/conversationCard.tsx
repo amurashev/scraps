@@ -43,7 +43,7 @@ const ConversationCard = ({
   return (
     <div
       className={classNames(
-        'w-full px-6 pt-3 hover:bg-gray-50 cursor-pointer space-y-3'
+        'w-full px-6 pt-3 hover:bg-gray-50 dark:hover:bg-gray-900 cursor-pointer space-y-3'
       )}
     >
       <div className="flex items-center space-x-3">
