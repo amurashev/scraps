@@ -5,14 +5,14 @@ import classNames from 'classnames'
 
 import defaultState from './state'
 import reducer from './reducers'
+import { MessengerPageContext } from './context'
+import { getConversations, getMessages, sendMessage } from './requests'
+import { getTempMessage } from './utils'
 
 import Center from '../components/center'
 import UserDetails from '../components/userDetails'
 import SideBar from '../components/sidebar'
 import EmptyChat from '../components/emptyChat'
-
-import { MessengerPageContext } from './context'
-import { getConversations, getMessages, sendMessage } from './requests'
 
 function Messenger() {
   const [state, dispatch] = useReducer(reducer, defaultState)
@@ -20,15 +20,24 @@ function Messenger() {
   const { conversations, messages, selectedConversationId, ui } = state
   const { hasDetailsBlock, mobileScreen } = ui
 
+  const senderId = '1'
+
   const selectedConversation = selectedConversationId
     ? conversations.data.find((item) => item.id === selectedConversationId)
     : undefined
 
   const onMessageSend = async (text: string) => {
-    const newMessage = await sendMessage(text)
+    const tempMessage = getTempMessage({ text, senderId })
     dispatch({
       type: 'addMessage',
-      payload: newMessage,
+      payload: tempMessage,
+    })
+
+    const updatedMessage = await sendMessage({ text, senderId })
+    dispatch({
+      type: 'updateMessage',
+      id: tempMessage.id,
+      payload: updatedMessage,
     })
   }
 
@@ -76,8 +85,6 @@ function Messenger() {
       if (e.key === 'Escape') goBack()
     })
   }, [])
-
-  console.warn('Messenger', state)
 
   return (
     <MessengerPageContext.Provider

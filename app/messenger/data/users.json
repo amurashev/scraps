@@ -1,5 +1,6 @@
 {
   "1": {
+    "id": "1",
     "firstName": "Current",
     "lastName": "User",
     "isOnline": true,
@@ -7,6 +8,7 @@
     "avatarUrl": "https://xsgames.co/randomusers/assets/avatars/male/1.jpg"
   },
   "2": {
+    "id": "2",
     "firstName": "User name with",
     "lastName": "Very long string",
     "isOnline": true,
@@ -14,6 +16,7 @@
     "avatarUrl": "https://xsgames.co/randomusers/assets/avatars/male/2.jpg"
   },
   "3": {
+    "id": "3",
     "firstName": "Simple",
     "lastName": "User",
     "isOnline": true,
@@ -21,6 +24,7 @@
     "avatarUrl": "https://xsgames.co/randomusers/assets/avatars/male/11.jpg"
   },
   "4": {
+    "id": "4",
     "firstName": "Lorem",
     "lastName": "Ipsum",
     "isOnline": true,

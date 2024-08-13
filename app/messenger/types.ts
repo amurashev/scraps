@@ -54,3 +54,4 @@ export type Action =
   | { type: 'setMessagesFetchStatus'; value: boolean }
   | { type: 'addMessages'; payload: Message[] }
   | { type: 'addMessage'; payload: Message }
+  | { type: 'updateMessage'; payload: Message, id: string }

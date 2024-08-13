@@ -20,6 +20,15 @@ function conversationsReducer(
       return { ...state, data: [...state.data, action.payload] }
     }
 
+    case 'updateMessage': {
+      return {
+        ...state,
+        data: state.data.map((item) =>
+          item.id === action.id ? action.payload : item
+        ),
+      }
+    }
+
     default: {
       return state
     }

@@ -18,15 +18,9 @@ export const getConversations = async (): Promise<Conversation[]> => {
       lastMessage: {
         ...lastMessage,
         type: lastMessage.type as Message['type'],
-        sender: {
-          id: lastMessage.senderId,
-          ...sender,
-        },
+        sender,
       },
-      user: {
-        id: conversation.userId,
-        ...user,
-      },
+      user,
     }
   })
 }
@@ -42,10 +36,7 @@ export const getMessages = async (
 
   const message = {
     ...conversation?.lastMessage,
-    sender: {
-      id: lastMessage?.senderId,
-      ...sender,
-    },
+    sender,
   } as Message
 
   return [
@@ -55,10 +46,7 @@ export const getMessages = async (
       text: 'Have a nice week bro!',
       type: 'text',
       senderId: '2',
-      sender: {
-        id: '2',
-        ...users['2'],
-      },
+      sender: users['2'],
       deliveredTo: [],
       readBy: [],
     },
@@ -66,23 +54,22 @@ export const getMessages = async (
   ]
 }
 
-export const sendMessage = async (text: string): Promise<Message> => {
+export const sendMessage = async ({
+  text,
+  senderId,
+}: {
+  text: string
+  senderId: string
+}): Promise<Message> => {
   await sleep(500)
 
   return {
-    id: '2',
+    id: `5`,
     date: '2024-08-12T16:15:53+02:00',
     text: text,
     type: 'text',
-    senderId: '1',
-    sender: {
-      id: '1',
-      firstName: 'Current',
-      lastName: 'User',
-      isOnline: true,
-      lastOnlineDate: '2024-08-12T18:00:53+02:00',
-      avatarUrl: 'https://xsgames.co/randomusers/assets/avatars/male/1.jpg',
-    },
+    senderId,
+    sender: users[senderId as keyof typeof users],
     deliveredTo: [],
     readBy: [],
   }
