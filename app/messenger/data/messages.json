@@ -1,0 +1,62 @@
+[
+  {
+    "id": "1",
+    "date": "2024-08-12T18:00:53+02:00",
+    "text": "This is new landing page, What do you think?",
+    "type": "text",
+    "conversationId": "2",
+    "senderId": "1",
+    "deliveredTo": [],
+    "readBy": []
+  },
+  {
+    "id": "2",
+    "date": "2024-08-12T16:15:53+02:00",
+    "text": "That is very cool!",
+    "type": "text",
+    "conversationId": "2",
+    "senderId": "2",
+    "deliveredTo": [],
+    "readBy": []
+  },
+  {
+    "id": "3",
+    "date": "2024-08-12T13:44:53+02:00",
+    "text": "Thank you! 🙏",
+    "type": "text",
+    "conversationId": "3",
+    "senderId": "3",
+    "deliveredTo": [],
+    "readBy": []
+  },
+  {
+    "id": "4",
+    "date": "2024-08-12T13:44:53+02:00",
+    "text": " That was great",
+    "type": "text",
+    "conversationId": "3",
+    "senderId": "3",
+    "deliveredTo": [],
+    "readBy": []
+  },
+  {
+    "id": "3",
+    "date": "2024-08-12T13:44:53+02:00",
+    "text": "Hi!",
+    "type": "text",
+    "conversationId": "4",
+    "senderId": "1",
+    "deliveredTo": [],
+    "readBy": []
+  },
+  {
+    "id": "4",
+    "date": "2024-08-12T13:44:53+02:00",
+    "text": "Do you have any feedback?",
+    "type": "text",
+    "conversationId": "4",
+    "senderId": "1",
+    "deliveredTo": [],
+    "readBy": []
+  }
+]

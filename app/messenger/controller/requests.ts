@@ -2,27 +2,38 @@ import { sleep } from '@/lib/utils'
 
 import conversations from '../data/conversations.json'
 import users from '../data/users.json'
+import messages from '../data/messages.json'
 
 import { Conversation, Message } from '../types'
 
 export const getConversations = async (): Promise<Conversation[]> => {
   await sleep(1000)
 
-  return conversations.map((conversation) => {
-    const lastMessage = conversation.lastMessage
-    const sender = users[lastMessage.senderId as keyof typeof users]
-    const user = users[conversation.userId as keyof typeof users]
+  return conversations
+    .map((conversation) => {
+      const conversationMessages = messages.filter(
+        (item) => item.conversationId === conversation.id
+      )
+      const lastMessage = conversationMessages.length
+        ? conversationMessages[conversationMessages.length - 1]
+        : undefined
+      const user = users[conversation.userId as keyof typeof users]
 
-    return {
-      ...conversation,
-      lastMessage: {
-        ...lastMessage,
-        type: lastMessage.type as Message['type'],
-        sender,
-      },
-      user,
-    }
-  })
+      const updatedLestMessage = lastMessage
+        ? {
+            ...lastMessage,
+            type: lastMessage.type as Message['type'],
+            sender: users[lastMessage.senderId as keyof typeof users],
+          }
+        : undefined
+
+      return {
+        ...conversation,
+        lastMessage: updatedLestMessage as Message, // Because we filter it anyway
+        user,
+      }
+    })
+    .filter((item) => item.lastMessage)
 }
 
 export const getMessages = async (
@@ -30,28 +41,15 @@ export const getMessages = async (
 ): Promise<Message[]> => {
   await sleep(1500)
 
-  const conversation = conversations.find((item) => item.id === conversationId)
-  const lastMessage = conversation?.lastMessage
-  const sender = users[lastMessage?.senderId as keyof typeof users]
-
-  const message = {
-    ...conversation?.lastMessage,
-    sender,
-  } as Message
-
-  return [
-    {
-      id: '2',
-      date: '2024-08-12T16:15:53+02:00',
-      text: 'Have a nice week bro!',
-      type: 'text',
-      senderId: '2',
-      sender: users['2'],
-      deliveredTo: [],
-      readBy: [],
-    },
-    message,
-  ]
+  return messages
+    .filter((item) => item.conversationId === conversationId)
+    .map((item) => {
+      const sender = users[item?.senderId as keyof typeof users]
+      return {
+        ...item,
+        sender,
+      } as Message
+    })
 }
 
 export const sendMessage = async ({

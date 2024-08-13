@@ -40,7 +40,7 @@ const Chat = ({
       const prevMessage = arr[key - 1]
       let isNext = false
 
-      if (prevMessage && prevMessage.isYour) {
+      if (prevMessage && prevMessage.isYour && isYour) {
         isNext = true
       }
 
