@@ -10,6 +10,11 @@ const pages = [
       'Example of simple messenger. Just layout with some basic actions (w/o data saving/fetching)',
     href: '/messenger',
   },
+  {
+    title: 'Settings',
+    description: '',
+    href: '/settings/profile',
+  },
   // {
   //   title: 'AI',
   //   description: '',
