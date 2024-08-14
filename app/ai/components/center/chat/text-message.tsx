@@ -54,9 +54,7 @@ function TextMessage({
               'justify-start': !isYour,
             })}
           >
-            <div className="font-bold text-sm">
-              {name}
-            </div>
+            <div className="font-bold text-sm">{name}</div>
             <time className="flex-shrink-0 text-xs text-muted-foreground">
               {formattedDate}
             </time>

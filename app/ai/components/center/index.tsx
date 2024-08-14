@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import { VirtuosoHandle } from 'react-virtuoso'
 import { useRef } from 'react'
 
@@ -20,13 +19,6 @@ function Center({
   const chatRef = useRef<VirtuosoHandle | null>(null)
   return (
     <div className="h-full flex flex-col border-0 border-l-[1px] border-r-[1px] border-border">
-      {/* <div
-        className={classNames(
-          'w-full h-[60px] flex items-center border-0 border-b-[1px] border-border'
-        )}
-      >
-        Header
-      </div> */}
       <div className="flex-1 py-4">
         {areMessagesFetched ? (
           <Chat chatRef={chatRef} messages={messages} />
