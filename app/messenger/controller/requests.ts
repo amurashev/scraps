@@ -64,7 +64,7 @@ export const sendMessage = async ({
   return {
     id: `5`,
     date: '2024-08-12T16:15:53+02:00',
-    text: text,
+    text,
     type: 'text',
     senderId,
     sender: users[senderId as keyof typeof users],

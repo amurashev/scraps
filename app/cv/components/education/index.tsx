@@ -1,4 +1,4 @@
-const Education = ({
+function Education({
   education,
 }: {
   education: {
@@ -8,7 +8,7 @@ const Education = ({
     field: string
     degree: string
   }[]
-}) => {
+}) {
   return (
     <ul>
       {education.map((item) => (

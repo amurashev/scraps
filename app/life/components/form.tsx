@@ -4,7 +4,7 @@ import { DatePicker } from '@/components/ui/date-picker'
 import { Label } from '@/components/ui/label'
 import { Slider } from '@/components/ui/slider'
 
-const Form = ({
+function Form({
   date,
   lifeCycle,
   activeCycle,
@@ -18,7 +18,7 @@ const Form = ({
   onChangeDate: (value: Date) => void
   onChangeLifeCycle: (value: number) => void
   onChangeActiveCycle: (value: number) => void
-}) => {
+}) {
   return (
     <div className="flex flex-col space-y-6">
       <div className="space-y-2 flex flex-col flex-1">

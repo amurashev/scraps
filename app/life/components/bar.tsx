@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 
-const Bar = ({ type }: { type: 'regular' | 'lightGreen' | 'green' }) => {
+function Bar({ type }: { type: 'regular' | 'lightGreen' | 'green' }) {
   return (
     <div
       className={classNames(

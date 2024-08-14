@@ -2,7 +2,7 @@ import { State } from '../types'
 
 const defaultState: State = {
   questionIndex: 0,
-  userAnswers: {}
+  userAnswers: {},
 }
 
 export default defaultState

@@ -12,7 +12,7 @@ export const getTempMessage = ({
   return {
     id: `temp_${Date.now()}_${senderId}`,
     date: '2024-08-12T16:15:53+02:00',
-    text: text,
+    text,
     type: 'text',
     senderId,
     sender: users[senderId as keyof typeof users],

@@ -1,4 +1,5 @@
 'use client'
+
 import classNames from 'classnames'
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
@@ -28,7 +29,7 @@ function Header() {
               'border-0 border-b-2 border-solid',
               {
                 'font-bold': pathname === item.href,
-                'border-primary': pathname == item.href,
+                'border-primary': pathname === item.href,
                 'border-transparent': pathname !== item.href,
               }
             )}

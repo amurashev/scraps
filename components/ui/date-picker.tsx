@@ -28,7 +28,7 @@ export function DatePicker({
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          variant={'outline'}
+          variant="outline"
           className={cn(
             'w-full justify-start text-left font-normal',
             !value && 'text-muted-foreground'
@@ -45,7 +45,7 @@ export function DatePicker({
           fromYear={fromYear}
           captionLayout="dropdown"
           toYear={toYear}
-          onSelect={(value) => onChange(value as Date)}
+          onSelect={(newValue) => onChange(newValue as Date)}
           initialFocus
         />
       </PopoverContent>

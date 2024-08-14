@@ -1,22 +1,26 @@
 import classNames from 'classnames'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { VirtuosoHandle } from 'react-virtuoso'
 
 import { Button } from '@/components/ui/button'
 
-const Footer = ({
+function Footer({
   chatRef,
   onSend,
 }: {
   chatRef: { current: VirtuosoHandle | null }
   onSend: (message: string) => void
-}) => {
+}) {
   const [message, setMessage] = useState('')
 
+  const hasMessage = message.length
+
   const sendMessage = () => {
-    onSend(message)
-    chatRef.current?.scrollToIndex(100000)
-    setMessage('')
+    if (hasMessage) {
+      onSend(message)
+      chatRef.current?.scrollToIndex(100000)
+      setMessage('')
+    }
   }
 
   return (
@@ -39,7 +43,9 @@ const Footer = ({
           }
         }}
       />
-      <Button onClick={sendMessage}>Send</Button>
+      <Button disabled={!hasMessage} onClick={sendMessage}>
+        Send
+      </Button>
     </div>
   )
 }

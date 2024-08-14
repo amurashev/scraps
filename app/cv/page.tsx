@@ -20,7 +20,7 @@ export default function CV() {
           className={classNames(
             'w-full flex flex-col space-y-4',
             'md:flex-row md:space-x-4 md:space-y-0',
-            'print:flex-row print:space-x-4 print:space-y-0',
+            'print:flex-row print:space-x-4 print:space-y-0'
           )}
         >
           <div className="md:w-1/2 print:w-1/2">

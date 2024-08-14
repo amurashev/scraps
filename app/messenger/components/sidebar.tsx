@@ -6,7 +6,7 @@ import ConversationCard, { ConversationCardSkeleton } from './conversationCard'
 
 import { Conversation } from '../types'
 
-const SideBar = ({
+function SideBar({
   hasInitialConversations,
   conversations,
   onConversationClick,
@@ -14,7 +14,7 @@ const SideBar = ({
   hasInitialConversations: boolean
   conversations: Conversation[]
   onConversationClick: (id: string) => void
-}) => {
+}) {
   return (
     <>
       <div className="p-4 px-6 space-y-6">
@@ -25,14 +25,20 @@ const SideBar = ({
         {!hasInitialConversations ? (
           <>
             {Array.from({ length: 5 }, (_, i) => i + 1).map((_, key) => (
-              <ConversationCardSkeleton key={key} />
+              <ConversationCardSkeleton key={key} /> // eslint-disable-line react/no-array-index-key
             ))}
           </>
         ) : (
           <>
             {conversations.map((item) => {
               return (
-                <div key={item.id} onClick={() => onConversationClick(item.id)}>
+                <div
+                  role="button"
+                  aria-label="Conversation"
+                  tabIndex={0}
+                  key={item.id}
+                  onClick={() => onConversationClick(item.id)}
+                >
                   <ConversationCard
                     firstName={item.user.firstName}
                     lastName={item.user.lastName}

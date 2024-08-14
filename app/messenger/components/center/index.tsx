@@ -9,7 +9,7 @@ import Chat from './chat'
 import Footer from './footer'
 import { Message } from '../../types'
 
-const Center = ({
+function Center({
   firstName,
   lastName,
   avatarUrl,
@@ -27,7 +27,7 @@ const Center = ({
   onShowDetails: () => void
   onBack: () => void
   onSend: (message: string) => void
-}) => {
+}) {
   const chatRef = useRef<VirtuosoHandle | null>(null)
   return (
     <div className="h-full flex flex-col">

@@ -41,7 +41,7 @@ function Controller() {
             dispatch({
               type: 'setUserAnswer',
               index: questionIndex,
-              value: value,
+              value,
             })
             dispatch({ type: 'increaseQuestionIndex' })
           }}

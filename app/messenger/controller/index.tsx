@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useReducer } from 'react'
+import { useEffect, useMemo, useReducer } from 'react'
 import classNames from 'classnames'
 
 import defaultState from './state'
@@ -21,6 +21,15 @@ function Messenger() {
   const { hasDetailsBlock, mobileScreen } = ui
 
   const senderId = '1'
+
+  const context = useMemo(
+    () => ({
+      actualUser: {
+        id: senderId,
+      },
+    }),
+    [senderId]
+  )
 
   const selectedConversation = selectedConversationId
     ? conversations.data.find((item) => item.id === selectedConversationId)
@@ -46,9 +55,9 @@ function Messenger() {
     dispatch({ type: 'changeMobileScreen', screen: 'chat' })
     dispatch({ type: 'setMessagesFetchStatus', value: false })
 
-    const messages = await getMessages(id)
+    const conversationMessages = await getMessages(id)
 
-    dispatch({ type: 'addMessages', payload: messages })
+    dispatch({ type: 'addMessages', payload: conversationMessages })
     dispatch({ type: 'setMessagesFetchStatus', value: true })
   }
 
@@ -69,10 +78,10 @@ function Messenger() {
   }
 
   const fetchConversations = async () => {
-    const conversations = await getConversations()
+    const newConversations = await getConversations()
 
-    if (conversations.length) {
-      dispatch({ type: 'addConversations', payload: conversations })
+    if (newConversations.length) {
+      dispatch({ type: 'addConversations', payload: newConversations })
     }
 
     dispatch({ type: 'setInitialConversationFetchStatus', value: true })
@@ -87,11 +96,7 @@ function Messenger() {
   }, [])
 
   return (
-    <MessengerPageContext.Provider
-      value={{
-        opponent: selectedConversation ? selectedConversation.user : undefined,
-      }}
-    >
+    <MessengerPageContext.Provider value={context}>
       <div className="w-full h-[calc(100vh-60px)] grid grid-cols-12">
         <div
           className={classNames(

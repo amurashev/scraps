@@ -13,7 +13,7 @@ export const addDays = (date: Date, days: number) => {
 
 export const isAfterDate = (dateA: Date, dateB: Date) => dateA > dateB
 
-const Result = ({
+function Result({
   birthday,
   lifeCycle,
   activeCycle,
@@ -21,7 +21,7 @@ const Result = ({
   birthday: Date
   activeCycle: number
   lifeCycle: number
-}) => {
+}) {
   const weeks = useMemo(() => {
     const today = new Date()
     const endActiveCycleData = addDays(birthday, 365 * activeCycle)
@@ -71,7 +71,7 @@ const Result = ({
       </ul>
 
       <div className="flex flex-wrap gap-0.5">
-        {weeks.map((item, key) => {
+        {weeks.map((item) => {
           let type: 'regular' | 'lightGreen' | 'green' = 'regular'
 
           if (item.type === 'passed') {

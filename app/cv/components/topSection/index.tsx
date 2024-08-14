@@ -66,7 +66,7 @@ function TopSection({ person }: { person: Person }) {
       className={classNames(
         'flex flex-col justify-start space-y-4',
         'md:flex-row md:space-x-4 md:space-y-0',
-        'print:flex-row print:space-x-4 print:space-y-0',
+        'print:flex-row print:space-x-4 print:space-y-0'
       )}
     >
       <Image

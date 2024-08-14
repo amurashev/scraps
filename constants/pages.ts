@@ -6,7 +6,8 @@ const pages = [
   },
   {
     title: 'Messenger',
-    description: "Example of simple messenger. Just layout with some basic actions (w/o data saving/fetching)",
+    description:
+      'Example of simple messenger. Just layout with some basic actions (w/o data saving/fetching)',
     href: '/messenger',
   },
   {

@@ -5,7 +5,7 @@ import { FaChevronLeft, FaIdCardClip } from 'react-icons/fa6'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { IconButton } from '@/components/ui/icon-button'
 
-const Header = ({
+function Header({
   firstName,
   lastName,
   avatarUrl,
@@ -17,7 +17,7 @@ const Header = ({
   avatarUrl: string
   onShowDetails: () => void
   onBack: () => void
-}) => {
+}) {
   return (
     <div className={classNames('w-full px-4 flex items-center space-x-3')}>
       <div className="flex flex-shrink-0 space-x-1">
@@ -26,7 +26,7 @@ const Header = ({
         </IconButton>
         <Avatar>
           <AvatarImage src={avatarUrl} />
-          <AvatarFallback>{'AA'}</AvatarFallback>
+          <AvatarFallback>AA</AvatarFallback>
         </Avatar>
       </div>
       <div className="flex-grow min-w-[1px] pt-0">

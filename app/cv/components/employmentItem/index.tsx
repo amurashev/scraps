@@ -10,7 +10,7 @@ const getDateByString = (date: string) => {
 
 const formatIndex = 'MMM yyy'
 
-const EmploymentItem = ({
+function EmploymentItem({
   item,
 }: {
   item: {
@@ -23,7 +23,7 @@ const EmploymentItem = ({
     startDate: string
     endDate: string
   }
-}) => {
+}) {
   const [hasFullText, setHasFullText] = useState(false)
 
   const hasDetails =
@@ -48,9 +48,9 @@ const EmploymentItem = ({
       </div>
 
       {!hasFullText && hasDetails && (
+        /* eslint-disable jsx-a11y/anchor-is-valid */
         <a
           href="#"
-          className="text-link print:hidden"
           onClick={(e) => {
             e.preventDefault()
             setHasFullText(true)
@@ -58,6 +58,7 @@ const EmploymentItem = ({
         >
           Show more
         </a>
+        /* eslint-enable jsx-a11y/anchor-is-valid */
       )}
 
       {hasFullText && (
@@ -66,9 +67,9 @@ const EmploymentItem = ({
             <div className="space-y-1">
               <div className="font-bold">Job responsibilities</div>
               <ul className="list-disc pl-4">
-                {item.responsibilities?.map((item) => (
-                  <li key={item}>
-                    <div>{item}</div>
+                {item.responsibilities?.map((resp) => (
+                  <li key={resp}>
+                    <div>{resp}</div>
                   </li>
                 ))}
               </ul>

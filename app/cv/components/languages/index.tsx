@@ -5,14 +5,14 @@ const isLocalePossible = (value: string) => ['EN', 'ES', 'RU'].includes(value)
 const isLevelPossible = (value: number) =>
   Number(value) > 0 && Number(value) <= 5
 
-const Languages = ({
+function Languages({
   languages,
 }: {
   languages: {
     label: string
     level: number
   }[]
-}) => {
+}) {
   return (
     <ul>
       {languages.map((item) => {
@@ -27,7 +27,9 @@ const Languages = ({
         return (
           <li key={item.label}>
             <span>{languageLabel.defaultMessage}&nbsp;&ndash;&nbsp;</span>
-            <span className="text-muted-foreground">{levelLabel.defaultMessage}</span>
+            <span className="text-muted-foreground">
+              {levelLabel.defaultMessage}
+            </span>
           </li>
         )
       })}

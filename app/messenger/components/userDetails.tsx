@@ -1,11 +1,9 @@
-import classNames from 'classnames'
-
 import { FaChevronLeft } from 'react-icons/fa6'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { IconButton } from '@/components/ui/icon-button'
 
-const UserDetails = ({
+function UserDetails({
   firstName,
   lastName,
   avatarUrl,
@@ -15,8 +13,7 @@ const UserDetails = ({
   lastName: string
   avatarUrl: string
   onBack: () => void
-}) => {
-
+}) {
   return (
     <div>
       <div className="border-0 px-4 h-[60px] flex items-center border-b-[1px] border-border md:hidden">
@@ -29,7 +26,7 @@ const UserDetails = ({
           <div className="flex-shrink-0">
             <Avatar size={128}>
               <AvatarImage src={avatarUrl} />
-              <AvatarFallback>{'AA'}</AvatarFallback>
+              <AvatarFallback>AA</AvatarFallback>
             </Avatar>
           </div>
           <div className="flex-grow min-w-[1px] w-full">

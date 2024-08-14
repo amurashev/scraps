@@ -13,7 +13,7 @@ const defaultState: State = {
   messages: {
     data: [],
     areFetched: false,
-  }
+  },
 }
 
 export default defaultState

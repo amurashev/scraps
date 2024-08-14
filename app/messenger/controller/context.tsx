@@ -1,13 +1,8 @@
 import { createContext, useContext } from 'react'
 
 type ContextProps = {
-  opponent?: {
+  actualUser?: {
     id: string
-    firstName: string
-    lastName: string
-    isOnline: boolean
-    lastOnlineDate: string
-    avatarUrl: string
   }
 }
 

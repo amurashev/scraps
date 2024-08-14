@@ -1,10 +1,11 @@
+import Link from 'next/link'
+
 import {
   Card,
   CardTitle,
   CardDescription,
   CardHeader,
 } from '@/components/ui/card'
-import Link from 'next/link'
 
 import pages from '@/constants/pages'
 

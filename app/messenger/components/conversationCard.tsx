@@ -5,13 +5,9 @@ import { format } from 'date-fns'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Skeleton } from '@/components/ui/skeleton'
 
-export const ConversationCardSkeleton = () => {
+export function ConversationCardSkeleton() {
   return (
-    <div
-      className={classNames(
-        'w-full px-6 pt-3 space-y-3'
-      )}
-    >
+    <div className={classNames('w-full px-6 pt-3 space-y-3')}>
       <div className="flex items-center space-x-3">
         <div className="flex-shrink-0">
           <Skeleton className="h-10 w-10 rounded-full" />
@@ -26,7 +22,7 @@ export const ConversationCardSkeleton = () => {
   )
 }
 
-const ConversationCard = ({
+function ConversationCard({
   firstName,
   lastName,
   avatarUrl,
@@ -38,7 +34,7 @@ const ConversationCard = ({
   avatarUrl: string
   textMessage: string
   date: string
-}) => {
+}) {
   const formattedDate = format(date, 'HH:mm')
   return (
     <div
@@ -50,7 +46,7 @@ const ConversationCard = ({
         <div className="flex-shrink-0">
           <Avatar>
             <AvatarImage src={avatarUrl} />
-            <AvatarFallback>{'AA'}</AvatarFallback>
+            <AvatarFallback>AA</AvatarFallback>
           </Avatar>
         </div>
         <div className="flex-grow min-w-[1px]">

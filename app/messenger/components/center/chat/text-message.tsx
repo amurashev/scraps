@@ -3,7 +3,7 @@ import { format } from 'date-fns'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
-const TextMessage = ({
+function TextMessage({
   id,
   firstName,
   lastName,
@@ -13,7 +13,7 @@ const TextMessage = ({
   isYour = false,
   isNext = false,
 }: {
-  id: string,
+  id: string
   firstName: string
   lastName: string
   avatarUrl: string
@@ -21,7 +21,7 @@ const TextMessage = ({
   date: string
   isYour: boolean
   isNext: boolean
-}) => {
+}) {
   const formattedDate = format(date, 'HH:mm')
   const isTemp = id.includes('temp')
 
@@ -37,7 +37,7 @@ const TextMessage = ({
         <div className="flex-shrink-0">
           <Avatar size={8}>
             <AvatarImage src={avatarUrl} />
-            <AvatarFallback>{'AA'}</AvatarFallback>
+            <AvatarFallback>AA</AvatarFallback>
           </Avatar>
         </div>
       )}
