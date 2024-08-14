@@ -15,6 +15,11 @@ const pages = [
     description: '',
     href: '/settings/profile',
   },
+  {
+    title: 'l18n',
+    description: '',
+    href: '/en/l18n',
+  },
   // {
   //   title: 'AI',
   //   description: '',
