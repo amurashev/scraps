@@ -34,7 +34,7 @@ export default function Content() {
               <div className="flex-grow">
                 <CardTitle>{formatMessage(messages.locale)}</CardTitle>
               </div>
-              <div className="text-3xl flex space-x-2">
+              <div className="text-3xl flex gap-2">
                 {locales.map((item) => (
                   <Link
                     key={item.locale}

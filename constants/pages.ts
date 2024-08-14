@@ -18,7 +18,7 @@ const pages = [
   {
     title: 'l18n',
     description: '',
-    href: '/en/l18n',
+    href: '/l18n',
   },
   // {
   //   title: 'AI',

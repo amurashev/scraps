@@ -17,7 +17,7 @@ function Header() {
   return (
     <header className="flex sticky px-6 h-[60px] top-0 z-50 w-full bg-background/95 backdrop-blur border-0 border-b-[1px] border-solid border-border print:hidden">
       <nav className="hidden md:flex flex-1 items-center gap-6">
-        <Link href="/">
+        <Link href="/" locale="en">
           <FaHouse size={18} />
         </Link>
         {pages.map((item) => (
@@ -34,6 +34,7 @@ function Header() {
               }
             )}
             href={item.href}
+            locale="en"
           >
             {item.title}
           </Link>

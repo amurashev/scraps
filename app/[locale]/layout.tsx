@@ -4,7 +4,7 @@ import { Inter } from 'next/font/google'
 import Header from '@/components/header'
 import { cn } from '@/lib/utils'
 
-import './globals.css'
+import '../globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,11 +15,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  params: { locale },
 }: Readonly<{
+  params: { locale: string }
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       <body
         className={cn(
           'min-h-screen bg-background font-sans antialiased',
