@@ -14,10 +14,11 @@ const pages = [
     title: 'Settings',
     description: '',
     href: '/settings/profile',
+    subPages: ['/settings/profile', '/settings/notifications'],
   },
   {
     title: 'l18n',
-    description: '',
+    description: 'Example of using Internationalization for content',
     href: '/l18n',
   },
   // {

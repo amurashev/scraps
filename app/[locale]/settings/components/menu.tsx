@@ -22,15 +22,17 @@ export default function Menu() {
     <nav className={classNames('flex flex-col space-y-2')}>
       {subPages.map((item) => {
         const href = `/settings/${item.index}`
+        const isActive = pathname.includes(href)
         return (
           <Link
+            key={item.index}
             className={classNames(
               'inline-flex items-center whitespace-nowrap rounded-md text-sm font-medium transition-colors h-9 px-4 py-2 justify-start',
               'hover:text-accent-foreground',
               'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring',
               {
-                'bg-muted': pathname === href,
-                'hover:underline': pathname !== href,
+                'bg-muted': isActive,
+                'hover:underline': !isActive,
               }
             )}
             href={href}

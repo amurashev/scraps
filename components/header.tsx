@@ -20,25 +20,30 @@ function Header() {
         <Link href="/" locale="en">
           <FaHouse size={18} />
         </Link>
-        {pages.map((item) => (
-          <Link
-            key={item.href}
-            className={classNames(
-              'transition-colors h-full flex items-center',
-              'hover:border-primary',
-              'border-0 border-b-2 border-solid',
-              {
-                'font-bold': pathname === item.href,
-                'border-primary': pathname === item.href,
-                'border-transparent': pathname !== item.href,
-              }
-            )}
-            href={item.href}
-            locale="en"
-          >
-            {item.title}
-          </Link>
-        ))}
+        {pages.map((item) => {
+          const isActive = item.subPages
+            ? item.subPages.some((subPage) => pathname.includes(subPage))
+            : pathname.includes(item.href)
+          return (
+            <Link
+              key={item.href}
+              className={classNames(
+                'transition-colors h-full flex items-center',
+                'hover:border-primary',
+                'border-0 border-b-2 border-solid',
+                {
+                  'font-bold': isActive,
+                  'border-primary': isActive,
+                  'border-transparent': !isActive,
+                }
+              )}
+              href={item.href}
+              locale="en"
+            >
+              {item.title}
+            </Link>
+          )
+        })}
       </nav>
       <div className="flex flex-1 items-center flex-grow md:hidden">Menu</div>
       <div className="flex items-center space-x-1">

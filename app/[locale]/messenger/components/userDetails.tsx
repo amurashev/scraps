@@ -1,4 +1,4 @@
-import { FaChevronLeft } from 'react-icons/fa6'
+import { FaXmark } from 'react-icons/fa6'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { IconButton } from '@/components/ui/icon-button'
@@ -16,12 +16,12 @@ function UserDetails({
 }) {
   return (
     <div>
-      <div className="border-0 px-4 h-[60px] flex items-center border-b-[1px] border-border md:hidden">
-        <IconButton onClick={onBack}>
-          <FaChevronLeft size={18} />
-        </IconButton>
-      </div>
-      <div className="py-10 px-6 w-full">
+      <div className="py-10 px-6 w-full relative">
+        <div className="absolute top-2 right-2">
+          <IconButton onClick={onBack}>
+            <FaXmark size={22} />
+          </IconButton>
+        </div>
         <div className="w-full flex flex-col items-center space-y-4">
           <div className="flex-shrink-0">
             <Avatar size={128}>
