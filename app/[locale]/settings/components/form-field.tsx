@@ -4,18 +4,26 @@ import { Label } from '@/components/ui/label'
 
 export default function FormField({
   label,
+  htmlFor,
   description,
   children,
+  errorMessage,
 }: {
   label: string
+  htmlFor: string
   description: string
+  errorMessage?: string
   children: React.ReactNode
 }) {
   return (
     <div className="space-y-1">
-      <Label htmlFor="email">{label}</Label>
+      <Label htmlFor={htmlFor}>{label}</Label>
       {children}
-      <p className="text-muted-foreground text-xs">{description}</p>
+      {errorMessage ? (
+        <p className="text-destructive text-xs">{errorMessage}</p>
+      ) : (
+        <p className="text-muted-foreground text-xs">{description}</p>
+      )}
     </div>
   )
 }
