@@ -42,7 +42,7 @@ export default function Form({
     } else {
       toast({
         description: 'Settings are saved',
-        variant: 'default'
+        variant: 'default',
       })
     }
   }
