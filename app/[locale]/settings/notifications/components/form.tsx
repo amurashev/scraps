@@ -53,7 +53,7 @@ export default function Form({ communication, marketing }: FormData) {
       })
     })
 
-    console.error(err)
+    console.error(err) // eslint-disable-line no-console
   }
 
   return (

@@ -59,7 +59,7 @@ export default function Form({
       })
     })
 
-    console.error(err)
+    console.error(err) // eslint-disable-line no-console
   }
 
   return (

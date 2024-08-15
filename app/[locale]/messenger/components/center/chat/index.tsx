@@ -83,7 +83,7 @@ function Chat({
       data={groupedMessages}
       // overscan={1}
       startReached={() => {
-        console.warn('startReached')
+        // console.warn('startReached')
       }}
       // atBottomStateChange={() => true}
       style={{ flex: '1 1 auto', overscrollBehavior: 'contain' }}
