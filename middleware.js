@@ -9,6 +9,8 @@ export function middleware(request) {
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   )
 
+  return 
+
   if (pathnameHasLocale) return
 
   // Redirect if there is no locale
