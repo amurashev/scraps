@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label'
 
 function Form() {
   const onSubmit = () => {
-    console.warn('onSubmit')
+    //
   }
 
   return (

@@ -5,7 +5,7 @@ function Item({
 }: {
   title: string
   answer?: string
-  children?: any
+  children?: React.ReactNode
 }) {
   return (
     <li key={title} className="flex flex-col gap-1">

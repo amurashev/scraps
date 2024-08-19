@@ -12,7 +12,7 @@ const fetchData = async () => {
 export default async function ListPage() {
   const result = await fetchData()
   const list = [result] as Movie[]
-  console.warn('ListPage', result)
+  // console.warn('ListPage', result)
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between px-6 py-6 md:px-12 md:py-12">
