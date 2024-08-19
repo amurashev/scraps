@@ -21,6 +21,11 @@ const pages = [
     description: 'Example of using Internationalization for content',
     href: '/l18n',
   },
+  {
+    title: 'Sanity.io',
+    description: 'Integration with Sanity.io CMS',
+    href: '/sanity',
+  },
   // {
   //   title: 'AI',
   //   description: '',

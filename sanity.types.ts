@@ -310,7 +310,7 @@ export type POSTS_QUERYResult = Array<{
   slug: Slug | null
 }>
 // Variable: POST_QUERY
-// Query: *[_type == "post" && slug.current == $slug][0]{  title, body, mainImage}
+// Query: *[_type == "post" && slug.current == $slug][0]{  title, body, mainImage, publishedAt}
 export type POST_QUERYResult = {
   title: string | null
   body: Array<
@@ -358,4 +358,5 @@ export type POST_QUERYResult = {
     alt?: string
     _type: 'image'
   } | null
+  publishedAt: string | null
 } | null

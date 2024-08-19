@@ -5,6 +5,7 @@ const nextConfig = {
       'media.licdn.com',
       'covers.openlibrary.org',
       'm.media-amazon.com',
+      'cdn.sanity.io',
     ],
   },
   reactStrictMode: false,

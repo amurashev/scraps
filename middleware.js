@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server'
 
 import { i18n } from './i18n-config'
 
+const l18nExceptions = [
+  '/studio'
+]
+
 export function middleware(request) {
   // Check if there is any supported locale in the pathname
   const { pathname } = request.nextUrl
@@ -9,9 +13,9 @@ export function middleware(request) {
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   )
 
-  return 
+  const noNeedTol18n = l18nExceptions.includes(pathname)
 
-  if (pathnameHasLocale) return
+  if (pathnameHasLocale || noNeedTol18n) return
 
   // Redirect if there is no locale
   request.nextUrl.pathname = `/${i18n.defaultLocale}${pathname}`
