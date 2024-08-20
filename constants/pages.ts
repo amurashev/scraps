@@ -24,7 +24,14 @@ const pages = [
   {
     title: 'Blog',
     description: 'Based on Sanity.io CMS',
+    tags: ['Sanity.io'],
     href: '/blog',
+  },
+  {
+    title: 'Restaurant',
+    description: 'Restaurant App',
+    tags: ['Sanity.io'],
+    href: '/restaurant',
   },
   // {
   //   title: 'AI',
