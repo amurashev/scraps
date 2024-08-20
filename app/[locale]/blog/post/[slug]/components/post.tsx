@@ -6,9 +6,12 @@ import Link from 'next/link'
 
 import { urlFor } from '@/sanity/lib/image'
 import { POST_QUERYResult } from '../../../../../../sanity.types'
+import { blogRoute } from '@/constants/routes'
 
 export function Post({ post }: { post: POST_QUERYResult }) {
   const { title, mainImage, body, publishedAt } = post || {}
+
+  const blogUrl = blogRoute.getUrl()
 
   return (
     <article className="flex flex-col space-y-4">
@@ -26,7 +29,7 @@ export function Post({ post }: { post: POST_QUERYResult }) {
         {body ? <PortableText value={body} /> : null}
       </div>
       <div>{publishedAt}</div>
-      <Link href="/blog" className="text-blue-600">
+      <Link href={blogUrl} className="text-blue-600">
         Back to articles
       </Link>
     </article>
