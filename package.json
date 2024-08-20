@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "scraps",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier '{app,components,pages,lib,constants}/**/*.{js,ts,tsx}' --write",
+    "sanity-generate": "npx sanity typegen generate",
     "type-check": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {

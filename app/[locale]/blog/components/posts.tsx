@@ -9,7 +9,7 @@ export function Posts({ posts }: { posts: POSTS_QUERYResult }) {
         <li key={post._id}>
           <a
             className="block py-3 hover:underline"
-            href={`/sanity/post/${post?.slug?.current}`}
+            href={`/blog/post/${post?.slug?.current}`}
           >
             {post?.title}
           </a>

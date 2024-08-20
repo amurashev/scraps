@@ -26,7 +26,7 @@ export function Post({ post }: { post: POST_QUERYResult }) {
         {body ? <PortableText value={body} /> : null}
       </div>
       <div>{publishedAt}</div>
-      <Link href="/sanity" className="text-blue-600">
+      <Link href="/blog" className="text-blue-600">
         Back to articles
       </Link>
     </article>

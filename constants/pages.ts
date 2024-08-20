@@ -12,7 +12,7 @@ const pages = [
   },
   {
     title: 'Settings',
-    description: '',
+    description: 'Several forms with validation',
     href: '/settings/profile',
     subPages: ['/settings/profile', '/settings/notifications'],
   },
@@ -22,9 +22,9 @@ const pages = [
     href: '/l18n',
   },
   {
-    title: 'Sanity.io',
-    description: 'Integration with Sanity.io CMS',
-    href: '/sanity',
+    title: 'Blog',
+    description: 'Based on Sanity.io CMS',
+    href: '/blog',
   },
   // {
   //   title: 'AI',
