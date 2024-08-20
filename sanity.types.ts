@@ -68,6 +68,65 @@ export type Geopoint = {
   alt?: number
 }
 
+export type RestaurantProduct = {
+  _id: string
+  _type: 'restaurantProduct'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  category?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'restaurantCategory'
+  }
+  image?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  slug?: Slug
+  price?: number
+  isSpicy?: boolean
+  isVegetarian?: boolean
+  weight?: number
+  kcal?: number
+  proteins?: number
+  fats?: number
+  carbohydrates?: number
+  ingredients?: string
+  description?: string
+}
+
+export type RestaurantCategory = {
+  _id: string
+  _type: 'restaurantCategory'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  image?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  slug?: Slug
+  description?: string
+}
+
 export type Post = {
   _id: string
   _type: 'post'
@@ -290,6 +349,8 @@ export type AllSanitySchemaTypes =
   | SanityImageDimensions
   | SanityFileAsset
   | Geopoint
+  | RestaurantProduct
+  | RestaurantCategory
   | Post
   | Author
   | Category
@@ -360,3 +421,46 @@ export type POST_QUERYResult = {
   } | null
   publishedAt: string | null
 } | null
+// Variable: RESTAURANT_CATEGORIES_QUERY
+// Query: *[_type == "restaurantCategory" && defined(slug.current)][0...12]{  _id, title, slug, image}
+export type RESTAURANT_CATEGORIES_QUERYResult = Array<{
+  _id: string
+  title: string | null
+  slug: Slug | null
+  image: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  } | null
+}>
+// Variable: RESTAURANT_PRODUCTS_SHOTS_QUERY
+// Query: *[  _type == "restaurantProduct" && defined(slug.current)][0...12]{  _id,   title,  slug,  image,  description,  price,  category->{    _id,     slug,    title  }, }
+export type RESTAURANT_PRODUCTS_SHOTS_QUERYResult = Array<{
+  _id: string
+  title: string | null
+  slug: Slug | null
+  image: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  } | null
+  description: string | null
+  price: number | null
+  category: {
+    _id: string
+    slug: Slug | null
+    title: string | null
+  } | null
+}>

@@ -1,11 +1,24 @@
 /* eslint-disable camelcase, no-underscore-dangle */
+import {
+  RESTAURANT_CATEGORIES_QUERY,
+  RESTAURANT_PRODUCTS_SHOTS_QUERY,
+} from '@/sanity/lib/queries'
+
+import { sanityFetch } from '@/sanity/lib/client'
+import {
+  RESTAURANT_CATEGORIES_QUERYResult,
+  RESTAURANT_PRODUCTS_SHOTS_QUERYResult,
+} from '../../../../sanity.types'
+import Controller from './controller'
 
 export default async function Page() {
-  return (
-    <div className="min-h-screen">
-      <div className="container max-w-2xl py-6">
-        <h1 className="text-2xl font-bold">menu</h1>
-      </div>
-    </div>
-  )
+  const categories = await sanityFetch<RESTAURANT_CATEGORIES_QUERYResult>({
+    query: RESTAURANT_CATEGORIES_QUERY,
+  })
+
+  const products = await sanityFetch<RESTAURANT_PRODUCTS_SHOTS_QUERYResult>({
+    query: RESTAURANT_PRODUCTS_SHOTS_QUERY,
+  })
+
+  return <Controller categories={categories} products={products} />
 }

@@ -8,12 +8,14 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier '{app,components,pages,lib,constants}/**/*.{js,ts,tsx}' --write",
+    "sanity-extract": "npx sanity schema extract",
     "sanity-generate": "npx sanity typegen generate",
     "type-check": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "@portabletext/react": "^3.1.0",
     "@radix-ui/react-avatar": "^1.1.0",
+    "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-navigation-menu": "^1.2.0",
     "@radix-ui/react-popover": "^1.1.1",
@@ -31,7 +33,7 @@
     "date-fns": "^3.6.0",
     "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1",
-    "lucide-react": "^0.427.0",
+    "lucide-react": "^0.428.0",
     "next": "14.2.5",
     "next-sanity": "^9.4.5",
     "react": "^18",
