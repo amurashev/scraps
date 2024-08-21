@@ -43,7 +43,7 @@ const apps = [
   {
     title: 'Restaurant',
     description: 'Example of simple app to use in the restaurant industry',
-    tags: ['Sanity.io'],
+    tags: ['Sanity.io', 'Postgres'],
     href: restaurantRoute.getUrl(),
   },
   {

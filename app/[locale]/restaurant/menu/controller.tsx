@@ -19,6 +19,7 @@ import { SuccessScreen } from './components/success-screen'
 import { MobileFooter } from './components/mobile-footer'
 
 import { Order } from './types'
+import { postOrder } from './requests'
 
 export default function Controller({
   categories,
@@ -80,20 +81,21 @@ export default function Controller({
     })
   }
 
-  const createOrder = (type: 'card' | 'cash') => {
+  const createOrder = async (type: 'card' | 'cash') => {
     const newOrder = {
-      type,
-      selectedCategoryId,
-      order: Object.keys(order).map((id) => ({
+      type: type as string,
+      items: Object.keys(order).map((id) => ({
         id,
         count: order[id].count,
       })),
-      totalPrice,
+      price: totalPrice,
     }
     setIsPaymentStep(false)
-    setSuccessOrderId('5414')
     setOrder({})
-    console.warn('createOrder', newOrder)
+
+    const result = await postOrder(newOrder)
+    setSuccessOrderId(result.id)
+    console.warn('createOrder', newOrder, result)
   }
 
   const onFinish = () => {
