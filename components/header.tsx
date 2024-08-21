@@ -5,47 +5,35 @@ import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
-import { FaGithub, FaHouse, FaMoon, FaSun } from 'react-icons/fa6'
+import { FaGithub, FaMoon, FaSun } from 'react-icons/fa6'
 
-import pages from '@/constants/pages'
 import { IconButton, IconLink } from '@/components/ui/icon-button'
 
 function Header() {
   const [isDark, setIsDark] = useState(false)
   const pathname = usePathname()
+  const isHomePage = pathname === '/' || pathname === '/en' // TODO:
 
   return (
     <header className="flex sticky px-6 h-[60px] top-0 z-50 w-full bg-background/95 backdrop-blur border-0 border-b-[1px] border-solid border-border print:hidden">
-      <nav className="hidden md:flex flex-1 items-center gap-6">
-        <Link href="/" locale="en">
-          <FaHouse size={18} />
+      <nav className="flex flex-1 items-center gap-6">
+        <Link
+          className={classNames(
+            'transition-colors h-full flex items-center',
+            'hover:border-primary',
+            'border-0 border-b-2 border-solid',
+            {
+              'font-bold': isHomePage,
+              'border-primary': isHomePage,
+              'border-transparent': !isHomePage,
+            }
+          )}
+          href="/"
+          locale="en"
+        >
+          Applications
         </Link>
-        {pages.map((item) => {
-          const isActive = item.subPages
-            ? item.subPages.some((subPage) => pathname.includes(subPage))
-            : pathname.includes(item.href)
-          return (
-            <Link
-              key={item.href}
-              className={classNames(
-                'transition-colors h-full flex items-center',
-                'hover:border-primary',
-                'border-0 border-b-2 border-solid',
-                {
-                  'font-bold': isActive,
-                  'border-primary': isActive,
-                  'border-transparent': !isActive,
-                }
-              )}
-              href={item.href}
-              locale="en"
-            >
-              {item.title}
-            </Link>
-          )
-        })}
       </nav>
-      <div className="flex flex-1 items-center flex-grow md:hidden">Menu</div>
       <div className="flex items-center space-x-1">
         <IconLink href="https://github.com/amurashev/scraps" target="_blank">
           <FaGithub size={24} />
