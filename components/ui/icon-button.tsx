@@ -11,7 +11,7 @@ export function IconButton({
     <div
       role="button"
       tabIndex={0}
-      className="cursor-pointer p-3 rounded-sm hover:bg-muted"
+      className="cursor-pointer p-3 rounded-sm hover:bg-muted flex items-center gap-2"
       onClick={onClick}
     >
       {children}

@@ -23,9 +23,9 @@ export function Product({
       {image?.asset?._ref ? (
         <Image
           className="m-0 flex-shrink-0"
-          src={urlFor(image?.asset?._ref).width(300).height(300).url()}
+          src={urlFor(image?.asset?._ref).width(300).height(220).url()}
           width={300}
-          height={300}
+          height={220}
           alt={title || ''}
         />
       ) : null}

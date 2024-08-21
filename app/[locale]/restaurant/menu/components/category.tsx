@@ -23,7 +23,8 @@ export function Category({
   return (
     <Card
       className={classNames(
-        'flex flex-col gap-2 cursor-pointer relative overflow-hidden',
+        'flex flex-col gap-2 cursor-pointer relative overflow-hidden w-[100px] h-[100px]',
+        'md:w-full md:h-full',
         {
           'ring ring-2 ring-ring': isSelected,
         }
@@ -36,6 +37,7 @@ export function Category({
           src={urlFor(image?.asset?._ref).width(300).height(300).url()}
           width={300}
           height={300}
+          // layout=" fill"
           alt={title || ''}
         />
       ) : null}

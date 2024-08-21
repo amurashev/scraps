@@ -3,20 +3,22 @@
 /* eslint-disable camelcase, no-underscore-dangle */
 import { useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import classNames from 'classnames'
 
 import {
   RESTAURANT_CATEGORIES_QUERYResult,
   RESTAURANT_PRODUCTS_SHOTS_QUERYResult,
 } from '../../../../sanity.types'
+import { restaurantOrdersRoute } from '@/constants/routes'
 
-import { Product } from './components/product'
+import { Products } from './components/products'
 import { Categories } from './components/categories'
 import { OrderList } from './components/order'
 import { PaymentDrawer } from './components/payment-drawer'
+import { SuccessScreen } from './components/success-screen'
+import { MobileFooter } from './components/mobile-footer'
 
 import { Order } from './types'
-import { SuccessScreen } from './components/success-screen'
-import { restaurantOrdersRoute } from '@/constants/routes'
 
 export default function Controller({
   categories,
@@ -32,6 +34,9 @@ export default function Controller({
   const [order, setOrder] = useState<Order>({})
   const [isPaymentStep, setIsPaymentStep] = useState(false)
   const [successOrderId, setSuccessOrderId] = useState<string | null>(null)
+  const [mobileScreen, setMobileScreen] = useState<'product' | 'order'>(
+    'product'
+  )
 
   const categoryProducts = useMemo(
     () => products.filter((item) => item.category?._id === selectedCategoryId),
@@ -92,13 +97,20 @@ export default function Controller({
   }
 
   const onFinish = () => {
-    setSuccessOrderId(null)
     router.push(restaurantOrdersRoute.getUrl())
   }
 
   return (
-    <div className="w-full h-[calc(100vh-60px)] grid grid-cols-12 bg-muted">
-      <div className="col-span-2 p-6 border-0 border-r-[1px] border-border">
+    <div className="w-full h-[calc(100vh-60px)] md:grid md:grid-cols-12 bg-muted">
+      <div
+        className={classNames(
+          'md:col-span-2 p-6 border-0 border-r-[1px] border-border',
+          {
+            hidden: mobileScreen !== 'product',
+            'md:block': true,
+          }
+        )}
+      >
         <Categories
           categories={categories}
           selectedCategoryId={selectedCategoryId}
@@ -107,20 +119,26 @@ export default function Controller({
           }}
         />
       </div>
-      <div className="col-span-6 p-6">
-        <ul className="grid grid-cols-3">
-          {categoryProducts.map((item) => (
-            <Product
-              key={item._id}
-              item={item}
-              onClick={() => {
-                addItem(item._id)
-              }}
-            />
-          ))}
-        </ul>
+      <div
+        className={classNames('md:col-span-7 p-6', {
+          hidden: mobileScreen !== 'product',
+          'md:block': true,
+        })}
+      >
+        <Products
+          categoryProducts={categoryProducts}
+          onProductClick={(id) => addItem(id)}
+        />
       </div>
-      <div className="col-span-4 p-6 border-0 border-l-[1px] border-border">
+      <div
+        className={classNames(
+          'col-span-3 p-6 border-0 border-l-[1px] border-border',
+          {
+            hidden: mobileScreen !== 'order',
+            'md:block': true,
+          }
+        )}
+      >
         <OrderList
           order={order}
           productsObject={productsObject}
@@ -132,6 +150,7 @@ export default function Controller({
           onItemDelete={(itemId) => {
             removeItem(itemId)
           }}
+          onBackClick={() => setMobileScreen('product')}
         />
       </div>
 
@@ -152,6 +171,13 @@ export default function Controller({
           onFinishClick={() => onFinish()}
         />
       )}
+
+      <div className="md:hidden">
+        <MobileFooter
+          totalPrice={totalPrice}
+          onShowDetails={() => setMobileScreen('order')}
+        />
+      </div>
     </div>
   )
 }

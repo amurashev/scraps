@@ -14,9 +14,8 @@ export function Categories({
   onClick: (id: string) => void
 }) {
   return (
-    <div className="flex flex-col gap-4">
-      <h2 className="text-2xl font-bold">Categories</h2>
-      <ul className="grid gap-2">
+    <div className="flex flex-col gap-3 md:items-center w-full">
+      <ul className="flex md:grid gap-2">
         {categories.map((item) => (
           <Category
             key={item._id}
