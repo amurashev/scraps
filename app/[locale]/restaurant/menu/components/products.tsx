@@ -15,7 +15,7 @@ export function Products({
     <div className="flex flex-col gap-3">
       <h2 className="text-2xl font-bold">Products</h2>
       {categoryProducts.length > 0 ? (
-        <ul className="grid grid-cols-3 gap-4">
+        <ul className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {categoryProducts.map((item) => (
             <Product
               key={item._id}
