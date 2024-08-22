@@ -10,6 +10,7 @@ import {
   RESTAURANT_PRODUCTS_SHOTS_QUERYResult,
 } from '../../../../sanity.types'
 import { restaurantOrdersRoute } from '@/constants/routes'
+import { postOrder } from '@/lib/endpoints/orders'
 
 import { Products } from './components/products'
 import { Categories } from './components/categories'
@@ -19,7 +20,6 @@ import { SuccessScreen } from './components/success-screen'
 import { MobileFooter } from './components/mobile-footer'
 
 import { Order } from './types'
-import { postOrder } from './requests'
 
 export default function Controller({
   categories,
@@ -93,9 +93,11 @@ export default function Controller({
     setIsPaymentStep(false)
     setOrder({})
 
-    const result = await postOrder(newOrder)
-    setSuccessOrderId(result.id)
-    console.warn('createOrder', newOrder, result)
+    const { data } = await postOrder(newOrder)
+
+    if (data) {
+      setSuccessOrderId(data.id)
+    }
   }
 
   const onFinish = () => {

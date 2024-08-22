@@ -1,6 +1,6 @@
 import { sql } from '@vercel/postgres'
 import { NextResponse, NextRequest } from 'next/server'
-import { headers } from 'next/headers'
+import { checkAuth } from '@/lib/api'
 
 /*
 CREATE TABLE Orders (
@@ -23,40 +23,78 @@ export async function GET() {
   const { rows } = await client.sql`SELECT * from orders;`
   client.release()
 
-  return NextResponse.json({ rows })
+  return NextResponse.json({ data: rows })
 }
 
-type Data = {
+type PostData = {
   type: string
   items: { id: string; count: number }[]
   price: number
 }
 
 export async function POST(request: NextRequest) {
-  const data: Data = await request.json()
-  const headersList = headers()
+  const authResult = checkAuth()
+  if (authResult) return authResult
 
-  const authorization = headersList.get('authorization')
+  const data: PostData = await request.json()
 
-  if (authorization !== 'TOKEN') {
-    return NextResponse.json({ error: 'Token is wrong' }, { status: 401 })
+  if (!data.items) {
+    return NextResponse.json({ error: 'Order is empty' }, { status: 400 })
   }
 
-  if (data.items && data.price) {
-    const itemsString = JSON.stringify(data.items)
+  if (!data.price) {
+    return NextResponse.json({ error: 'Order price is wrong' }, { status: 400 })
+  }
 
-    try {
-      const client = await sql.connect()
+  const itemsString = JSON.stringify(data.items)
 
-      await client.sql`INSERT INTO orders (type, price, items, status) VALUES (${data.type}, ${data.price}, ${itemsString}, 'new');`
-      const { rows } = await client.sql`SELECT currval('orders_id_seq');`
-      client.release()
+  try {
+    const client = await sql.connect()
 
-      const id = rows.length ? rows[0].currval : null
+    await client.sql`INSERT INTO orders (type, price, items, status) VALUES (${data.type}, ${data.price}, ${itemsString}, 'new');`
+    const { rows } = await client.sql`SELECT currval('orders_id_seq');`
+    client.release()
 
-      return NextResponse.json({ id })
-    } catch (error) {
-      return NextResponse.json({ error }, { status: 500 })
-    }
+    const id = rows.length ? rows[0].currval : null
+
+    return NextResponse.json({
+      data: {
+        id,
+      },
+    })
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 500 })
+  }
+}
+
+export async function PUT(request: NextRequest) {
+  const data: {
+    id: string
+    status: string
+  } = await request.json()
+  const authResult = checkAuth()
+  if (authResult) return authResult
+
+  if (!data.id) {
+    return NextResponse.json({ error: 'Order is not found' }, { status: 400 })
+  }
+
+  if (!data.status || !['done'].includes(data.status)) {
+    return NextResponse.json({ error: 'Status is incorrect' }, { status: 400 })
+  }
+
+  try {
+    const client = await sql.connect()
+
+    await client.sql`UPDATE orders SET status = ${data.status} WHERE id = ${data.id};`
+    const { rows } =
+      await client.sql`SELECT * from orders WHERE id = ${data.id};`
+    client.release()
+
+    const updatedItem = rows.length ? rows[0] : null
+
+    return NextResponse.json({ data: updatedItem })
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 500 })
   }
 }
