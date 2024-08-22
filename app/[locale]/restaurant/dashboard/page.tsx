@@ -66,10 +66,5 @@ export default async function Page() {
   productsStat.sort((a, b) => b.count - a.count)
   orderStat.sort((a, b) => Number(new Date(a.date)) - Number(new Date(b.date)))
 
-  return (
-    <Controller
-      productsStat={productsStat}
-      orderStat={orderStat}
-    />
-  )
+  return <Controller productsStat={productsStat} orderStat={orderStat} />
 }
