@@ -8,6 +8,7 @@ import { sanityFetch } from '@/sanity/lib/client'
 import { RESTAURANT_PRODUCTS_SHOTS_QUERYResult } from '../../../../sanity.types'
 import { getOrders } from '@/lib/endpoints/orders'
 
+export const revalidate = 0
 export const dynamic = 'force-dynamic'
 
 export default async function Page() {
