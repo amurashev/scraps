@@ -86,11 +86,11 @@ export default function Home() {
                   <CardDescription>{item.description}</CardDescription>
 
                   {item.tags && (
-                    <ul>
+                    <div className="flex flex-wrap gap-2">
                       {item.tags.map((tag) => (
-                        <Badge>{tag}</Badge>
+                        <Badge key={tag}>{tag}</Badge>
                       ))}
-                    </ul>
+                    </div>
                   )}
                 </CardHeader>
               </Card>

@@ -11,6 +11,8 @@ import {
 } from '../../../../sanity.types'
 import Controller from './controller'
 
+export const dynamic = 'force-dynamic'
+
 export default async function Page() {
   const categories = await sanityFetch<RESTAURANT_CATEGORIES_QUERYResult>({
     query: RESTAURANT_CATEGORIES_QUERY,

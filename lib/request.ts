@@ -8,9 +8,13 @@ export type Response<T> = {
 
 export const apiRequest = async <T>(
   url: string,
-  props: { data?: Record<string, any>; method?: 'GET' | 'POST' | 'PUT' }
+  props: {
+    data?: Record<string, any>
+    method?: 'GET' | 'POST' | 'PUT'
+    cache?: 'force-cache'
+  }
 ): Promise<Response<T>> => {
-  const { data, method = 'GET' } = props || {}
+  const { data, method = 'GET', cache } = props || {}
 
   return fetch(`${apiHost}${url}`, {
     method,
@@ -20,5 +24,6 @@ export const apiRequest = async <T>(
       Authorization: `TOKEN`,
       Accept: 'application/vnd.api+json',
     },
+    cache,
   }).then((res) => res.json())
 }
