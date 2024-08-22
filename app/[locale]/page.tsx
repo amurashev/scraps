@@ -7,7 +7,7 @@ import {
   CardHeader,
 } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { blogRoute, restaurantRoute } from '@/constants/routes'
+import { blogRoute, restaurantMenuRoute } from '@/constants/routes'
 
 const apps = [
   {
@@ -44,7 +44,7 @@ const apps = [
     title: 'Restaurant',
     description: 'Example of simple app to use in the restaurant industry',
     tags: ['Sanity.io', 'Postgres'],
-    href: restaurantRoute.getUrl(),
+    href: restaurantMenuRoute.getUrl(),
   },
   {
     title: 'Questionnaire',

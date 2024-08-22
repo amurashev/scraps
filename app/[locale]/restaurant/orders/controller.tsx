@@ -62,7 +62,7 @@ export default function Controller({
   }
 
   return (
-    <div className="w-full h-[calc(100vh-60px)] md:grid md:grid-cols-12 bg-muted">
+    <div className="w-full h-full md:grid md:grid-cols-12 bg-muted">
       <div className="md:col-span-8 p-6 gap-6 flex flex-col">
         <div className="flex flex-col gap-3">
           <h2 className="text-2xl font-bold">New Orders</h2>
@@ -94,7 +94,7 @@ export default function Controller({
           </ul>
         </div>
       </div>
-      <div className="md:col-span-4 p-6">
+      <div className="md:col-span-4 p-6 bg-background border-l-[1px] border-border">
         <OrderDetails
           productsObject={productsObject}
           order={selectedOrder}

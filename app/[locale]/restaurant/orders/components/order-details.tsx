@@ -43,15 +43,13 @@ function OrderItem({
 
   return (
     <div className="flex flex-col gap-3">
-      <ul className="divide-y divide-blue-100 flex flex-col">
+      <ul className="divide-y divide-border divide-dashed flex flex-col">
         {itemsArray.map((item) => (
-          <li key={item.id} className="flex gap-3 items-center w-full py-2">
+          <li key={item.id} className="flex gap-3 items-center w-full py-3">
             <div className="flex-1 flex items-end gap-2">
-              <div>{productsObject[item.id].title}</div>
-              <div className="h-[1px] border-blue-300 border-dashed border-0 border-b-[1px] flex-grow">
-                &nbsp;
+              <div>
+                {productsObject[item.id].title} x <b>{item.count}</b>
               </div>
-              <div className="font-bold">{item.count}</div>
             </div>
             {finishedItems.includes(item.id) ? (
               <Button variant="destructive" onClick={() => returnItem(item.id)}>

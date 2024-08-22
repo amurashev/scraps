@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
   try {
     const client = await sql.connect()
 
-    await client.sql`INSERT INTO orders (type, price, items, status) VALUES (${data.type}, ${data.price}, ${itemsString}, 'new');`
+    await client.sql`INSERT INTO orders (type, price, items, status, created_at) VALUES (${data.type}, ${data.price}, ${itemsString}, 'new', NOW());`
     const { rows } = await client.sql`SELECT currval('orders_id_seq');`
     client.release()
 

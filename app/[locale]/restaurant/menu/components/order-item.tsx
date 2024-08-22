@@ -3,7 +3,6 @@
 import Image from 'next/image'
 
 import { urlFor } from '@/sanity/lib/image'
-import { Card } from '@/components/ui/card'
 
 import { RESTAURANT_PRODUCTS_SHOTS_QUERYResult } from '../../../../../sanity.types'
 
@@ -19,19 +18,23 @@ export function OrderItem({
   onItemDelete: () => void
 }) {
   const { title, image, price } = item || {}
+  const imageSize = 52
 
   return (
-    <Card className="flex flex-row overflow-hidden cursor-pointer">
+    <div className="flex flex-row overflow-hidden py-3">
       {image?.asset?._ref ? (
         <Image
-          className="m-0 flex-shrink-0"
-          src={urlFor(image?.asset?._ref).width(84).height(84).url()}
-          width={84}
-          height={84}
+          className="m-0 flex-shrink-0 rounded-sm"
+          src={urlFor(image?.asset?._ref)
+            .width(imageSize)
+            .height(imageSize)
+            .url()}
+          width={imageSize}
+          height={imageSize}
           alt={title || ''}
         />
       ) : null}
-      <div className="px-3 py-2 flex flex-col gap-2 w-full pr-3 min-w-[1px]">
+      <div className="px-3 flex flex-col gap-0 w-full pr-3 min-w-[1px]">
         {title ? (
           <div className="font-bold flex-1 truncate">{title}</div>
         ) : null}
@@ -56,6 +59,6 @@ export function OrderItem({
           </div>
         </div>
       </div>
-    </Card>
+    </div>
   )
 }

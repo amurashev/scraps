@@ -4,28 +4,23 @@ import classNames from 'classnames'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-const subPages = [
-  {
-    index: 'profile',
-    label: 'Profile',
-  },
-  {
-    index: 'notifications',
-    label: 'Notifications',
-  },
-]
-
-export default function Menu() {
+export default function Menu({
+  pages,
+}: {
+  pages: {
+    url: string
+    label: string
+  }[]
+}) {
   const pathname = usePathname()
 
   return (
     <nav className={classNames('flex flex-col space-y-2')}>
-      {subPages.map((item) => {
-        const href = `/settings/${item.index}`
-        const isActive = pathname.includes(href)
+      {pages.map((item) => {
+        const isActive = pathname.includes(item.url)
         return (
           <Link
-            key={item.index}
+            key={item.url}
             className={classNames(
               'inline-flex items-center whitespace-nowrap rounded-md text-sm font-medium transition-colors h-9 px-4 py-2 justify-start',
               'hover:text-accent-foreground',
@@ -35,7 +30,7 @@ export default function Menu() {
                 'hover:underline': !isActive,
               }
             )}
-            href={href}
+            href={item.url}
           >
             {item.label}
           </Link>

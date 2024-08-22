@@ -23,6 +23,8 @@ export function PaymentDrawer({
   onOpenChange: () => void
   onContinue: (type: 'card' | 'cash') => void
 }) {
+  const taxPrice = Number((totalPrice * 0.1).toFixed(2))
+
   return (
     <Sheet open={isOpen} onOpenChange={onOpenChange}>
       <SheetContent>
@@ -30,25 +32,36 @@ export function PaymentDrawer({
           <h2 className="text-2xl font-bold">Order details</h2>
           <Separator />
 
-          <div className="grid gap-1">
+          <div className="divide-y divide-border divide-dashed">
             {Object.keys(order)
               .filter((itemId) => order[itemId].count)
               .map((itemId) => {
                 return (
-                  <div className="flex gap-1 w-full" key={itemId}>
+                  <div
+                    className="flex gap-1 w-full text-muted-foreground py-1"
+                    key={itemId}
+                  >
                     <div className="flex-grow">
-                      {productsObject[itemId].title}
+                      {productsObject[itemId].title} x {order[itemId].count}
                     </div>
                     <div>{productsObject[itemId].price} $</div>
                   </div>
                 )
               })}
           </div>
-          <Separator />
-          <div>
-            <div className="text-lg font-bold flex justify-between">
-              <span>Total:</span>
+          <div className="grid gap-2 bg-muted p-3 rounded-md">
+            <div className="text-muted-foreground flex justify-between">
+              <span>Subtotal:</span>
               <span>{totalPrice} $</span>
+            </div>
+            <div className="text-muted-foreground flex justify-between">
+              <span>Sales tax:</span>
+              <span>{taxPrice} $</span>
+            </div>
+            <Separator />
+            <div className="text-xl font-bold flex justify-between">
+              <span>Total:</span>
+              <span>{totalPrice + taxPrice} $</span>
             </div>
           </div>
           <h2 className="text-lg font-bold">How you would like to pay?</h2>

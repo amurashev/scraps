@@ -20,6 +20,7 @@ import { SuccessScreen } from './components/success-screen'
 import { MobileFooter } from './components/mobile-footer'
 
 import { Order } from './types'
+import { Separator } from '@/components/ui/separator'
 
 export default function Controller({
   categories,
@@ -105,38 +106,31 @@ export default function Controller({
   }
 
   return (
-    <div className="w-full h-[calc(100vh-60px)] md:grid md:grid-cols-12 bg-muted">
+    <div className="w-full h-full md:grid md:grid-cols-12 bg-muted pb-[72px] md:pb-0">
       <div
-        className={classNames(
-          'md:col-span-2 p-6 border-0 border-r-[1px] border-border',
-          {
-            hidden: mobileScreen !== 'product',
-            'md:block': true,
-          }
-        )}
-      >
-        <Categories
-          categories={categories}
-          selectedCategoryId={selectedCategoryId}
-          onClick={(id) => {
-            setSelectedCategoryId(id)
-          }}
-        />
-      </div>
-      <div
-        className={classNames('md:col-span-7 p-6', {
+        className={classNames('md:col-span-8 p-6 ', {
           hidden: mobileScreen !== 'product',
           'md:block': true,
         })}
       >
-        <Products
-          categoryProducts={categoryProducts}
-          onProductClick={(id) => addItem(id)}
-        />
+        <div className="flex flex-col gap-6">
+          <Categories
+            categories={categories}
+            selectedCategoryId={selectedCategoryId}
+            onClick={(id) => {
+              setSelectedCategoryId(id)
+            }}
+          />
+          <Separator />
+          <Products
+            categoryProducts={categoryProducts}
+            onProductClick={(id) => addItem(id)}
+          />
+        </div>
       </div>
       <div
         className={classNames(
-          'col-span-3 p-6 border-0 border-l-[1px] border-border',
+          'col-span-4 p-6 border-0 border-l-[1px] border-border bg-background',
           {
             hidden: mobileScreen !== 'order',
             'md:block': true,
