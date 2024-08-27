@@ -33,6 +33,22 @@ function Header() {
         >
           Applications
         </Link>
+        <Link
+          className={classNames(
+            'transition-colors h-full flex items-center',
+            'hover:border-primary',
+            'border-0 border-b-2 border-solid',
+            {
+              'font-bold': isHomePage,
+              'border-primary': isHomePage,
+              'border-transparent': !isHomePage,
+            }
+          )}
+          href="/components"
+          locale="en"
+        >
+          Components
+        </Link>
       </nav>
       <div className="flex items-center space-x-1">
         <IconLink href="https://github.com/amurashev/scraps" target="_blank">

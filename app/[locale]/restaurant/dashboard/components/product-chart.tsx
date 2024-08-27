@@ -58,8 +58,8 @@ export function ProductStat({
               axisLine={false}
               tickFormatter={(value) => value}
             />
-            <XAxis dataKey="count" type="number" hide />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+            <XAxis dataKey="count" type="number" />
+            <ChartTooltip content={<ChartTooltipContent/>} />
             <Bar
               dataKey="count"
               layout="vertical"

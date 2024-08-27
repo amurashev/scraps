@@ -12,7 +12,7 @@ export const revalidate = 0
 export const dynamic = 'force-dynamic'
 
 export default async function Page() {
-  const { data: orders } = await getOrders()
+  const { data: orders = [] } = await getOrders()
 
   const products = await sanityFetch<RESTAURANT_PRODUCTS_SHOTS_QUERYResult>({
     query: RESTAURANT_PRODUCTS_SHOTS_QUERY,
@@ -25,6 +25,10 @@ export default async function Page() {
   products.forEach((item) => {
     productsObject[item._id] = item
   })
+
+  orders.sort(
+    (a, b) => Number(new Date(a.created_at)) - Number(new Date(b.created_at))
+  )
 
   return <Controller orders={orders || []} productsObject={productsObject} />
 }
