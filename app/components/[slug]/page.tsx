@@ -5,7 +5,7 @@ import Content from './components/content'
 
 import ConversationCardMdx from '../data/conversation-card.mdx'
 
-export const componentsMdx = {
+const componentsMdx = {
   'conversation-card': <ConversationCardMdx />,
 }
 
