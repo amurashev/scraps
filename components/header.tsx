@@ -39,9 +39,9 @@ function Header() {
             'hover:border-primary',
             'border-0 border-b-2 border-solid',
             {
-              'font-bold': isHomePage,
-              'border-primary': isHomePage,
-              'border-transparent': !isHomePage,
+              'font-bold': pathname.includes('components'),
+              'border-primary': pathname.includes('components'),
+              'border-transparent': !pathname.includes('components'),
             }
           )}
           href="/components"

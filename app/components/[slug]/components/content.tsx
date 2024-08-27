@@ -17,7 +17,7 @@ export default function Content({
   children: any
 }) {
   return (
-    <div className="w-[800px] h-full px-6 py-4 space-y-6">
+    <div className="max-w-full w-[800px] h-full px-6 py-4 space-y-6">
       <div className="space-y-3">
         <Breadcrumbs label={name} />
 

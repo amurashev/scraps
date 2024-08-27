@@ -6,6 +6,8 @@ import { Toaster } from '@/components/ui/toaster'
 import SidebarLayout from '@/components/layouts/sidebar-layout'
 import { cn } from '@/lib/utils'
 
+import { components } from './data/components'
+
 import '../globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -35,12 +37,10 @@ export default function RootLayout({
           <SidebarLayout
             title="Components"
             sidebar="3"
-            pages={[
-              {
-                url: '/components/conversation-card',
-                label: 'Conversation Card',
-              },
-            ]}
+            pages={components.map((item) => ({
+              label: item.name,
+              url: `/components/${item.index}`,
+            }))}
           >
             {children}
           </SidebarLayout>
