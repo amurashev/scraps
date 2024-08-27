@@ -1,15 +1,16 @@
 'use client'
 
-import { Separator } from '@/components/ui/separator'
+import Content from './components/content'
+import ConversationCardMdx from './mdx/conversation-card.mdx'
+
+const name = 'Conversation Card'
+const description =
+  'Simple component to use in some messenger applications as chat / conversation card'
 
 export default function Page() {
   return (
-    <div className="w-full h-full px-4 py-4 space-y-4">
-      <div className="">
-        <h2 className="font-bold text-2xl">Profile</h2>
-      </div>
-      <Separator />
-      <div className="max-w-96"></div>
-    </div>
+    <Content name={name} description={description}>
+      <ConversationCardMdx />
+    </Content>
   )
 }

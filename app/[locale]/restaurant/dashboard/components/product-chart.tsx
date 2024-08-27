@@ -59,7 +59,7 @@ export function ProductStat({
               tickFormatter={(value) => value}
             />
             <XAxis dataKey="count" type="number" />
-            <ChartTooltip content={<ChartTooltipContent/>} />
+            <ChartTooltip content={<ChartTooltipContent />} />
             <Bar
               dataKey="count"
               layout="vertical"

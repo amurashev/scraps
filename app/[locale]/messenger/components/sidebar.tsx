@@ -2,17 +2,21 @@
 
 import { Input } from '@/components/ui/input'
 
-import ConversationCard, { ConversationCardSkeleton } from './conversationCard'
+import ConversationCard, {
+  ConversationCardSkeleton,
+} from '@/components/messenger/conversation-card'
 
 import { Conversation } from '../types'
 
 function SideBar({
   hasInitialConversations,
   conversations,
+  selectedId,
   onConversationClick,
 }: {
   hasInitialConversations: boolean
   conversations: Conversation[]
+  selectedId?: string
   onConversationClick: (id: string) => void
 }) {
   return (
@@ -21,7 +25,7 @@ function SideBar({
         <h2 className="font-bold text-2xl">Messages</h2>
         <Input placeholder="Search" />
       </div>
-      <div>
+      <div className="divide-y divide-border">
         {!hasInitialConversations ? (
           <>
             {Array.from({ length: 5 }, (_, i) => i + 1).map((_, key) => (
@@ -45,6 +49,7 @@ function SideBar({
                     avatarUrl={item.user.avatarUrl}
                     textMessage={item.lastMessage.text}
                     date={item.lastMessage.date}
+                    isSelected={selectedId === item.id}
                   />
                 </div>
               )

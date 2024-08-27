@@ -34,10 +34,11 @@ export default function RootLayout({
         <main className="">
           <SidebarLayout
             title="Components"
+            sidebar="3"
             pages={[
               {
-                url: '/components/card',
-                label: 'Profile',
+                url: '/components/conversation-card',
+                label: 'Conversation Card',
               },
             ]}
           >

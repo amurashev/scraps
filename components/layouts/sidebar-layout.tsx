@@ -5,10 +5,12 @@ import Menu from '../ui/menu'
 export default function SidebarLayout({
   pages,
   title,
+  sidebar = '2',
   children, // will be a page or nested layout
 }: {
   children: React.ReactNode
   title: string
+  sidebar?: '2' | '3'
   pages: {
     url: string
     label: string
@@ -19,7 +21,11 @@ export default function SidebarLayout({
       <div
         className={classNames(
           'bg-background col-span-12 border-0 border-b-[1px] border-border',
-          'lg:col-span-2 lg:border-b-0 lg:border-r-[1px]'
+          'lg:border-b-0 lg:border-r-[1px]',
+          {
+            'lg:col-span-2': sidebar === '2',
+            'lg:col-span-3': sidebar === '3',
+          }
         )}
       >
         <div className="space-y-4 py-4 px-3">
@@ -30,7 +36,10 @@ export default function SidebarLayout({
         </div>
       </div>
       <div
-        className={classNames('bg-background col-span-12', 'lg:col-span-10')}
+        className={classNames('bg-background col-span-12', {
+          'lg:col-span-10': sidebar === '2',
+          'lg:col-span-9': sidebar === '3',
+        })}
       >
         {children}
       </div>

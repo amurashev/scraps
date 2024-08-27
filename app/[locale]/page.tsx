@@ -7,7 +7,7 @@ import {
   CardHeader,
 } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { blogRoute, restaurantMenuRoute } from '@/constants/routes'
+import { restaurantMenuRoute } from '@/constants/routes'
 
 const apps = [
   {
@@ -34,12 +34,12 @@ const apps = [
     href: '/l18n',
     tags: ['react-intl'],
   },
-  {
-    title: 'Blog',
-    description: 'Based on Sanity.io CMS',
-    tags: ['Sanity.io'],
-    href: blogRoute.getUrl(),
-  },
+  // {
+  //   title: 'Blog',
+  //   description: 'Based on Sanity.io CMS',
+  //   tags: ['Sanity.io'],
+  //   href: blogRoute.getUrl(),
+  // },
   {
     title: 'Restaurant',
     description: 'Example of simple app to use in the restaurant industry',

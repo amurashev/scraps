@@ -111,6 +111,7 @@ function Messenger() {
           <SideBar
             hasInitialConversations={conversations.areFetched}
             conversations={conversations.data}
+            selectedId={selectedConversationId}
             onConversationClick={conversationClick}
           />
         </div>
