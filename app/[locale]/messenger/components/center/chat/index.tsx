@@ -2,8 +2,9 @@ import classNames from 'classnames'
 import { Virtuoso, VirtuosoHandle, ListProps } from 'react-virtuoso'
 import { forwardRef, memo, useMemo } from 'react'
 
+import TextMessage from '@/components/messenger/text-message'
+
 import { Message } from '../../../types'
-import TextMessage from './text-message'
 
 export type EnhancedTextMessage = Message & {
   isNext: boolean
@@ -11,7 +12,7 @@ export type EnhancedTextMessage = Message & {
 }
 
 const List: React.FC<ListProps> = forwardRef((props, ref) => {
-  return <div className="pl-3 pr-5 space-y-0" {...props} ref={ref} />
+  return <div className="pl-3 pr-5 space-y-1" {...props} ref={ref} />
 })
 
 function ListItem({ item }: { item: EnhancedTextMessage }) {

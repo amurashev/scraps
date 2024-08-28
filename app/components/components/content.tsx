@@ -80,7 +80,7 @@ export default function Content({
         <Separator />
 
         {cases.length > 0 && (
-          <div className="space-y-8">
+          <div className="space-y-8 pt-2">
             {cases.map((item) => (
               <div className="space-y-2">
                 <div>

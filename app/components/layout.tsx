@@ -8,15 +8,17 @@ import { cn } from '@/lib/utils'
 
 import '../globals.css'
 
-type ComponentIndex = 'conversation-card'
-
 const components: {
-  index: ComponentIndex
+  index: string
   label: string
 }[] = [
   {
     index: 'conversation-card',
     label: 'Conversation Card',
+  },
+  {
+    index: 'chat-message',
+    label: 'Chat message',
   },
 ]
 
