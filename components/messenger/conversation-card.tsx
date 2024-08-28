@@ -22,6 +22,53 @@ export function ConversationCardSkeleton() {
   )
 }
 
+interface ConversationCardProps {
+  /**
+   * First name of user.
+   */
+  firstName: string
+  /**
+   * Last name of user.
+   */
+  lastName: string
+  /**
+   * Scr of user photo.
+   */
+  avatarUrl?: string
+  /**
+   * Text message to show.
+   */
+  textMessage: string
+  /**
+   * Date of message.
+   */
+  date: string | Date
+  /**
+   * To show if user is owner of last message.
+   */
+  isYour?: boolean
+  /**
+   * To show indicator if opponent is typing a new message.
+   */
+  isTyping?: boolean
+  /**
+   * Mark card as selected.
+   */
+  isSelected?: boolean
+  /**
+   * Status of displayed message.
+   * - sent, but not delivered / read
+   * - delivered but not read
+   * - read
+   * - error: in case of some issues with sending of message
+   */
+  messageStatus?: 'sent' | 'delivered' | 'read' | 'error'
+  /**
+   * Number of unread messages.
+   */
+  numberOfUnread?: number
+}
+
 function ConversationCard({
   firstName = '',
   lastName = '',
@@ -33,18 +80,7 @@ function ConversationCard({
   isTyping = false,
   messageStatus = 'sent',
   numberOfUnread = 0,
-}: {
-  firstName: string
-  lastName: string
-  avatarUrl?: string
-  textMessage: string
-  date: string | Date
-  isYour?: boolean
-  isTyping?: boolean
-  isSelected?: boolean
-  messageStatus?: 'sent' | 'delivered' | 'read' | 'error'
-  numberOfUnread?: number
-}) {
+}: ConversationCardProps) {
   let formattedDate = format(date, 'HH:mm')
 
   const todayMinus1Day = sub(new Date(), {

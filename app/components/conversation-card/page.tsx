@@ -19,7 +19,7 @@ const data = {
     lastName: 'Doe',
     avatarUrl: 'https://xsgames.co/randomusers/assets/avatars/male/1.jpg',
     textMessage: 'Hello! Welcome to our conversation 👋',
-    date: '2024-08-12T16:15:53+02:00',
+    date: new Date(),
     isYour: false,
   },
 }
@@ -142,26 +142,26 @@ export default function Page() {
           jsx: (
             <Card className="divide-y divide-border">
               <ConversationCard
+                {...data.props}
                 firstName="Michel"
                 lastName="Vain"
                 avatarUrl="https://xsgames.co/randomusers/assets/avatars/female/1.jpg"
                 textMessage="Yes, agree"
-                date="2024-08-12T11:44:53+02:00"
               />
               <ConversationCard
+                {...data.props}
                 firstName="John"
                 lastName="Doe"
                 avatarUrl="https://xsgames.co/randomusers/assets/avatars/male/1.jpg"
                 textMessage="I've never seen that, Wow!"
-                date="2024-08-12T16:15:53+02:00"
                 isSelected
               />
               <ConversationCard
+                {...data.props}
                 firstName="Sam"
                 lastName="Cooper"
                 avatarUrl="https://xsgames.co/randomusers/assets/avatars/male/4.jpg"
                 textMessage="Let's go"
-                date="2024-08-12T19:59:53+02:00"
               />
             </Card>
           ),

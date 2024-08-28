@@ -83,12 +83,14 @@ export default function Content({
           <div className="space-y-8">
             {cases.map((item) => (
               <div className="space-y-2">
-                <h3 className="font-bold text-lg">{item.title}</h3>
-                {item.description && (
-                  <p className="text-muted-foreground text-base">
-                    {item.description}
-                  </p>
-                )}
+                <div>
+                  <h3 className="font-bold text-lg">{item.title}</h3>
+                  {item.description && (
+                    <p className="text-muted-foreground text-base">
+                      {item.description}
+                    </p>
+                  )}
+                </div>
                 <Card className="p-6 bg-muted">{item.jsx}</Card>
               </div>
             ))}
