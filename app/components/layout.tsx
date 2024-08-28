@@ -8,9 +8,9 @@ import { cn } from '@/lib/utils'
 
 import '../globals.css'
 
-export type ComponentIndex = 'conversation-card'
+type ComponentIndex = 'conversation-card'
 
-export const components: {
+const components: {
   index: ComponentIndex
   label: string
 }[] = [
