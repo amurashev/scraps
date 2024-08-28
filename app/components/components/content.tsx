@@ -6,6 +6,7 @@ import { Separator } from '@/components/ui/separator'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 import { Breadcrumbs } from './breadcrumbs'
+import { Card } from '@/components/ui/card'
 
 export default function Content({
   name,
@@ -42,7 +43,7 @@ export default function Content({
           <TabsTrigger value="code">Code</TabsTrigger>
         </TabsList>
         <TabsContent value="component">
-          <div className="bg-muted p-6 rounded-sm">{component}</div>
+          <Card className="bg-muted p-6">{component}</Card>
         </TabsContent>
         <TabsContent value="code">
           <MDXProvider
@@ -55,7 +56,7 @@ export default function Content({
               h2: (props) => <h2 className="font-bold text-2xl" {...props} />,
               h3: (props) => <h3 className="font-bold text-lg" {...props} />,
               pre: (props) => (
-                <div className="bg-muted px-4 py-4 rounded-md">
+                <div className="px-4 py-4 bg-secondary-foreground rounded-md">
                   <pre>{props.children}</pre>
                 </div>
               ),
@@ -88,7 +89,7 @@ export default function Content({
                     {item.description}
                   </p>
                 )}
-                <div>{item.jsx}</div>
+                <Card className="p-6 bg-muted">{item.jsx}</Card>
               </div>
             ))}
           </div>

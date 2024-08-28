@@ -22,7 +22,7 @@ const nextConfig = {
 /** @type {import('rehype-pretty-code').Options} */
 const options = {
   keepBackground: false,
-  theme: 'min-light',
+  theme: 'min-dark',
 };
 
 plugins.push(

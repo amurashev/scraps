@@ -45,7 +45,7 @@ export default function Page() {
       }
       cases={[
         {
-          title: 'Case with different user data',
+          title: 'Different user data',
           jsx: (
             <Card className="divide-y divide-border">
               <ConversationCard
@@ -65,7 +65,7 @@ export default function Page() {
           ),
         },
         {
-          title: 'Different message status cases',
+          title: 'Different message statuses',
           jsx: (
             <Card className="divide-y divide-border">
               <ConversationCard
@@ -130,7 +130,7 @@ export default function Page() {
           ),
         },
         {
-          title: 'Opponent is typing message',
+          title: 'Opponent is typing a message',
           jsx: (
             <Card>
               <ConversationCard {...data.props} isYour={false} isTyping />
@@ -167,7 +167,7 @@ export default function Page() {
           ),
         },
         {
-          title: 'Skeleton mode',
+          title: 'Skeleton',
           description: 'Use this case when real data is not loaded yet',
           jsx: (
             <Card>

@@ -51,6 +51,7 @@ function EmploymentItem({
         /* eslint-disable jsx-a11y/anchor-is-valid */
         <a
           href="#"
+          className="text-link"
           onClick={(e) => {
             e.preventDefault()
             setHasFullText(true)
