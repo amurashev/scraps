@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 
-import { format } from 'date-fns'
+import { format, isAfter, isBefore, sub } from 'date-fns'
 import { RiCheckFill, RiAlertFill, RiCheckDoubleFill } from 'react-icons/ri'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -36,17 +36,32 @@ function ConversationCard({
 }: {
   firstName: string
   lastName: string
-  avatarUrl: string
+  avatarUrl?: string
   textMessage: string
-  date: string
+  date: string | Date
   isYour?: boolean
   isTyping?: boolean
   isSelected?: boolean
   messageStatus?: 'sent' | 'delivered' | 'read' | 'error'
   numberOfUnread?: number
 }) {
-  const formattedDate = format(date, 'HH:mm')
+  let formattedDate = format(date, 'HH:mm')
+
+  const todayMinus1Day = sub(new Date(), {
+    days: 1,
+  })
+  const todayMinus7Day = sub(new Date(), {
+    days: 7,
+  })
+
+  if (isBefore(date, todayMinus7Day)) {
+    formattedDate = format(date, 'dd.MM')
+  } else if (isAfter(date, todayMinus7Day) && isBefore(date, todayMinus1Day)) {
+    formattedDate = format(date, 'E')
+  }
+
   const letters = `${firstName.charAt(0)}${lastName.charAt(0)}`
+
   return (
     <div
       className={classNames('w-full px-6 py-3 cursor-pointer space-y-3', {
@@ -67,7 +82,7 @@ function ConversationCard({
               {firstName} {lastName}
             </div>
             {isYour && (
-              <div className="flex-shrink-0">
+              <div className="flex-shrink-0" data-test={messageStatus}>
                 {messageStatus === 'sent' && (
                   <RiCheckFill size={18} className="text-primary" />
                 )}
@@ -96,12 +111,11 @@ function ConversationCard({
               <p
                 className={classNames('truncate flex-grow', {
                   'text-muted-foreground': messageStatus !== 'error',
-                  'text-destructive/60 dark:text-destructive':
-                    messageStatus === 'error',
+                  'text-muted-foreground/40': messageStatus === 'error',
                   'font-semibold': numberOfUnread > 0,
                 })}
               >
-                {textMessage}
+                {textMessage || <>&nbsp;</>}
               </p>
             )}
 

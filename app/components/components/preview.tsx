@@ -17,11 +17,24 @@ export function CodePreview({ children }: { children?: React.ReactNode }) {
     />(\s|\n|\r|\t)*?</g,
     '><'
   )
+
+  const today = new Date()
+  const yesterday = new Date()
+  yesterday.setDate(yesterday.getDate() - 1)
+
+  const weekAgo = new Date()
+  weekAgo.setDate(weekAgo.getDate() - 7)
+  weekAgo.setHours(weekAgo.getHours() - 1)
+
   return (
     <div className="rounded-sm border-border border mb-8 mt-2">
       <div className="bg-muted p-6 rounded-sm">
         <JsxParser
-          bindings={{}}
+          bindings={{
+            today,
+            yesterday,
+            weekAgo,
+          }}
           // @ts-expect-error: JsxParser has mismatched types
           components={{ Card, ConversationCard, ConversationCardSkeleton }}
           jsx={cleanedCodeString}

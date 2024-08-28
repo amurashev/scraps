@@ -17,7 +17,7 @@ export default function SidebarLayout({
   }[]
 }) {
   return (
-    <section className="w-full min-h-[calc(100vh-60px)] grid grid-cols-12">
+    <section className="w-full h-[calc(100vh-60px)] grid grid-cols-12">
       <div
         className={classNames(
           'bg-background col-span-12 border-0 border-b-[1px] border-border',
