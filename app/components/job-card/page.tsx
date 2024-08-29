@@ -74,8 +74,18 @@ export default function Page() {
       code={data.mdx}
       component={
         <EnhancedJobCard
-          {...defaultProps}
+          position="Business Analyst"
+          companyName="Leaves & Plants"
+          companyAvatarUrl="/images/logos/leaves.png"
+          location="London, UK"
+          date={new Date()}
+          salaryType="hourly"
+          locationType="remote"
+          positionLevel="middle"
+          positionTerm="full"
+          salary={30}
           description="Our company is a group of schools, which aims to provide excellent education to children and young people across the country. We seek to improve the life chances of all the children and young people we serve and make it our mission to bring out 'the best in everyone' – students, staff, parents, and the wider community."
+          skills={['Business Process', 'Analytical Skills']}
         />
       }
       cases={[
