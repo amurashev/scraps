@@ -26,7 +26,7 @@ export default function Content({
   }[]
 }) {
   return (
-    <div className="max-w-full w-[800px] h-auto px-6 py-4 pb-10 space-y-10">
+    <div className="max-w-full h-auto px-6 py-4 pb-10 space-y-10">
       <div className="space-y-3">
         <Breadcrumbs label={name} />
 
@@ -82,7 +82,7 @@ export default function Content({
         {cases.length > 0 && (
           <div className="space-y-8 pt-2">
             {cases.map((item) => (
-              <div className="space-y-2">
+              <div key={item.title} className="space-y-2">
                 <div>
                   <h3 className="font-bold text-lg">{item.title}</h3>
                   {item.description && (

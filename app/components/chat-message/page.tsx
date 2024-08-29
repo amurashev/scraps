@@ -3,6 +3,12 @@
 import TextMessage from '@/components/messenger/text-message'
 import { Card } from '@/components/ui/card'
 
+import {
+  getUserAvatarUrl,
+  getUserFirstName,
+  getUserLastName,
+} from '@/lib/fake-data'
+
 import Content from '../components/content'
 import Code from './code.mdx'
 
@@ -15,9 +21,9 @@ const data = {
 
 const defaultProps = {
   id: '1',
-  firstName: 'John',
-  lastName: 'Doe',
-  avatarUrl: 'https://xsgames.co/randomusers/assets/avatars/male/1.jpg',
+  firstName: getUserFirstName(),
+  lastName: getUserLastName(),
+  avatarUrl: getUserAvatarUrl(),
   text: 'Hello! Welcome to our conversation 👋',
   date: new Date(),
   isYour: true,
@@ -26,9 +32,9 @@ const defaultProps = {
 
 const opponentProps = {
   id: '1',
-  firstName: 'Michel',
-  lastName: 'Vain',
-  avatarUrl: 'https://xsgames.co/randomusers/assets/avatars/female/3.jpg',
+  firstName: getUserFirstName(0, 'female'),
+  lastName: getUserLastName(0, 'female'),
+  avatarUrl: getUserAvatarUrl(3, 'female'),
   isYour: false,
 }
 

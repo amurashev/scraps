@@ -117,10 +117,10 @@ const TextMessage = forwardRef<HTMLDivElement, TextMessageProps>(
           >
             <p className="break-words">
               {text}{' '}
-              <div className="flex-shrink-0 ml-2 mt-[8px] float-end text-muted-foreground text-right flex items-center gap-[1px]">
+              <span className="flex-shrink-0 ml-2 mt-[8px] float-end text-muted-foreground text-right flex items-center gap-[1px]">
                 <time className="text-[10px]">{formattedDate}</time>
                 {isYour && (
-                  <div className="flex-shrink-0" data-test={messageStatus}>
+                  <span className="flex-shrink-0" data-test={messageStatus}>
                     {messageStatus === 'sent' && (
                       <RiCheckFill size={16} className="text-primary" />
                     )}
@@ -133,9 +133,9 @@ const TextMessage = forwardRef<HTMLDivElement, TextMessageProps>(
                     {messageStatus === 'error' && (
                       <RiAlertFill size={16} className="text-destructive" />
                     )}
-                  </div>
+                  </span>
                 )}
-              </div>
+              </span>
             </p>
           </div>
         </div>

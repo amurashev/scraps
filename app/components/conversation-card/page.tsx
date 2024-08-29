@@ -4,6 +4,12 @@ import ConversationCard, {
   ConversationCardSkeleton,
 } from '@/components/messenger/conversation-card'
 
+import {
+  getUserAvatarUrl,
+  getUserFirstName,
+  getUserLastName,
+} from '@/lib/fake-data'
+
 import Content from '../components/content'
 import Code from './code.mdx'
 import { Card } from '@/components/ui/card'
@@ -15,9 +21,9 @@ const data = {
     'Simple component to use in some messenger applications as chat/conversation card',
   mdx: <Code />,
   props: {
-    firstName: 'John',
-    lastName: 'Doe',
-    avatarUrl: 'https://xsgames.co/randomusers/assets/avatars/male/1.jpg',
+    firstName: getUserFirstName(),
+    lastName: getUserLastName(),
+    avatarUrl: getUserAvatarUrl(1),
     textMessage: 'Hello! Welcome to our conversation 👋',
     date: new Date(),
     isYour: false,
@@ -53,7 +59,7 @@ export default function Page() {
                 firstName="Pablo"
                 lastName="Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Cipriano de la Santísima Trinidad Ruiz y Picasso"
                 textMessage="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-                avatarUrl="https://xsgames.co/randomusers/assets/avatars/male/2.jpg"
+                avatarUrl={getUserAvatarUrl(2)}
               />
 
               <ConversationCard

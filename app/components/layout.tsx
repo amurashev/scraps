@@ -20,6 +20,10 @@ const components: {
     index: 'chat-message',
     label: 'Chat message',
   },
+  {
+    index: 'job-card',
+    label: 'Job Card',
+  },
 ]
 
 const inter = Inter({ subsets: ['latin'] })

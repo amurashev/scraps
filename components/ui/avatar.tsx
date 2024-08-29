@@ -13,16 +13,20 @@ const sizes = {
   128: 'h-[128px] w-[128px]',
 }
 
-type Props = { size?: keyof typeof sizes }
+type Props = { size?: keyof typeof sizes; type?: 'square' | 'circle' }
 
 const Avatar = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Root> & Props,
   React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root> & Props
->(({ className, size = 10, ...props }, ref) => (
+>(({ className, size = 10, type = 'circle', ...props }, ref) => (
   <AvatarPrimitive.Root
     ref={ref}
     className={cn(
-      'relative flex shrink-0 overflow-hidden rounded-full',
+      'relative flex shrink-0 overflow-hidden',
+      {
+        'rounded-full': type === 'circle',
+        'rounded-sm': type === 'square',
+      },
       sizes[size],
       className
     )}

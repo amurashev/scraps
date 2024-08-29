@@ -16,6 +16,7 @@ export function middleware(request) {
   )
 
   if (pathnameHasLocale || noNeedTol18n) return
+  return
 
   // Redirect if there is no locale
   request.nextUrl.pathname = `/${i18n.defaultLocale}${pathname}`
