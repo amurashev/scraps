@@ -3,11 +3,7 @@
 import TextMessage from '@/components/messenger/text-message'
 import { Card } from '@/components/ui/card'
 
-import {
-  getUserAvatarUrl,
-  getUserFirstName,
-  getUserLastName,
-} from '@/lib/fake-data'
+import { getRandomUser } from '@/lib/fake-data'
 
 import Content from '../components/content'
 import Code from './code.mdx'
@@ -19,11 +15,16 @@ const data = {
   mdx: <Code />,
 }
 
+const user1 = getRandomUser(0, 'male')
+const user2 = getRandomUser(0, 'female')
+
+const userWithLongName = getRandomUser(1, 'male')
+
 const defaultProps = {
   id: '1',
-  firstName: getUserFirstName(),
-  lastName: getUserLastName(),
-  avatarUrl: getUserAvatarUrl(),
+  firstName: user1.firstName,
+  lastName: user1.lastName,
+  avatarUrl: user1.avatarUrl,
   text: 'Hello! Welcome to our conversation 👋',
   date: new Date(),
   isYour: true,
@@ -32,9 +33,9 @@ const defaultProps = {
 
 const opponentProps = {
   id: '1',
-  firstName: getUserFirstName(0, 'female'),
-  lastName: getUserLastName(0, 'female'),
-  avatarUrl: getUserAvatarUrl(3, 'female'),
+  firstName: user2.firstName,
+  lastName: user2.lastName,
+  avatarUrl: user2.avatarUrl,
   isYour: false,
 }
 
@@ -60,9 +61,9 @@ export default function Page() {
             <Wrapper>
               <TextMessage
                 {...defaultProps}
-                firstName="Pablo"
-                avatarUrl="https://xsgames.co/randomusers/assets/avatars/male/2.jpg"
-                lastName="Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Cipriano de la Santísima Trinidad Ruiz y Picasso"
+                firstName={userWithLongName.firstName}
+                lastName={userWithLongName.lastName}
+                avatarUrl={userWithLongName.avatarUrl}
                 text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
               />
             </Wrapper>

@@ -4,15 +4,17 @@ import ConversationCard, {
   ConversationCardSkeleton,
 } from '@/components/messenger/conversation-card'
 
-import {
-  getUserAvatarUrl,
-  getUserFirstName,
-  getUserLastName,
-} from '@/lib/fake-data'
+import { getRandomUser } from '@/lib/fake-data'
 
 import Content from '../components/content'
 import Code from './code.mdx'
 import { Card } from '@/components/ui/card'
+
+const user1 = getRandomUser(0, 'male')
+const user2 = getRandomUser(0, 'female')
+const user3 = getRandomUser(2, 'male')
+
+const userWithLongName = getRandomUser(1, 'male')
 
 const data = {
   index: 'conversation-card',
@@ -21,9 +23,9 @@ const data = {
     'Simple component to use in some messenger applications as chat/conversation card',
   mdx: <Code />,
   props: {
-    firstName: getUserFirstName(),
-    lastName: getUserLastName(),
-    avatarUrl: getUserAvatarUrl(1),
+    firstName: user1.firstName,
+    lastName: user1.lastName,
+    avatarUrl: user1.avatarUrl,
     textMessage: 'Hello! Welcome to our conversation 👋',
     date: new Date(),
     isYour: false,
@@ -56,10 +58,10 @@ export default function Page() {
             <Card className="divide-y divide-border">
               <ConversationCard
                 {...data.props}
-                firstName="Pablo"
-                lastName="Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Cipriano de la Santísima Trinidad Ruiz y Picasso"
+                firstName={userWithLongName.firstName}
+                lastName={userWithLongName.lastName}
                 textMessage="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-                avatarUrl={getUserAvatarUrl(2)}
+                avatarUrl={userWithLongName.avatarUrl}
               />
 
               <ConversationCard
@@ -149,24 +151,24 @@ export default function Page() {
             <Card className="divide-y divide-border">
               <ConversationCard
                 {...data.props}
-                firstName="Michel"
-                lastName="Vain"
-                avatarUrl="https://xsgames.co/randomusers/assets/avatars/female/1.jpg"
+                firstName={user2.firstName}
+                lastName={user2.lastName}
+                avatarUrl={user2.avatarUrl}
                 textMessage="Yes, agree"
               />
               <ConversationCard
                 {...data.props}
-                firstName="John"
-                lastName="Doe"
-                avatarUrl="https://xsgames.co/randomusers/assets/avatars/male/1.jpg"
+                firstName={user1.firstName}
+                lastName={user1.lastName}
+                avatarUrl={user1.avatarUrl}
                 textMessage="I've never seen that, Wow!"
                 isSelected
               />
               <ConversationCard
                 {...data.props}
-                firstName="Sam"
-                lastName="Cooper"
-                avatarUrl="https://xsgames.co/randomusers/assets/avatars/male/4.jpg"
+                firstName={user3.firstName}
+                lastName={user3.lastName}
+                avatarUrl={user3.avatarUrl}
                 textMessage="Let's go"
               />
             </Card>

@@ -58,6 +58,14 @@ function ItemWrapper({ children }: { children: React.ReactNode }) {
   return <Card className="w-full">{children}</Card>
 }
 
+function EnhancedJobCard(props: JobCardProps) {
+  return (
+    <ItemWrapper>
+      <JobCard {...props} />
+    </ItemWrapper>
+  )
+}
+
 export default function Page() {
   return (
     <Content
@@ -65,95 +73,79 @@ export default function Page() {
       description={data.description}
       code={data.mdx}
       component={
-        <div>
-          <ItemWrapper>
-            <JobCard
-              {...defaultProps}
-              description="Our company is a group of schools, which aims to provide excellent education to children and young people across the country. We seek to improve the life chances of all the children and young people we serve and make it our mission to bring out 'the best in everyone' – students, staff, parents, and the wider community."
-            />
-          </ItemWrapper>
-        </div>
+        <EnhancedJobCard
+          {...defaultProps}
+          description="Our company is a group of schools, which aims to provide excellent education to children and young people across the country. We seek to improve the life chances of all the children and young people we serve and make it our mission to bring out 'the best in everyone' – students, staff, parents, and the wider community."
+        />
       }
       cases={[
         {
           title: 'Different user cases',
           jsx: (
             <Wrapper>
-              <ItemWrapper>
-                <JobCard
-                  {...defaultProps}
-                  description="Our company is a group of schools, which aims to provide excellent education to children and young people across the country. We seek to improve the life chances of all the children and young people we serve and make it our mission to bring out 'the best in everyone' – students, staff, parents, and the wider community."
-                />
-              </ItemWrapper>
-              <ItemWrapper>
-                <JobCard
-                  {...defaultProps}
-                  companyName={company1.name}
-                  companyAvatarUrl={company1.logo}
-                  location={company1.location}
-                  description="Leading Company in the payments industry on the lookout for a Data Analytics Lead:"
-                  position="Data Team Lead"
-                  positionLevel="senior"
-                  skills={['SQL', 'AWS', 'Databases']}
-                />
-              </ItemWrapper>
-              <ItemWrapper>
-                <JobCard
-                  {...defaultProps}
-                  companyName={company2.name}
-                  companyAvatarUrl={company2.logo}
-                  location={company2.location}
-                  position="Email Marketing Specialist / Social Media Manager"
-                  description="Our client is looking for an experienced ML/AI engineer to lead their delivery of effective ML/AI- driven solutions and processes, and to help shape their ML/AI strategy."
-                  skills={[
-                    'Copywriting',
-                    'Email',
-                    'Social Media',
-                    'Web Content Writing',
-                  ]}
-                  positionLevel="middle"
-                />
-              </ItemWrapper>
-              <ItemWrapper>
-                <JobCard
-                  {...defaultProps}
-                  companyName={company3.name}
-                  companyAvatarUrl={company3.logo}
-                  location={company3.location}
-                  position="Head of Artificial Intelligence"
-                  description="We are proud to be working with an exciting AI company, looking for their next Head of Artificial Intelligence, who will build and lead a talented team in developing visionary AI-driven products for consumers and businesses."
-                  skills={[
-                    'Artificial Intelligence',
-                    'Deep Learning',
-                    'Machine Learning',
-                  ]}
-                  positionLevel="senior"
-                />
-              </ItemWrapper>
-              <ItemWrapper>
-                <JobCard
-                  {...defaultProps}
-                  companyName={company4.name}
-                  companyAvatarUrl={company4.logo}
-                  location={company4.location}
-                  description="We are a talent and innovation led company with 738,000 people serving clients in more than 120 countries. Technology is at the core of change today, and we are one of the world’s leaders in helping drive that change, with strong ecosystem relationships."
-                  position="Sales Manager"
-                  skills={['Sales', 'Client Accounts']}
-                />
-              </ItemWrapper>
-              <ItemWrapper>
-                <JobCard
-                  {...defaultProps}
-                  companyName={company5.name}
-                  companyAvatarUrl={company5.logo}
-                  location={company5.location}
-                  salaryType="hourly"
-                  salary={30}
-                  position="Marketing Manager"
-                  description="Business Analyst with SIGMA tool experience or similar reporting /dashboard tool experience is MUST"
-                  skills={['Business Process', 'Analytical Skills']}
-                />
-              </ItemWrapper>
+              <EnhancedJobCard
+                {...defaultProps}
+                description="Our company is a group of schools, which aims to provide excellent education to children and young people across the country. We seek to improve the life chances of all the children and young people we serve and make it our mission to bring out 'the best in everyone' – students, staff, parents, and the wider community."
+              />
+              <EnhancedJobCard
+                {...defaultProps}
+                companyName={company1.name}
+                companyAvatarUrl={company1.logo}
+                location={company1.location}
+                description="Leading Company in the payments industry on the lookout for a Data Analytics Lead:"
+                position="Data Team Lead"
+                positionLevel="senior"
+                skills={['SQL', 'AWS', 'Databases']}
+              />
+              <EnhancedJobCard
+                {...defaultProps}
+                companyName={company2.name}
+                companyAvatarUrl={company2.logo}
+                location={company2.location}
+                position="Email Marketing Specialist / Social Media Manager"
+                description="Our client is looking for an experienced ML/AI engineer to lead their delivery of effective ML/AI- driven solutions and processes, and to help shape their ML/AI strategy."
+                skills={[
+                  'Copywriting',
+                  'Email',
+                  'Social Media',
+                  'Web Content Writing',
+                ]}
+                positionLevel="middle"
+              />
+              <EnhancedJobCard
+                {...defaultProps}
+                companyName={company3.name}
+                companyAvatarUrl={company3.logo}
+                location={company3.location}
+                position="Head of Artificial Intelligence"
+                description="We are proud to be working with an exciting AI company, looking for their next Head of Artificial Intelligence, who will build and lead a talented team in developing visionary AI-driven products for consumers and businesses."
+                skills={[
+                  'Artificial Intelligence',
+                  'Deep Learning',
+                  'Machine Learning',
+                ]}
+                positionLevel="senior"
+              />
+              <EnhancedJobCard
+                {...defaultProps}
+                companyName={company4.name}
+                companyAvatarUrl={company4.logo}
+                location={company4.location}
+                description="We are a talent and innovation led company with 738,000 people serving clients in more than 120 countries. Technology is at the core of change today, and we are one of the world’s leaders in helping drive that change, with strong ecosystem relationships."
+                position="Sales Manager"
+                skills={['Sales', 'Client Accounts']}
+              />
+              <EnhancedJobCard
+                {...defaultProps}
+                companyName={company5.name}
+                companyAvatarUrl={company5.logo}
+                location={company5.location}
+                salaryType="hourly"
+                salary={30}
+                position="Marketing Manager"
+                description="Business Analyst with SIGMA tool experience or similar reporting /dashboard tool experience is MUST"
+                skills={['Business Process', 'Analytical Skills']}
+              />
             </Wrapper>
           ),
         },
@@ -186,21 +178,23 @@ export default function Page() {
           title: 'Different Salary types',
           jsx: (
             <Wrapper>
-              <ItemWrapper>
-                <JobCard {...defaultProps} salary={100} salaryType="hourly" />
-              </ItemWrapper>
+              <EnhancedJobCard
+                {...defaultProps}
+                salary={100}
+                salaryType="hourly"
+              />
 
-              <ItemWrapper>
-                <JobCard {...defaultProps} salary={6000} salaryType="monthly" />
-              </ItemWrapper>
+              <EnhancedJobCard
+                {...defaultProps}
+                salary={6000}
+                salaryType="monthly"
+              />
 
-              <ItemWrapper>
-                <JobCard
-                  {...defaultProps}
-                  salary={120000}
-                  salaryType="yearly"
-                />
-              </ItemWrapper>
+              <EnhancedJobCard
+                {...defaultProps}
+                salary={120000}
+                salaryType="yearly"
+              />
             </Wrapper>
           ),
         },
@@ -208,21 +202,10 @@ export default function Page() {
           title: 'Different Posting time',
           jsx: (
             <Wrapper>
-              <ItemWrapper>
-                <JobCard {...defaultProps} date={today} />
-              </ItemWrapper>
-
-              <ItemWrapper>
-                <JobCard {...defaultProps} date={todaySub1Hour} />
-              </ItemWrapper>
-
-              <ItemWrapper>
-                <JobCard {...defaultProps} date={todaySub1Day} />
-              </ItemWrapper>
-
-              <ItemWrapper>
-                <JobCard {...defaultProps} date={todaySub1Week} />
-              </ItemWrapper>
+              <EnhancedJobCard {...defaultProps} date={today} />
+              <EnhancedJobCard {...defaultProps} date={todaySub1Hour} />
+              <EnhancedJobCard {...defaultProps} date={todaySub1Day} />
+              <EnhancedJobCard {...defaultProps} date={todaySub1Week} />
             </Wrapper>
           ),
         },
@@ -230,13 +213,8 @@ export default function Page() {
           title: 'Liked / untouched',
           jsx: (
             <Wrapper>
-              <ItemWrapper>
-                <JobCard {...defaultProps} isLiked />
-              </ItemWrapper>
-
-              <ItemWrapper>
-                <JobCard {...defaultProps} isLiked={false} />
-              </ItemWrapper>
+              <EnhancedJobCard {...defaultProps} isLiked />
+              <EnhancedJobCard {...defaultProps} isLiked={false} />
             </Wrapper>
           ),
         },

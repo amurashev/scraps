@@ -1,57 +1,64 @@
-export const getUserAvatarUrl = (
-  index?: number,
-  sex: 'male' | 'female' = 'male'
-) => `https://xsgames.co/randomusers/assets/avatars/${sex}/${index}.jpg`
-
-const names = {
-  first: {
-    male: ['John'],
-    female: ['Michel'],
-  },
-  last: {
-    male: ['Doe'],
-    female: ['Vain'],
-  },
+const users = {
+  male: [
+    {
+      firstName: 'John',
+      lastName: 'Doe',
+      avatarUrl: 'https://xsgames.co/randomusers/assets/avatars/male/1.jpg',
+    },
+    {
+      firstName: 'Pablo',
+      lastName:
+        'Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Cipriano de la Santísima Trinidad Ruiz y Picasso',
+      avatarUrl: 'https://xsgames.co/randomusers/assets/avatars/male/2.jpg',
+    },
+    {
+      firstName: 'Sam',
+      lastName: 'Cooper',
+      avatarUrl: 'https://xsgames.co/randomusers/assets/avatars/male/4.jpg',
+    },
+  ],
+  female: [
+    {
+      firstName: 'Michel',
+      lastName: 'Vain',
+      avatarUrl: 'https://xsgames.co/randomusers/assets/avatars/female/3.jpg',
+    },
+  ],
 }
 
-export const getUserFirstName = (index = 0, sex: 'male' | 'female' = 'male') =>
-  names.first[sex][index]
-
-export const getUserLastName = (index = 0, sex: 'male' | 'female' = 'male') =>
-  names.last[sex][index]
-
-const cities = ['Paris']
-export const getCity = (index = 0) => cities[index]
+export const getRandomUser = (index = 0, sex: 'male' | 'female' = 'male') => {
+  return users[sex][index]
+}
 
 const companies = [
   {
     name: 'Quality Standards',
-    logo: '/logos/quality.png',
+    logo: '/images/logos/quality.png',
     location: 'Paris, France',
   },
   {
     name: 'Check Icon & Success',
-    logo: '/logos/correct.png',
+    logo: '/images/logos/correct.png',
     location: 'London, UK',
   },
   {
     name: 'ThreeBook',
-    logo: '/logos/books.png',
+    logo: '/images/logos/books.png',
     location: 'San Francisco, USA',
   },
   {
     name: 'Hats',
-    logo: '/logos/mortarboard.png',
+    logo: '/images/logos/mortarboard.png',
     location: 'New York, USA',
   },
   {
     name: 'Flat Computer Ind.',
-    logo: '/logos/imac.png',
+    logo: '/images/logos/imac.png',
     location: 'Berlin, GErmany',
   },
   {
     name: 'Leaves and nature',
-    logo: '/logos/leaves.png',
+    logo: '/images/logos/leaves.png',
     location: 'Lisbon, Portugal',
   },
 ]
