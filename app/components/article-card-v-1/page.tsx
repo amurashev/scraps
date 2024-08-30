@@ -3,7 +3,7 @@
 import ArticleCard, {
   ArticleCardSkeleton,
   ArticleCardProps,
-} from '@/components/others/article-card'
+} from '@/components/articles/article-card-v-1'
 import { Card } from '@/components/ui/card'
 
 import { getRandomUser, getRandomArticle } from '@/lib/fake-data'

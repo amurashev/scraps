@@ -55,29 +55,37 @@ const getComponentItem = (index: keyof typeof components, pathname: string) => {
   )
 }
 
+const menuStructure: {
+  label: string
+  items: (keyof typeof components)[]
+}[] = [
+  {
+    label: 'Messenger',
+    items: ['conversation-card', 'chat-message'],
+  },
+  {
+    label: 'Articles',
+    items: ['article-card-v-1', 'article-card-v-2'],
+  },
+  {
+    label: 'Other',
+    items: ['job-card'],
+  },
+]
+
 export default function Menu() {
   const pathname = usePathname()
 
   return (
     <ul className="space-y-3">
-      <li>
-        <MenuHeader label="Messenger" />
-        <ul>
-          {(
-            ['conversation-card', 'chat-message'] as (keyof typeof components)[]
-          ).map((index) => getComponentItem(index, pathname))}
-        </ul>
-      </li>
-      <li>
-        <MenuHeader label="Other" />
-        <ul>
+      {menuStructure.map((group) => (
+        <li>
+          <MenuHeader label={group.label} />
           <ul>
-            {(
-              ['job-card', 'article-card-v-1'] as (keyof typeof components)[]
-            ).map((index) => getComponentItem(index, pathname))}
+            {group.items.map((index) => getComponentItem(index, pathname))}
           </ul>
-        </ul>
-      </li>
+        </li>
+      ))}
     </ul>
   )
 }
