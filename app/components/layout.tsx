@@ -3,28 +3,12 @@ import { Inter } from 'next/font/google'
 
 import Header from '@/components/header'
 import { Toaster } from '@/components/ui/toaster'
-import SidebarLayout from '@/components/layouts/sidebar-layout'
+
 import { cn } from '@/lib/utils'
 
-import '../globals.css'
+import Menu from './components/menu'
 
-const components: {
-  index: string
-  label: string
-}[] = [
-  {
-    index: 'conversation-card',
-    label: 'Conversation Card',
-  },
-  {
-    index: 'chat-message',
-    label: 'Chat message',
-  },
-  {
-    index: 'job-card',
-    label: 'Job Card',
-  },
-]
+import '../globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -41,25 +25,35 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+    <html lang={locale}>
       <body
         className={cn(
-          'min-h-screen bg-background font-sans antialiased',
+          'h-screen w-screen overflow-hidden bg-background font-sans antialiased',
           inter.className
         )}
       >
         <Header />
-        <main className="">
-          <SidebarLayout
-            title="Components"
-            sidebar="3"
-            pages={components.map((item) => ({
-              label: item.label,
-              url: `/components/${item.index}`,
-            }))}
-          >
-            {children}
-          </SidebarLayout>
+        <main>
+          <section className="w-full h-[calc(100vh-60px)] flex">
+            <div
+              className={cn(
+                'bg-muted w-[240px] fixed h-full flex-grow border-0 border-b-[1px] border-border',
+                'lg:border-b-0 lg:border-r-[1px]'
+              )}
+            >
+              <div className="space-y-3 pt-4">
+                <h2 className="font-bold text-2xl px-4">Components</h2>
+                <Menu />
+              </div>
+            </div>
+            <div
+              className={cn(
+                'bg-background flex-grow min-w-1 pl-[240px] overflow-x-auto'
+              )}
+            >
+              {children}
+            </div>
+          </section>
         </main>
         <Toaster />
       </body>

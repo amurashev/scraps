@@ -56,7 +56,7 @@ export default function Content({
               h2: (props) => <h2 className="font-bold text-2xl" {...props} />,
               h3: (props) => <h3 className="font-bold text-lg" {...props} />,
               pre: (props) => (
-                <div className="px-4 py-4 bg-secondary-foreground rounded-md">
+                <div className="px-4 py-4 bg-secondary-foreground dark:bg-secondary rounded-md">
                   <pre>{props.children}</pre>
                 </div>
               ),
