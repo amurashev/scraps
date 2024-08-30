@@ -63,13 +63,17 @@ const menuStructure: {
     label: 'Messenger',
     items: ['conversation-card', 'chat-message'],
   },
-  // {
-  //   label: 'Articles',
-  //   items: ['article-card-v-1', 'article-card-v-2'],
-  // },
+  {
+    label: 'Articles',
+    items: ['article-card-v-1', 'article-card-v-2'],
+  },
+  {
+    label: 'Jobs',
+    items: ['job-card', 'job-view'],
+  },
   {
     label: 'Other',
-    items: ['job-card'],
+    items: [],
   },
 ]
 
@@ -78,14 +82,20 @@ export default function Menu() {
 
   return (
     <ul className="space-y-3">
-      {menuStructure.map((group) => (
-        <li>
-          <MenuHeader label={group.label} />
-          <ul>
-            {group.items.map((index) => getComponentItem(index, pathname))}
-          </ul>
-        </li>
-      ))}
+      {menuStructure
+        .filter((group) =>
+          group.items.some((item) => !components[item].isHidden)
+        )
+        .map((group) => (
+          <li key={group.label}>
+            <MenuHeader label={group.label} />
+            <ul>
+              {group.items
+                .filter((item) => !components[item].isHidden)
+                .map((index) => getComponentItem(index, pathname))}
+            </ul>
+          </li>
+        ))}
     </ul>
   )
 }

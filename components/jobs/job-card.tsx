@@ -188,6 +188,8 @@ const JobCard = forwardRef<HTMLDivElement, JobCardProps>(
       params.push(<Salary salary={salary} salaryType={salaryType} />)
     }
 
+    const clearedDescription = description.replace(/<[^>]*>?/gm, '')
+
     return (
       <div
         ref={ref}
@@ -234,8 +236,8 @@ const JobCard = forwardRef<HTMLDivElement, JobCardProps>(
               </div>
             )}
 
-            {description.length > 0 && (
-              <p className="line-clamp-2 mt-2">{description}</p>
+            {clearedDescription.length > 0 && (
+              <p className="line-clamp-2 mt-2">{clearedDescription}</p>
             )}
 
             <div className="text-sm text-muted-foreground mt-2">

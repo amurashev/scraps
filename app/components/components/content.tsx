@@ -74,12 +74,12 @@ export default function Content({
         </TabsContent>
       </Tabs>
 
-      <div className="space-y-3">
-        <h2 className="font-bold text-2xl">Examples</h2>
+      {cases.length > 0 && (
+        <div className="space-y-3">
+          <h2 className="font-bold text-2xl">Examples</h2>
 
-        <Separator />
+          <Separator />
 
-        {cases.length > 0 && (
           <div className="space-y-8 pt-2">
             {cases.map((item) => (
               <div key={item.title} className="space-y-2">
@@ -95,8 +95,8 @@ export default function Content({
               </div>
             ))}
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   )
 }

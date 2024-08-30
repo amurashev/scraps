@@ -97,3 +97,94 @@ const articles = [
 export const getRandomArticle = (index = 0) => {
   return articles[index]
 }
+
+const positions: {
+  title: string
+  description: string
+  skills: string[]
+  level: 'entry' | 'middle' | 'senior'
+  salary?: number
+  salaryType?: 'yearly' | 'monthly' | 'hourly'
+  locationType?: 'remote' | 'on-site' | 'hybrid'
+  term?: 'full' | 'part' | 'contract'
+}[] = [
+  {
+    title: 'Business Analyst',
+    skills: ['Business Process', 'Analytical Skills'],
+    level: 'middle',
+    salary: 90000,
+    salaryType: 'yearly',
+    description: `<h2>About Us:</h2>
+<p>At [Company Name], we’re dedicated to driving innovation and delivering exceptional value to our clients. We’re seeking a talented Business Analyst to join our dynamic team and play a key role in shaping our business strategies and processes.</p>
+<h2>Position Overview:</h2>
+<p>As a Business Analyst, you will work closely with stakeholders to identify business needs, gather requirements, and develop data-driven solutions to enhance operational efficiency. You’ll be responsible for analyzing complex data, creating detailed reports, and providing actionable insights to support decision-making and improve overall performance.</p>
+<h2>Key Responsibilities:</h2>
+<ul>
+<li>Collaborate with stakeholders to understand business requirements and objectives.</li>
+<li>Conduct detailed analysis of business processes and systems to identify areas for improvement.</li>
+<li>Develop and maintain comprehensive documentation, including business requirements, functional specifications, and process maps.</li>
+<li>Analyze data to generate reports and provide insights that drive strategic decision-making.</li>
+<li>Design and implement solutions to address identified business needs and enhance operational efficiency.</li>
+<li>Facilitate meetings and workshops to gather requirements, present findings, and drive consensus.</li>
+<li>Work closely with project managers and development teams to ensure successful delivery of projects.</li>
+<li>Monitor project progress and provide regular updates to stakeholders.</li>
+</ul>
+
+<h2>Qualifications:</h2>
+<ul>
+<li>Bachelor’s degree in Business Administration, Computer Science, or a related field.</li>
+<li>3+ years of experience as a Business Analyst or in a similar role.</li>
+<li>Strong analytical skills with the ability to interpret complex data and generate actionable insights.</li>
+<li>Proficiency in data analysis tools and software (e.g., Excel, SQL, Tableau).</li>
+<li>Excellent communication and interpersonal skills, with the ability to interact effectively with stakeholders at all levels.</li>
+<li>Experience with project management methodologies and tools is a plus.</li>
+<li>Detail-oriented with strong organizational and problem-solving abilities.</li>
+</ul>
+
+<h2>What We Offer:</h2>
+<ul>
+<li>Competitive salary and benefits package.</li>
+<li>Opportunities for professional growth and development.</li>
+<li>A collaborative and supportive work environment.</li>
+<li>Flexible working hours and remote work options.</li>
+<li>Health, dental, and vision insurance.</li>
+</ul>
+
+<h2>How to Apply:</h2>
+<p>If you’re passionate about leveraging data to drive business success and are ready to take on a challenging and rewarding role, we’d love to hear from you. Please submit your resume and cover letter to [application email] with the subject line “Business Analyst Application – [Your Name]”.</p>`,
+  },
+  {
+    title: 'Data Team Lead',
+    description: '',
+    skills: ['SQL', 'AWS', 'Databases'],
+    level: 'senior',
+  },
+  {
+    title: 'Email Marketing Specialist / Social Media Manager',
+    description: '',
+    skills: ['Copywriting', 'Email', 'Social Media', 'Web Content Writing'],
+    level: 'middle',
+  },
+  {
+    title: 'Head of Artificial Intelligence',
+    description: '',
+    skills: ['Artificial Intelligence', 'Deep Learning', 'Machine Learning'],
+    level: 'senior',
+  },
+  {
+    title: 'Sales Manager',
+    description: '',
+    skills: ['Sales', 'Client Accounts'],
+    level: 'middle',
+  },
+  {
+    title: 'Marketing Manager',
+    description: '',
+    skills: ['Business Process', 'Analytical Skills'],
+    level: 'middle',
+  },
+]
+
+export const getRandomPosition = (index = 0) => {
+  return positions[index]
+}

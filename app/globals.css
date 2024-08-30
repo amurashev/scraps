@@ -73,4 +73,21 @@
   address {
     font-style: normal;
   }
+
+  .text-with-html {
+    h2 {
+      font-weight: bold;
+      margin-bottom: 0.3rem;
+    }
+
+    p {
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      list-style: disc;
+      padding-left: 1.2rem;
+      margin-bottom: 1rem;
+    }
+  }
 }

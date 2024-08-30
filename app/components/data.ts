@@ -1,4 +1,11 @@
-export const components = {
+export const components: Record<
+  string,
+  {
+    name: string
+    description: string
+    isHidden?: boolean
+  }
+> = {
   'conversation-card': {
     name: 'Conversation Card',
     description:
@@ -13,12 +20,19 @@ export const components = {
     description:
       'Display a job information with some details like: location, salary, position level',
   },
+  'job-view': {
+    name: 'Job View',
+    description: 'Display full job position description',
+    isHidden: true,
+  },
   'article-card-v-1': {
     name: 'Article Card (Type 1)',
     description: 'Display short information about article for some blogs',
+    isHidden: true,
   },
   'article-card-v-2': {
     name: 'Article Card (Type 2)',
     description: 'Display short information about article for some blogs',
+    isHidden: true,
   },
 }
