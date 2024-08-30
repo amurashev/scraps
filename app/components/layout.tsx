@@ -37,7 +37,7 @@ export default function RootLayout({
           <section className="w-full h-[calc(100vh-60px)] flex">
             <div
               className={cn(
-                'bg-muted w-[240px] fixed h-full flex-grow border-0 border-b-[1px] border-border',
+                'bg-muted w-[240px] hidden md:block fixed h-full flex-grow border-0 border-b-[1px] border-border',
                 'lg:border-b-0 lg:border-r-[1px]'
               )}
             >
@@ -48,7 +48,7 @@ export default function RootLayout({
             </div>
             <div
               className={cn(
-                'bg-background flex-grow min-w-1 pl-[240px] overflow-x-auto'
+                'bg-background flex-grow min-w-1 md:pl-[240px] overflow-x-auto'
               )}
             >
               {children}

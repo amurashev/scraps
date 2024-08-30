@@ -63,10 +63,10 @@ const menuStructure: {
     label: 'Messenger',
     items: ['conversation-card', 'chat-message'],
   },
-  {
-    label: 'Articles',
-    items: ['article-card-v-1', 'article-card-v-2'],
-  },
+  // {
+  //   label: 'Articles',
+  //   items: ['article-card-v-1', 'article-card-v-2'],
+  // },
   {
     label: 'Other',
     items: ['job-card'],
