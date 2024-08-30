@@ -210,8 +210,8 @@ const JobCard = forwardRef<HTMLDivElement, JobCardProps>(
               </div>
 
               <div className="text-sm text-muted-foreground flex gap-2">
-                <div>{companyName}</div>
-                <div className="flex items-center">
+                <div className="truncate">{companyName}</div>
+                <div className="flex items-center flex-shrink-0">
                   <IoLocationOutline size={14} />
                   &nbsp;
                   <div>{location}</div>
@@ -224,7 +224,7 @@ const JobCard = forwardRef<HTMLDivElement, JobCardProps>(
 
           <div>
             {params.length && (
-              <div className="flex gap-1 font-bold text-sm mt-2">
+              <div className="flex flex-wrap gap-1 font-bold text-sm mt-2">
                 {params.map((item, key) => (
                   <>
                     <div key={item.toString()}>{item}</div>
