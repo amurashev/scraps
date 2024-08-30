@@ -26,7 +26,7 @@ export default function Content({
   }[]
 }) {
   return (
-    <div className="max-w-full h-auto px-6 py-4 pb-10 space-y-10">
+    <div className="max-w-full h-auto px-3 md:px-6 py-4 pb-10 space-y-10">
       <div className="space-y-3">
         <Breadcrumbs label={name} />
 
@@ -43,7 +43,7 @@ export default function Content({
           <TabsTrigger value="code">Code</TabsTrigger>
         </TabsList>
         <TabsContent value="component">
-          <Card className="bg-muted p-6">{component}</Card>
+          <Card className="bg-muted p-3 md:p-6">{component}</Card>
         </TabsContent>
         <TabsContent value="code">
           <MDXProvider
@@ -91,7 +91,7 @@ export default function Content({
                     </p>
                   )}
                 </div>
-                <Card className="p-6 bg-muted">{item.jsx}</Card>
+                <Card className="p-3 md:p-6 bg-muted">{item.jsx}</Card>
               </div>
             ))}
           </div>

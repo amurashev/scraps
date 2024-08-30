@@ -51,7 +51,11 @@ const todaySub1Week = new Date()
 todaySub1Week.setDate(todaySub1Week.getDate() - 7)
 
 function Wrapper({ children }: { children: React.ReactNode }) {
-  return <div className="grid grid-cols-2 gap-2 flex-wrap">{children}</div>
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 flex-wrap">
+      {children}
+    </div>
+  )
 }
 
 function ItemWrapper({ children }: { children: React.ReactNode }) {
@@ -163,13 +167,13 @@ export default function Page() {
           title: 'Different sizes',
           jsx: (
             <div className="flex flex-col gap-2">
-              <Card className="w-1/2">
+              <Card className="md:w-1/2">
                 <JobCard
                   {...defaultProps}
                   description="Our company is a group of schools, which aims to provide excellent education to children and young people across the country. We seek to improve the life chances of all the children and young people we serve and make it our mission to bring out 'the best in everyone' – students, staff, parents, and the wider community."
                 />
               </Card>
-              <Card className="w-3/4">
+              <Card className="md:w-3/4">
                 <JobCard
                   {...defaultProps}
                   description="Our company is a group of schools, which aims to provide excellent education to children and young people across the country. We seek to improve the life chances of all the children and young people we serve and make it our mission to bring out 'the best in everyone' – students, staff, parents, and the wider community."
