@@ -13,4 +13,8 @@ export const components = {
     description:
       'Display a job information with some details like: location, salary, position level',
   },
+  'article-card-v-1': {
+    name: 'Article Card (Type 1)',
+    description: 'Display short information about article for some blogs',
+  },
 }

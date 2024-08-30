@@ -47,6 +47,7 @@ const getComponentItem = (index: keyof typeof components, pathname: string) => {
 
   return (
     <ComponentLinkItem
+      key={index}
       url={url}
       label={components[index].name}
       isActive={isActive}
@@ -71,9 +72,9 @@ export default function Menu() {
         <MenuHeader label="Other" />
         <ul>
           <ul>
-            {(['job-card'] as (keyof typeof components)[]).map((index) =>
-              getComponentItem(index, pathname)
-            )}
+            {(
+              ['job-card', 'article-card-v-1'] as (keyof typeof components)[]
+            ).map((index) => getComponentItem(index, pathname))}
           </ul>
         </ul>
       </li>

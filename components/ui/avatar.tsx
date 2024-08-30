@@ -6,6 +6,7 @@ import * as AvatarPrimitive from '@radix-ui/react-avatar'
 import { cn } from '@/lib/utils'
 
 const sizes = {
+  6: 'h-6 w-6',
   8: 'h-8 w-8',
   10: 'h-10 w-10',
   12: 'h-12 w-12',

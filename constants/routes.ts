@@ -14,10 +14,10 @@ export const restaurantMenuRoute = route('/restaurant/menu')
 export const restaurantOrdersRoute = route('/restaurant/orders')
 export const restaurantDashboardRoute = route('/restaurant/dashboard')
 
-
 type ComponentPageRoute = {
   params: {
     slug: string
   }
 }
-export const componentPageRoute = route<ComponentPageRoute>('/components/[slug]')
+export const componentPageRoute =
+  route<ComponentPageRoute>('/components/[slug]')
