@@ -9,6 +9,8 @@ type BlogPostRoute = {
 }
 export const blogPostRoute = route<BlogPostRoute>('/blog/post/[slug]')
 
+export const jobsRoute = route('/jobs')
+
 export const restaurantRoute = route('/restaurant')
 export const restaurantMenuRoute = route('/restaurant/menu')
 export const restaurantOrdersRoute = route('/restaurant/orders')

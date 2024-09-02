@@ -16,46 +16,53 @@ import { Badge } from '../ui/badge'
 import { IconButton } from '../ui/icon-button'
 import { Separator } from '../ui/separator'
 
-export const JobCardSkeleton = forwardRef<HTMLDivElement>(
-  function JobCardSkeletonSkeleton(_, ref) {
-    return (
-      <div ref={ref} className={classNames('w-full px-4 py-4')}>
-        <div className="flex items-center space-x-3">
-          <div className="flex-shrink-0">
-            <Skeleton className="h-10 w-10 rounded-sm" />
-          </div>
-          <div className="flex-grow space-y-2">
-            <Skeleton className="h-4 w-[60%]" />
-            <Skeleton className="h-4 w-full" />
-          </div>
+export const JobCardSkeleton = forwardRef<
+  HTMLDivElement,
+  { hasSkills?: boolean; hasDescription?: boolean }
+>(function JobCardSkeletonSkeleton({ hasDescription, hasSkills }, ref) {
+  return (
+    <div ref={ref} className={classNames('w-full px-4 py-4')}>
+      <div className="flex items-center space-x-3">
+        <div className="flex-shrink-0">
+          <Skeleton className="h-10 w-10 rounded-sm" />
         </div>
-        <Separator className="mt-2" />
-
-        <div className="flex gap-4 mt-3">
-          <Skeleton className="h-4 w-[75px]" />
-          <Skeleton className="h-4 w-[75px]" />
-          <Skeleton className="h-4 w-[75px]" />
+        <div className="flex-grow space-y-2">
+          <Skeleton className="h-4 w-[60%]" />
+          <Skeleton className="h-4 w-full" />
         </div>
+      </div>
+      <Separator className="mt-2" />
 
+      <div className="flex gap-4 mt-3">
+        <Skeleton className="h-4 w-[75px]" />
+        <Skeleton className="h-4 w-[75px]" />
+        <Skeleton className="h-4 w-[75px]" />
+      </div>
+
+      {hasDescription && (
         <div className="mt-3">
           <Skeleton className="h-11 w-full" />
         </div>
+      )}
 
-        <div className="flex gap-4 mt-3">
-          <Skeleton className="h-4 w-[100px]" />
-        </div>
-
-        <Separator className="mt-2" />
-
-        <div className="flex gap-4 mt-3">
-          <Skeleton className="h-5 rounded-full w-[20%]" />
-          <Skeleton className="h-5 rounded-full w-[20%]" />
-          <Skeleton className="h-5 rounded-full w-[20%]" />
-        </div>
+      <div className="flex gap-4 mt-3">
+        <Skeleton className="h-4 w-[100px]" />
       </div>
-    )
-  }
-)
+
+      {hasSkills && (
+        <>
+          <Separator className="mt-2" />
+
+          <div className="flex gap-4 mt-3">
+            <Skeleton className="h-5 rounded-full w-[20%]" />
+            <Skeleton className="h-5 rounded-full w-[20%]" />
+            <Skeleton className="h-5 rounded-full w-[20%]" />
+          </div>
+        </>
+      )}
+    </div>
+  )
+})
 
 export interface JobCardProps {
   /**
@@ -229,6 +236,7 @@ const JobCard = forwardRef<HTMLDivElement, JobCardProps>(function JobCard(
           {params.length && (
             <div className="flex flex-wrap gap-1 font-bold text-sm mt-2">
               {params.map((item, key) => (
+                // eslint-disable-next-line react/no-array-index-key
                 <div key={key}>
                   {item}
                   {key !== params.length - 1 && <>&nbsp;&bull;</>}
@@ -265,7 +273,13 @@ const JobCard = forwardRef<HTMLDivElement, JobCardProps>(function JobCard(
       </div>
 
       <div className="text-gray-600 absolute top-1 right-1">
-        <IconButton onClick={() => onLikeClick?.()} className="p-2">
+        <IconButton
+          onClick={(e) => {
+            e.stopPropagation()
+            onLikeClick?.()
+          }}
+          className="p-2"
+        >
           {isLiked ? <IoBookmark size={16} /> : <IoBookmarkOutline size={16} />}
         </IconButton>
       </div>

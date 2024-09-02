@@ -1,3 +1,5 @@
+import { MouseEvent } from 'react'
+
 import Link from 'next/link'
 
 import { cn } from '@/lib/utils'
@@ -9,7 +11,7 @@ export function IconButton({
 }: {
   children: React.ReactNode
   className?: string
-  onClick: () => void
+  onClick: (e: MouseEvent<HTMLDivElement>) => void
 }) {
   return (
     <div
