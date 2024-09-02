@@ -157,127 +157,121 @@ function Salary({
   )
 }
 
-const JobCard = forwardRef<HTMLDivElement, JobCardProps>(
-  function ConversationCard(
-    {
-      position = '',
-      companyName = '',
-      location,
-      locationType = 'on-site',
-      salary,
-      salaryType = 'monthly',
-      positionLevel = 'entry',
-      positionTerm = 'full',
-      description = '',
-      companyAvatarUrl,
-      skills = [],
-      date,
-      isSelected = false,
-      isLiked = false,
-      onLikeClick,
-    },
-    ref
-  ) {
-    const formattedDate = getDateLabel(date)
+const JobCard = forwardRef<HTMLDivElement, JobCardProps>(function JobCard(
+  {
+    position = '',
+    companyName = '',
+    location,
+    locationType = 'on-site',
+    salary,
+    salaryType = 'monthly',
+    positionLevel = 'entry',
+    positionTerm = 'full',
+    description = '',
+    companyAvatarUrl,
+    skills = [],
+    date,
+    isSelected = false,
+    isLiked = false,
+    onLikeClick,
+  },
+  ref
+) {
+  const formattedDate = getDateLabel(date)
 
-    const params: (string | React.ReactElement)[] = [
-      locationTypeLabel[locationType],
-      positionTermLabel[positionTerm],
-      positionLevelLabel[positionLevel],
-    ]
+  const params: (string | React.ReactElement)[] = [
+    locationTypeLabel[locationType],
+    positionTermLabel[positionTerm],
+    positionLevelLabel[positionLevel],
+  ]
 
-    if (salary) {
-      params.push(<Salary salary={salary} salaryType={salaryType} />)
-    }
+  if (salary) {
+    params.push(<Salary salary={salary} salaryType={salaryType} />)
+  }
 
-    const clearedDescription = description.replace(/<[^>]*>?/gm, '')
+  const clearedDescription = description.replace(/<[^>]*>?/gm, '')
 
-    return (
-      <div
-        ref={ref}
-        className={classNames('relative w-full px-4 py-4 cursor-pointer', {
-          'bg-primary-foreground': isSelected,
-          'hover:bg-gray-50 dark:hover:bg-gray-900': !isSelected,
-        })}
-      >
+  return (
+    <div
+      ref={ref}
+      className={classNames('relative w-full px-4 py-4 cursor-pointer', {
+        'bg-primary-foreground': isSelected,
+        'hover:bg-gray-50 dark:hover:bg-gray-900': !isSelected,
+      })}
+    >
+      <div>
+        <div className="flex items-start space-x-3">
+          <div className="flex-shrink-0">
+            <Avatar type="square" size={10}>
+              <AvatarImage src={companyAvatarUrl} />
+              <AvatarFallback>{companyName}</AvatarFallback>
+            </Avatar>
+          </div>
+          <div className="flex flex-col space-y-0 min-w-[1px]">
+            <div className="font-bold text-base flex-grow truncate-2 min-w-[1px] pr-8 leading-5 truncate">
+              {position}
+            </div>
+
+            <div className="text-sm text-muted-foreground flex gap-2">
+              <div className="truncate">{companyName}</div>
+              <div className="flex items-center flex-shrink-0">
+                <IoLocationOutline size={14} />
+                &nbsp;
+                <div>{location}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <Separator className="mt-2" />
+
         <div>
-          <div className="flex items-start space-x-3">
-            <div className="flex-shrink-0">
-              <Avatar type="square" size={10}>
-                <AvatarImage src={companyAvatarUrl} />
-                <AvatarFallback>{companyName}</AvatarFallback>
-              </Avatar>
-            </div>
-            <div className="flex flex-col space-y-0 min-w-[1px]">
-              <div className="font-bold text-base flex-grow truncate-2 min-w-[1px] pr-8 leading-5 truncate">
-                {position}
-              </div>
-
-              <div className="text-sm text-muted-foreground flex gap-2">
-                <div className="truncate">{companyName}</div>
-                <div className="flex items-center flex-shrink-0">
-                  <IoLocationOutline size={14} />
-                  &nbsp;
-                  <div>{location}</div>
+          {params.length && (
+            <div className="flex flex-wrap gap-1 font-bold text-sm mt-2">
+              {params.map((item, key) => (
+                <div key={key}>
+                  {item}
+                  {key !== params.length - 1 && <>&nbsp;&bull;</>}
                 </div>
-              </div>
+              ))}
             </div>
+          )}
+
+          {clearedDescription.length > 0 && (
+            <p className="line-clamp-2 mt-2">{clearedDescription}</p>
+          )}
+
+          <div className="text-sm text-muted-foreground mt-2">
+            {formattedDate}
           </div>
+        </div>
 
-          <Separator className="mt-2" />
+        {skills.length > 0 && (
+          <>
+            <Separator className="mt-2" />
 
-          <div>
-            {params.length && (
-              <div className="flex flex-wrap gap-1 font-bold text-sm mt-2">
-                {params.map((item, key) => (
-                  <>
-                    <div key={item.toString()}>{item}</div>
-                    {key !== params.length - 1 && <div>&bull;</div>}
-                  </>
-                ))}
-              </div>
-            )}
-
-            {clearedDescription.length > 0 && (
-              <p className="line-clamp-2 mt-2">{clearedDescription}</p>
-            )}
-
-            <div className="text-sm text-muted-foreground mt-2">
-              {formattedDate}
-            </div>
-          </div>
-
-          {skills.length > 0 && (
-            <>
-              <Separator className="mt-2" />
-
-              <div className="flex gap-1 flex-wrap mt-3">
-                {skills.map((item) => (
-                  <Badge key={item} variant="secondary">
-                    {item}
-                  </Badge>
-                ))}
-                {/* {skills.length > 3 && (
+            <div className="flex gap-1 flex-wrap mt-3">
+              {skills.map((item) => (
+                <Badge key={item} variant="secondary">
+                  {item}
+                </Badge>
+              ))}
+              {/* {skills.length > 3 && (
                   <Badge variant="secondary">+{skills.length - 3}</Badge>
                 )} */}
-              </div>
-            </>
-          )}
-        </div>
-
-        <div className="text-gray-600 absolute top-1 right-1">
-          <IconButton onClick={() => onLikeClick?.()} className="p-2">
-            {isLiked ? (
-              <IoBookmark size={16} />
-            ) : (
-              <IoBookmarkOutline size={16} />
-            )}
-          </IconButton>
-        </div>
+            </div>
+          </>
+        )}
       </div>
-    )
-  }
-)
+
+      <div className="text-gray-600 absolute top-1 right-1">
+        <IconButton onClick={() => onLikeClick?.()} className="p-2">
+          {isLiked ? <IoBookmark size={16} /> : <IoBookmarkOutline size={16} />}
+        </IconButton>
+      </div>
+    </div>
+  )
+})
 JobCard.displayName = 'JobCard'
 
 export default JobCard

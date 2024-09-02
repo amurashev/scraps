@@ -198,7 +198,7 @@ const JobView = forwardRef<HTMLDivElement, JobCardProps>(function JobView(
 
           <Separator className="mt-3" />
           {description.length > 0 && (
-            <p
+            <div
               className="mt-5 text-with-html"
               dangerouslySetInnerHTML={{
                 __html: description,

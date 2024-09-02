@@ -2,8 +2,8 @@ import { cn } from '@/lib/utils'
 
 import { getRandomPosition, getRandomCompany } from '@/lib/fake-data'
 import JobList from './components/job-list'
-// import JobView from '@/components/jobs/job-view'
-// import { Card } from '@/components/ui/card'
+import JobView from '@/components/jobs/job-view'
+import { Card } from '@/components/ui/card'
 
 export default async function Page() {
   const positions = [
@@ -45,7 +45,7 @@ export default async function Page() {
       </div>
       <div className={cn('flex-grow min-w-1 md:pl-[360px] overflow-x-auto')}>
         <div className="px-3 py-5">
-          {/* <Card>
+          <Card>
             <JobView
               {...positions[0]}
               position={positions[0].title}
@@ -54,7 +54,7 @@ export default async function Page() {
               date="2024-08-12T16:15:53+02:00"
               // onApplyClick={() => {}}
             />
-          </Card> */}
+          </Card>
         </div>
       </div>
     </main>
