@@ -2,8 +2,8 @@ import { cn } from '@/lib/utils'
 
 import { getRandomPosition, getRandomCompany } from '@/lib/fake-data'
 import JobList from './components/job-list'
-import JobView from '@/components/jobs/job-view'
-import { Card } from '@/components/ui/card'
+// import JobView from '@/components/jobs/job-view'
+// import { Card } from '@/components/ui/card'
 
 export default async function Page() {
   const positions = [

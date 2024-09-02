@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import Image from 'next/image'
 
 import { Person } from '../../types'
+import { buttonVariants } from '@/components/ui/button'
 
 function LinkedInIcon({
   size = 28,
@@ -103,6 +104,13 @@ function TopSection({ person }: { person: Person }) {
             <EmailIcon />
           </a>
         </div>
+        <a
+          href="/share/CV_Andrei_Murashev.pdf"
+          className={buttonVariants({ variant: 'default', size: 'sm' })}
+          target="_blank"
+        >
+          Download PDF
+        </a>
       </div>
     </div>
   )

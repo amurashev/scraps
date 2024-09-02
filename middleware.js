@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 
 import { i18n } from './i18n-config'
 
-const l18nExceptions = ['/studio', '/api', '/components', '/images']
+const l18nExceptions = ['/studio', '/api', '/components', '/images', '/share']
 
 export function middleware(request) {
   // Check if there is any supported locale in the pathname

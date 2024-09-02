@@ -231,7 +231,7 @@ const JobCard = forwardRef<HTMLDivElement, JobCardProps>(
               <div className="flex flex-wrap gap-1 font-bold text-sm mt-2">
                 {params.map((item, key) => (
                   <>
-                    <div key={key}>{item}</div>
+                    <div key={item}>{item}</div>
                     {key !== params.length - 1 && <div>&bull;</div>}
                   </>
                 ))}
