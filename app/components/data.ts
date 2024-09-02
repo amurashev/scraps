@@ -23,7 +23,6 @@ export const components: Record<
   'job-view': {
     name: 'Job View',
     description: 'Display full job position description',
-    isHidden: true,
   },
   'article-card-v-1': {
     name: 'Article Card (Type 1)',
