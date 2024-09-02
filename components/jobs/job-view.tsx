@@ -1,3 +1,5 @@
+'use client'
+
 import classNames from 'classnames'
 import { forwardRef } from 'react'
 import { formatDistance } from 'date-fns'
@@ -214,8 +216,8 @@ const JobView = forwardRef<HTMLDivElement, JobCardProps>(function JobView(
             <Separator className="mt-3" />
 
             <div className="flex gap-1 flex-wrap mt-4">
-              {skills.map((item) => (
-                <Badge key={item} variant="secondary">
+              {skills.map((item, key) => (
+                <Badge key={key} variant="secondary">
                   {item}
                 </Badge>
               ))}

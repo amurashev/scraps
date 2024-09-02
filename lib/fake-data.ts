@@ -30,7 +30,13 @@ export const getRandomUser = (index = 0, sex: 'male' | 'female' = 'male') => {
   return users[sex][index]
 }
 
-const companies = [
+export type Company = {
+  name: string
+  logo: string
+  location: string
+}
+
+const companies: Company[] = [
   {
     name: 'Quality Standards',
     logo: '/images/logos/quality.png',
@@ -54,7 +60,7 @@ const companies = [
   {
     name: 'Flat Computer Ind.',
     logo: '/images/logos/imac.png',
-    location: 'Berlin, GErmany',
+    location: 'Berlin, Germany',
   },
   {
     name: 'Leaves and nature',
@@ -98,19 +104,25 @@ export const getRandomArticle = (index = 0) => {
   return articles[index]
 }
 
-const positions: {
+export type Position = {
+  id: string
   title: string
   description: string
+  location: string
   skills: string[]
   level: 'entry' | 'middle' | 'senior'
   salary?: number
   salaryType?: 'yearly' | 'monthly' | 'hourly'
   locationType?: 'remote' | 'on-site' | 'hybrid'
   term?: 'full' | 'part' | 'contract'
-}[] = [
+}
+
+const positions: Position[] = [
   {
+    id: '1',
     title: 'Business Analyst',
     skills: ['Business Process', 'Analytical Skills'],
+    location: 'Paris, France',
     level: 'middle',
     salary: 90000,
     salaryType: 'yearly',
@@ -154,34 +166,44 @@ const positions: {
 <p>If you’re passionate about leveraging data to drive business success and are ready to take on a challenging and rewarding role, we’d love to hear from you. Please submit your resume and cover letter to [application email] with the subject line “Business Analyst Application – [Your Name]”.</p>`,
   },
   {
+    id: '2',
     title: 'Data Team Lead',
     description: '',
     skills: ['SQL', 'AWS', 'Databases'],
     level: 'senior',
+    location: 'London, UK',
   },
   {
+    id: '3',
     title: 'Email Marketing Specialist / Social Media Manager',
     description: '',
     skills: ['Copywriting', 'Email', 'Social Media', 'Web Content Writing'],
     level: 'middle',
+    location: 'San Francisco, USA',
   },
   {
+    id: '4',
     title: 'Head of Artificial Intelligence',
     description: '',
     skills: ['Artificial Intelligence', 'Deep Learning', 'Machine Learning'],
     level: 'senior',
+    location: 'New York, USA',
   },
   {
+    id: '5',
     title: 'Sales Manager',
     description: '',
     skills: ['Sales', 'Client Accounts'],
     level: 'middle',
+    location: 'Berlin, Germany',
   },
   {
+    id: '6',
     title: 'Marketing Manager',
     description: '',
     skills: ['Business Process', 'Analytical Skills'],
     level: 'middle',
+    location: 'Lisbon, Portugal',
   },
 ]
 

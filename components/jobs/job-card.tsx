@@ -1,3 +1,5 @@
+'use client'
+
 import classNames from 'classnames'
 import { forwardRef } from 'react'
 import { formatDistance } from 'date-fns'
@@ -229,7 +231,7 @@ const JobCard = forwardRef<HTMLDivElement, JobCardProps>(
               <div className="flex flex-wrap gap-1 font-bold text-sm mt-2">
                 {params.map((item, key) => (
                   <>
-                    <div key={item.toString()}>{item}</div>
+                    <div key={key}>{item}</div>
                     {key !== params.length - 1 && <div>&bull;</div>}
                   </>
                 ))}
@@ -266,9 +268,9 @@ const JobCard = forwardRef<HTMLDivElement, JobCardProps>(
         <div className="text-gray-600 absolute top-1 right-1">
           <IconButton onClick={() => onLikeClick?.()} className="p-2">
             {isLiked ? (
-              <IoBookmark size={20} />
+              <IoBookmark size={16} />
             ) : (
-              <IoBookmarkOutline size={20} />
+              <IoBookmarkOutline size={16} />
             )}
           </IconButton>
         </div>
