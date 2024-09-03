@@ -13,7 +13,7 @@ export default async function Page() {
 
   return (
     <div className="min-h-screen">
-      <div className="container max-w-2xl py-6">
+      <div className="container max-w-4xl py-6 space-y-4">
         <h1 className="text-2xl font-bold">Posts</h1>
         <Posts posts={posts} />
       </div>

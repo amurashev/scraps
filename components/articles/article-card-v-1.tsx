@@ -1,3 +1,5 @@
+'use client'
+
 import classNames from 'classnames'
 import { forwardRef } from 'react'
 import Image from 'next/image'
@@ -49,7 +51,7 @@ export interface ArticleCardProps {
   /**
    * Article picture preview
    */
-  pictureUrl: string
+  pictureUrl?: string
   /**
    * Article topic name
    */
@@ -73,7 +75,7 @@ export interface ArticleCardProps {
   /**
    * Mark card as liked.
    */
-  isLiked: boolean
+  isLiked?: boolean
   /**
    * Handle like button click
    */
@@ -142,7 +144,9 @@ const ArticleCard = forwardRef<HTMLDivElement, ArticleCardProps>(
             </div>
 
             {text.length > 0 && (
-              <p className="line-clamp-2 text-muted-foreground">{text}</p>
+              <p className="line-clamp-2 text-muted-foreground h-[48px]">
+                {text}
+              </p>
             )}
 
             <div className="text-sm text-muted-foreground mt-2 flex gap-4">
