@@ -1,6 +1,6 @@
 'use client'
 
-import TextMessage from '@/components/messenger/text-message'
+import TextMessage from '@/components/parts/messenger/text-message'
 import { Card } from '@/components/ui/card'
 
 import { getRandomUser } from '@/lib/fake-data'

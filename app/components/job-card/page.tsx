@@ -3,7 +3,7 @@
 import JobCard, {
   JobCardSkeleton,
   JobCardProps,
-} from '@/components/jobs/job-card'
+} from '@/components/parts/jobs/job-card'
 import { Card } from '@/components/ui/card'
 
 import { getRandomCompany } from '@/lib/fake-data'

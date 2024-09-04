@@ -1,4 +1,4 @@
-import SidebarLayout from '@/components/layouts/sidebar-layout'
+import SidebarLayout from '@/components/layout/sidebar-layout'
 import {
   restaurantOrdersRoute,
   restaurantDashboardRoute,

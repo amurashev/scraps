@@ -2,7 +2,7 @@
 
 import ConversationCard, {
   ConversationCardSkeleton,
-} from '@/components/messenger/conversation-card'
+} from '@/components/parts/messenger/conversation-card'
 
 import { getRandomUser } from '@/lib/fake-data'
 

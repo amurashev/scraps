@@ -13,8 +13,7 @@ import {
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Skeleton } from '@/components/ui/skeleton'
-
-import { IconButton } from '../ui/icon-button'
+import { IconButton } from '@/components/ui/icon-button'
 
 export const ArticleCardSkeleton = forwardRef<HTMLDivElement>(
   function ArticleCardSkeleton(_, ref) {

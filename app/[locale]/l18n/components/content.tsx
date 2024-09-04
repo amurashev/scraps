@@ -7,7 +7,7 @@ import { es, enGB, ar } from 'date-fns/locale'
 
 import { Card, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
-import Price from '@/components/price'
+import Price from '@/components/common/price'
 
 import messages from './messages'
 

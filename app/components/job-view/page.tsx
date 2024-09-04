@@ -1,6 +1,6 @@
 'use client'
 
-import JobView, { JobCardProps } from '@/components/jobs/job-view'
+import JobView, { JobCardProps } from '@/components/parts/jobs/job-view'
 import { Card } from '@/components/ui/card'
 
 import { getRandomCompany, getRandomPosition } from '@/lib/fake-data'

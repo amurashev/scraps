@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input'
 
 import ConversationCard, {
   ConversationCardSkeleton,
-} from '@/components/messenger/conversation-card'
+} from '@/components/parts/messenger/conversation-card'
 
 import { Conversation } from '../types'
 

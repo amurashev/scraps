@@ -10,9 +10,9 @@ import {
 } from '@/lib/fake-data'
 import { cn, sleep } from '@/lib/utils'
 
-import JobView from '@/components/jobs/job-view'
+import JobView from '@/components/parts/jobs/job-view'
 import { Card } from '@/components/ui/card'
-import { JobCardSkeleton } from '@/components/jobs/job-card'
+import { JobCardSkeleton } from '@/components/parts/jobs/job-card'
 
 import JobList from './components/job-list'
 

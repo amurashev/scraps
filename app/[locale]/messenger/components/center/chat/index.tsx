@@ -2,7 +2,7 @@ import classNames from 'classnames'
 import { Virtuoso, VirtuosoHandle, ListProps } from 'react-virtuoso'
 import { forwardRef, memo, useMemo } from 'react'
 
-import TextMessage from '@/components/messenger/text-message'
+import TextMessage from '@/components/parts/messenger/text-message'
 
 import { Message } from '../../../types'
 

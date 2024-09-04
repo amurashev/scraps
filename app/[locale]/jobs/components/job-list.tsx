@@ -1,7 +1,7 @@
 'use client'
 
 import { Position, Company } from '@/lib/fake-data'
-import JobCard from '@/components/jobs/job-card'
+import JobCard from '@/components/parts/jobs/job-card'
 import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 

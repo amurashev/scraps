@@ -14,11 +14,10 @@ import {
 } from 'react-icons/io5'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-
-import { Badge } from '../ui/badge'
-import { IconButton } from '../ui/icon-button'
-import { Separator } from '../ui/separator'
-import { Button } from '../ui/button'
+import { Badge } from '@/components/ui/badge'
+import { IconButton } from '@/components/ui/icon-button'
+import { Separator } from '@/components/ui/separator'
+import { Button } from '@/components/ui/button'
 
 export interface JobCardProps {
   /**

@@ -11,10 +11,9 @@ import {
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Skeleton } from '@/components/ui/skeleton'
-
-import { Badge } from '../ui/badge'
-import { IconButton } from '../ui/icon-button'
-import { Separator } from '../ui/separator'
+import { Badge } from '@/components/ui/badge'
+import { IconButton } from '@/components/ui/icon-button'
+import { Separator } from '@/components/ui/separator'
 
 export const JobCardSkeleton = forwardRef<
   HTMLDivElement,

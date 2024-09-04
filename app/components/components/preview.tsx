@@ -8,7 +8,7 @@ import { onlyText } from 'react-children-utilities'
 import { Card } from '@/components/ui/card'
 import ConversationCard, {
   ConversationCardSkeleton,
-} from '@/components/messenger/conversation-card'
+} from '@/components/parts/messenger/conversation-card'
 
 export function CodePreview({ children }: { children?: React.ReactNode }) {
   const [showCode, setShowCode] = useState(false)

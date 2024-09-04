@@ -4,7 +4,7 @@ import { toPlainText } from '@portabletext/react'
 import Link from 'next/link'
 
 import { Card } from '@/components/ui/card'
-import ArticleCard from '@/components/articles/article-card-v-1'
+import ArticleCard from '@/components/parts/articles/article-card-v-1'
 
 import { blogPostRoute } from '@/constants/routes'
 import { urlFor } from '@/sanity/lib/image'

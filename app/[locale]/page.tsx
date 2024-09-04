@@ -67,11 +67,6 @@ const apps = [
     description: 'Example of minimalistic login page',
     href: '/login',
   },
-  // {
-  //   title: 'AI',
-  //   description: '',
-  //   href: '/ai',
-  // },
 ]
 
 export default function Home() {

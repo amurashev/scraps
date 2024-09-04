@@ -1,4 +1,4 @@
-import SidebarLayout from '@/components/layouts/sidebar-layout'
+import SidebarLayout from '@/components/layout/sidebar-layout'
 
 export default function SettingsLayout({
   children, // will be a page or nested layout

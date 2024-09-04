@@ -27,11 +27,9 @@ export const components: Record<
   'article-card-v-1': {
     name: 'Article Card (Type 1)',
     description: 'Display short information about article for some blogs',
-    isHidden: true,
   },
   'article-card-v-2': {
     name: 'Article Card (Type 2)',
     description: 'Display short information about article for some blogs',
-    isHidden: true,
   },
 }
