@@ -11,3 +11,20 @@ export const checkAuth = () => {
 
   return undefined
 }
+
+export const apiError = (props: {
+  message: string
+  field?: string | null
+  code?: string
+}) => {
+  const { message, field = null, code = null } = props
+  return NextResponse.json({
+    error: { message, field, code },
+  })
+}
+
+export const successResponse = (
+  data: Record<string, string | number | null> | null
+) => {
+  return NextResponse.json({ data })
+}

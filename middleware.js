@@ -1,12 +1,23 @@
 import { NextResponse } from 'next/server'
 
 import { i18n } from './i18n-config'
+import { verifySession, deleteSession } from '@/lib/session'
 
-const l18nExceptions = ['/studio', '/api', '/components', '/images', '/share']
+const l18nExceptions = [
+  '/studio',
+  '/api',
+  '/actions',
+  '/components',
+  '/images',
+  '/share',
+]
 
-export function middleware(request) {
+const publicRoutes = ['/login', '/signup']
+
+export async function middleware(request) {
   // Check if there is any supported locale in the pathname
   const { pathname } = request.nextUrl
+
   const pathnameHasLocale = i18n.locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   )
@@ -16,6 +27,14 @@ export function middleware(request) {
   )
 
   if (pathnameHasLocale || noNeedTol18n) return
+
+  const userId = await verifySession()
+
+  // 6. Redirect to /dashboard if the user is authenticated
+  const isPublicRoute = publicRoutes.includes(pathname)
+  if (isPublicRoute && userId) {
+    return NextResponse.redirect(new URL('/settings', request.nextUrl))
+  }
 
   // Redirect if there is no locale
   request.nextUrl.pathname = `/${i18n.defaultLocale}${pathname}`

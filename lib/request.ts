@@ -2,7 +2,7 @@ const apiHost = process.env.NEXT_PUBLIC_API_HOST
 
 export type Response<T> = {
   data?: T
-  error?: string
+  error?: { message: string; field: string; code: string }
   status: number
 }
 

@@ -47,7 +47,7 @@ export default function Controller({
 
       if (error) {
         toast({
-          description: error,
+          description: error.message,
           variant: 'destructive',
         })
       }

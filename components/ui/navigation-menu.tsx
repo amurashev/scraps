@@ -5,11 +5,19 @@ import { ChevronDown } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
+type Props = { align?: 'left' | 'right' }
+
 const NavigationMenuViewport = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Viewport>,
-  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Viewport>
->(({ className, ...props }, ref) => (
-  <div className={cn('absolute left-0 top-full flex justify-center')}>
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Viewport> &
+    Props
+>(({ className, align = 'left', ...props }, ref) => (
+  <div
+    className={cn('absolute top-full flex justify-center', {
+      'left-0': align === 'left',
+      'right-0': align === 'right',
+    })}
+  >
     <NavigationMenuPrimitive.Viewport
       className={cn(
         'origin-top-center relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 md:w-[var(--radix-navigation-menu-viewport-width)]',
@@ -25,8 +33,8 @@ NavigationMenuViewport.displayName =
 
 const NavigationMenu = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root>
->(({ className, children, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root> & Props
+>(({ className, children, align, ...props }, ref) => (
   <NavigationMenuPrimitive.Root
     ref={ref}
     className={cn(
@@ -36,7 +44,7 @@ const NavigationMenu = React.forwardRef<
     {...props}
   >
     {children}
-    <NavigationMenuViewport />
+    <NavigationMenuViewport align={align} />
   </NavigationMenuPrimitive.Root>
 ))
 NavigationMenu.displayName = NavigationMenuPrimitive.Root.displayName
