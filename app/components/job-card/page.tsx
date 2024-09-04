@@ -237,7 +237,7 @@ export default function Page() {
           jsx: (
             <Wrapper>
               <ItemWrapper>
-                <JobCardSkeleton />
+                <JobCardSkeleton hasSkills hasDescription />
               </ItemWrapper>
 
               <ItemWrapper>
