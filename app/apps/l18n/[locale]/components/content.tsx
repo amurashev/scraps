@@ -4,10 +4,13 @@ import { useIntl } from 'react-intl'
 import Link from 'next/link'
 import { format } from 'date-fns'
 import { es, enGB, ar } from 'date-fns/locale'
+import { useEffect } from 'react'
 
 import { Card, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
-import Price from '@/components/common/price'
+// import Price from '@/components/common/price'
+
+import { l18nRoute } from '@/constants/routes'
 
 import messages from './messages'
 
@@ -38,6 +41,11 @@ export default function Content() {
   const localeData =
     locales.find((item) => item.locale === locale) || locales[0]
 
+  useEffect(() => {
+    document.documentElement.dir = locale === 'ar' ? 'rtl' : 'ltr'
+    document.documentElement.lang = locale
+  }, [locale])
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between py-6 px-3 md:p-12 container">
       <div className="z-10 w-full max-w-2xl items-center justify-between font-mono text-sm">
@@ -51,7 +59,11 @@ export default function Content() {
                 {locales.map((item) => (
                   <Link
                     key={item.locale}
-                    href={`/${item.locale}/l18n`}
+                    href={l18nRoute.getUrl({
+                      params: {
+                        locale: item.locale,
+                      },
+                    })}
                     scroll={false}
                   >
                     {item.label}
@@ -74,7 +86,7 @@ export default function Content() {
                   })}
                 </li>
                 <li className="font-bold">
-                  <Price value={500} currency={localeData.currency} />
+                  {/* <Price value={500} currency={localeData.currency} /> */}
                 </li>
               </ul>
             </div>

@@ -10,7 +10,7 @@ import person from './data/person.json'
 
 export default function CV() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between px-6 py-6 md:px-12 md:py-12">
+    <main className="flex flex-col items-center justify-between px-6 py-6 md:px-12 md:py-12">
       <div className="space-y-6 max-w-[960px]">
         <TopSection person={person} />
 

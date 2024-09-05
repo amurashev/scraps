@@ -34,10 +34,6 @@ function Header(props: Props = {}) {
   const pathname = usePathname()
   const isHomePage = pathname === '/' || pathname === '/en' // TODO:
 
-  if (pathname.includes('/login')) {
-    return null // TODO: Dirty fix ;(
-  }
-
   return (
     <header className="flex sticky px-6 h-[60px] top-0 z-50 w-full bg-background/95 backdrop-blur border-0 border-b-[1px] border-solid border-border print:hidden">
       <nav className="flex flex-1 items-center gap-6">

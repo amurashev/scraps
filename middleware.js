@@ -37,10 +37,10 @@ export async function middleware(request) {
   }
 
   // Redirect if there is no locale
-  request.nextUrl.pathname = `/${i18n.defaultLocale}${pathname}`
+  // request.nextUrl.pathname = `/${i18n.defaultLocale}${pathname}`
   // e.g. incoming request is /products
   // The new URL is now /en-US/products
-  return NextResponse.redirect(request.nextUrl)
+  // return NextResponse.redirect(request.nextUrl)
 }
 
 export const config = {

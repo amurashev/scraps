@@ -1,16 +1,10 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-
-import Header from '@/components/layout/header'
-import { Toaster } from '@/components/ui/toaster'
 
 import { cn } from '@/lib/utils'
 
 import Menu from './components/menu'
 
-import '../globals.css'
-
-const inter = Inter({ subsets: ['latin'] })
+import CommonWithHeaderLayout from '../apps/layout'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -19,44 +13,33 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  params: { locale },
 }: Readonly<{
-  params: { locale: string }
   children: React.ReactNode
 }>) {
   return (
-    <html lang={locale}>
-      <body
-        className={cn(
-          'h-screen w-screen overflow-hidden bg-background font-sans antialiased',
-          inter.className
-        )}
-      >
-        <Header />
-        <main>
-          <section className="w-full h-[calc(100vh-60px)] flex">
-            <div
-              className={cn(
-                'bg-muted w-[240px] hidden md:block fixed h-full flex-grow border-0 border-b-[1px] border-border',
-                'lg:border-b-0 lg:border-r-[1px]'
-              )}
-            >
-              <div className="space-y-3 pt-4">
-                <h2 className="font-bold text-2xl px-4">Components</h2>
-                <Menu />
-              </div>
+    <CommonWithHeaderLayout>
+      <main>
+        <section className="w-full h-[calc(100vh-60px)] flex">
+          <div
+            className={cn(
+              'bg-muted w-[240px] hidden md:block fixed h-full flex-grow border-0 border-b-[1px] border-border',
+              'lg:border-b-0 lg:border-r-[1px]'
+            )}
+          >
+            <div className="space-y-3 pt-4">
+              <h2 className="font-bold text-2xl px-4">Components</h2>
+              <Menu />
             </div>
-            <div
-              className={cn(
-                'bg-background flex-grow min-w-1 md:pl-[240px] overflow-x-auto'
-              )}
-            >
-              {children}
-            </div>
-          </section>
-        </main>
-        <Toaster />
-      </body>
-    </html>
+          </div>
+          <div
+            className={cn(
+              'bg-background flex-grow min-w-1 md:pl-[240px] overflow-x-auto'
+            )}
+          >
+            {children}
+          </div>
+        </section>
+      </main>
+    </CommonWithHeaderLayout>
   )
 }

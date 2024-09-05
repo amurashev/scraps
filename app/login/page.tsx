@@ -7,7 +7,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
 export default function Login() {
   return (
-    <div className="relative grid grid-cols-1 md:grid-cols-2 w-full h-[100vh] flex-row items-center justify-center">
+    <main className="relative grid grid-cols-1 md:grid-cols-2 w-full h-[100vh] flex-row items-center justify-center">
       <div className="hidden relative h-full flex-col bg-sky-700 md:p-10 text-white dark:border-r md:flex justify-between">
         <Link href="/">
           <div className="font-bold text-base flex items-center space-x-2">
@@ -27,6 +27,6 @@ export default function Login() {
           <Form />
         </div>
       </div>
-    </div>
+    </main>
   )
 }
