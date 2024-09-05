@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 
 import { i18n } from './i18n-config'
-import { verifySession, deleteSession } from '@/lib/session'
+import { verifySession } from '@/lib/session'
 
 const l18nExceptions = [
   '/studio',

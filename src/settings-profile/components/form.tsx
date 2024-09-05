@@ -92,11 +92,12 @@ export default function Form() {
             label="Email"
             htmlFor="email"
             errorMessage={errors.email?.message}
-            description="The email address associated with this account"
+            description="Ask admin to change it ;)"
           >
             <Input
               type="email"
               placeholder="name@example.com"
+              disabled
               hasError={Boolean(errors.email?.message)}
               {...field}
             />

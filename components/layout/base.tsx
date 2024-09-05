@@ -4,7 +4,7 @@ import { verifySession } from '@/lib/session'
 import { getUserById } from '@/lib/endpoints/auth'
 import UserDataProvider from '@/contexts/user-data'
 
-export default async function CommonWithHeaderLayout({
+export default async function BaseLayout({
   children,
 }: Readonly<{
   children: React.ReactNode

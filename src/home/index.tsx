@@ -16,7 +16,7 @@ import {
   lifeRoute,
   questionnaireRoute,
 } from '@/constants/routes'
-import CommonWithHeaderLayout from '@/components/layout/with-header'
+import BaseLayout from '@/components/layout/base'
 
 const apps = [
   {
@@ -84,7 +84,7 @@ const apps = [
 
 export default function HomePage() {
   return (
-    <CommonWithHeaderLayout>
+    <BaseLayout>
       <main className="flex min-h-screen flex-col items-center justify-between p-4 md:p-24">
         <div className="z-10 w-full max-w-4xl items-center justify-between font-mono text-sm lg:flex">
           <div className="grid md:grid-cols-3 gap-4">
@@ -113,6 +113,6 @@ export default function HomePage() {
           </div>
         </div>
       </main>
-    </CommonWithHeaderLayout>
+    </BaseLayout>
   )
 }

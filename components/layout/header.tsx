@@ -20,7 +20,7 @@ import {
 import { buttonVariants } from '@/components/ui/button'
 
 import { logout } from '@/app/actions/auth'
-import { settingsRoute } from '@/constants/routes'
+import { loginRoute, settingsRoute, componentsRoute } from '@/constants/routes'
 
 type Props = {
   user?: {
@@ -65,7 +65,7 @@ function Header(props: Props = {}) {
               'border-transparent': !pathname.includes('components'),
             }
           )}
-          href="/components"
+          href={componentsRoute.getUrl()}
           locale="en"
         >
           Components
@@ -90,13 +90,13 @@ function Header(props: Props = {}) {
           {isDark ? <FaSun size={24} /> : <FaMoon size={24} />}
         </IconButton>
       </div>
-      <div className="flex items-center ml-3">
+      <div className="flex items-center ml-0">
         {user ? (
           <NavigationMenu align="right">
             <NavigationMenuList>
               <NavigationMenuItem>
                 <NavigationMenuTrigger>
-                  <Avatar type="circle" size={10}>
+                  <Avatar type="circle" size={8}>
                     <AvatarImage src="" />
                     <AvatarFallback>
                       {user.firstName.charAt(0)}
@@ -105,7 +105,7 @@ function Header(props: Props = {}) {
                   </Avatar>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <div className="w-[200px] flex flex-col divide-y divide-border divide-dashed">
+                  <div className="w-[200px] flex flex-col divide-y divide-border divide-solid">
                     <Link
                       href={settingsRoute.getUrl({
                         params: {
@@ -133,7 +133,7 @@ function Header(props: Props = {}) {
           </NavigationMenu>
         ) : (
           <Link
-            href="/login"
+            href={loginRoute.getUrl()}
             className={buttonVariants({ variant: 'default', size: 'sm' })}
           >
             Login

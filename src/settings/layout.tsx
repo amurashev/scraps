@@ -1,5 +1,5 @@
 import SidebarLayout from '@/components/layout/sidebar-layout'
-import CommonWithHeaderLayout from '@/components/layout/with-header'
+import BaseLayout from '@/components/layout/base'
 
 export default function SettingsLayout({
   children, // will be a page or nested layout
@@ -7,7 +7,7 @@ export default function SettingsLayout({
   children: React.ReactNode
 }) {
   return (
-    <CommonWithHeaderLayout>
+    <BaseLayout>
       <SidebarLayout
         title="Settings"
         pages={[
@@ -23,6 +23,6 @@ export default function SettingsLayout({
       >
         {children}
       </SidebarLayout>
-    </CommonWithHeaderLayout>
+    </BaseLayout>
   )
 }

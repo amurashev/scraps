@@ -21,7 +21,7 @@ function ComponentLinkItem({
     <li
       className={cn(
         {
-          'bg-border': isActive,
+          'bg-border rounded-md': isActive,
         },
         'py-2 px-4 text-sm'
       )}
