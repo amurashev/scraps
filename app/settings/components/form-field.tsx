@@ -11,7 +11,7 @@ export default function FormField({
 }: {
   label: string
   htmlFor: string
-  description: string
+  description?: string
   errorMessage?: string
   children: React.ReactNode
 }) {

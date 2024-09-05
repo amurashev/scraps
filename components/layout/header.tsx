@@ -25,7 +25,7 @@ type Props = {
   user?: {
     firstName: string
     lastName: string
-  }
+  } | null
 }
 
 function Header(props: Props = {}) {

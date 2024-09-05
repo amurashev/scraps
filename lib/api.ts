@@ -13,14 +13,18 @@ export const checkAuth = () => {
 }
 
 export const apiError = (props: {
-  message: string
+  message?: string
   field?: string | null
   code?: string
+  status?: number
 }) => {
-  const { message, field = null, code = null } = props
-  return NextResponse.json({
-    error: { message, field, code },
-  })
+  const { message, field = null, code = null, status = 400 } = props
+  return NextResponse.json(
+    {
+      error: { message, field, code },
+    },
+    { status }
+  )
 }
 
 export const successResponse = (

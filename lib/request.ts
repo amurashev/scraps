@@ -19,9 +19,17 @@ export const apiRequest = async <T>(
   const getParams =
     method === 'GET' && data ? new URLSearchParams(data).toString() : ''
 
-  return fetch(`${apiHost}${url}?${getParams}`, {
+  let body: string | undefined = ''
+
+  if (method === 'GET') {
+    body = undefined
+  } else if (data) {
+    body = JSON.stringify(data)
+  }
+
+  return fetch(`${apiHost}${url}${getParams.length ? `?${getParams}` : ''}`, {
     method,
-    body: method !== 'GET' && data ? JSON.stringify(data) : undefined,
+    body,
     headers: {
       'Content-Type': 'application/vnd.api+json',
       Authorization: `TOKEN`,

@@ -2,6 +2,7 @@ import Header from '@/components/layout/header'
 
 import { verifySession } from '@/lib/session'
 import { getUserById } from '@/lib/endpoints/auth'
+import UserDataProvider from '@/contexts/user-data'
 
 export default async function CommonWithHeaderLayout({
   children,
@@ -10,7 +11,7 @@ export default async function CommonWithHeaderLayout({
 }>) {
   const userId = await verifySession()
 
-  let user
+  let user = null
 
   if (userId) {
     const response = await getUserById({ id: userId })
@@ -20,9 +21,9 @@ export default async function CommonWithHeaderLayout({
     }
   }
   return (
-    <>
+    <UserDataProvider user={user}>
       <Header user={user} />
       {children}
-    </>
+    </UserDataProvider>
   )
 }

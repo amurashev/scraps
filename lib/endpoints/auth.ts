@@ -19,6 +19,20 @@ export const getUserById = async (data: { id: string }) => {
   return response
 }
 
+export const updateUser = async (data: {
+  id: string
+  email: string
+  firstName: string
+  lastName: string
+}) => {
+  const response = await apiRequest<User>(`/api/users/${data.id}`, {
+    method: 'PUT',
+    data,
+  })
+
+  return response
+}
+
 export const getUserByEmail = async (data: {
   email: string
   password: string
