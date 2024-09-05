@@ -2,14 +2,14 @@
 
 import { useState } from 'react'
 import { useForm, Controller, SubmitErrorHandler } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useToast } from '@/components/ui/use-toast'
 
-import { createSession } from '@/lib/endpoints/auth'
+import { getUserByEmail } from '@/lib/endpoints/auth'
+import { login } from '@/app/actions/auth'
 
 function FormField({
   label,
@@ -44,7 +44,6 @@ type FormData = {
 }
 
 function Form() {
-  const router = useRouter()
   const {
     control,
     handleSubmit,
@@ -56,7 +55,7 @@ function Form() {
 
   const onSubmit = async (data: FormData) => {
     setIsLoading(true)
-    const result = await createSession(data)
+    const result = await getUserByEmail(data)
 
     if (result.error) {
       toast({
@@ -65,7 +64,7 @@ function Form() {
       })
       setIsLoading(false)
     } else if (result.data?.id) {
-      router.push('/')
+      login(result.data?.id)
     }
   }
 
@@ -84,7 +83,7 @@ function Form() {
       <Controller
         name="email"
         control={control}
-        defaultValue=""
+        defaultValue="admin@admin.admin"
         rules={{
           required: {
             value: true,
@@ -110,7 +109,7 @@ function Form() {
       <Controller
         name="password"
         control={control}
-        defaultValue=""
+        defaultValue="admin"
         rules={{
           required: {
             value: true,

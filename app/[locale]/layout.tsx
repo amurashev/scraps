@@ -6,7 +6,7 @@ import { Toaster } from '@/components/ui/toaster'
 
 import { cn } from '@/lib/utils'
 import { verifySession } from '@/lib/session'
-import { getUser } from '@/lib/endpoints/auth'
+import { getUserById } from '@/lib/endpoints/auth'
 
 import '../globals.css'
 
@@ -29,7 +29,7 @@ export default async function RootLayout({
   let user
 
   if (userId) {
-    const response = await getUser({ id: userId })
+    const response = await getUserById({ id: userId })
 
     if (response.data) {
       user = response.data

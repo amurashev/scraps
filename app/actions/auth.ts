@@ -2,9 +2,14 @@
 
 import { redirect } from 'next/navigation'
 
-import { deleteSession } from '@/lib/session'
+import { deleteSession, createSession } from '@/lib/session'
 
 export async function logout() {
   deleteSession()
+  redirect('/')
+}
+
+export async function login(id: string) {
+  createSession(id)
   redirect('/')
 }

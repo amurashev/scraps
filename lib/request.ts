@@ -16,7 +16,10 @@ export const apiRequest = async <T>(
 ): Promise<Response<T>> => {
   const { data, method = 'GET', cache } = props || {}
 
-  return fetch(`${apiHost}${url}`, {
+  const getParams =
+    method === 'GET' && data ? new URLSearchParams(data).toString() : ''
+
+  return fetch(`${apiHost}${url}?${getParams}`, {
     method,
     body: method !== 'GET' && data ? JSON.stringify(data) : undefined,
     headers: {

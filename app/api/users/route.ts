@@ -3,7 +3,6 @@ import { sql } from '@vercel/postgres'
 import { NextRequest } from 'next/server'
 
 import { checkAuth, apiError, successResponse } from '@/lib/api'
-import { createSession } from '@/lib/session'
 
 /*
 CREATE TABLE scraps_users (
@@ -13,6 +12,38 @@ CREATE TABLE scraps_users (
   PRIMARY KEY (id)
 );
 */
+
+export async function GET(request: NextRequest) {
+  const { searchParams } = request.nextUrl
+  const email = searchParams.get('email')
+  const password = searchParams.get('password')
+
+  const authResult = checkAuth()
+  if (authResult) return authResult
+
+  if (!email) return apiError({ message: 'Email is not provided' })
+  if (!password) return apiError({ message: 'Password is not provided' })
+
+  const client = await sql.connect()
+
+  const { rows } =
+    await client.sql`SELECT * FROM scraps_users WHERE email = ${email};`
+  client.release()
+
+  const item = rows.length ? rows[0] : null
+
+  if (!item) {
+    return apiError({ message: 'User is not found' })
+  }
+
+  const checkPassword = await bcrypt.compare(password, item.password)
+
+  if (!checkPassword) {
+    return apiError({ message: 'Password is wrong', field: 'password' })
+  }
+
+  return successResponse({ id: item.id })
+}
 
 export async function POST(request: NextRequest) {
   const data: {
@@ -40,9 +71,6 @@ export async function POST(request: NextRequest) {
     return apiError({ message: 'Password is wrong', field: 'password' })
   }
 
-  // Create user session
-  await createSession(item.id)
-
   return successResponse({ id: item.id })
 }
 
@@ -66,9 +94,6 @@ export async function PUT(request: NextRequest) {
   if (!id) {
     return apiError({ message: 'Something went wrong' })
   }
-
-  // Create user session
-  await createSession(id)
 
   return successResponse({ id })
 }
