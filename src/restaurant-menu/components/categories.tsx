@@ -1,6 +1,6 @@
 /* eslint-disable camelcase, no-underscore-dangle */
 
-import { RESTAURANT_CATEGORIES_QUERYResult } from '../../../../sanity.types'
+import { RESTAURANT_CATEGORIES_QUERYResult } from '../../../sanity.types'
 
 import { Category } from './category'
 

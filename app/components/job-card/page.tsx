@@ -1,5 +1,3 @@
-import ComponentJobCardPage from '@/src/pages/components-library/items/job-card'
+import ComponentJobCardPage from '@/src/components-library/pages/job-card'
 
-export default function Page() {
-  return <ComponentJobCardPage />
-}
+export default ComponentJobCardPage

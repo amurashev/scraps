@@ -6,7 +6,7 @@ import { notFound } from 'next/navigation'
 import { POST_QUERY } from '@/sanity/lib/queries'
 
 import { sanityFetch } from '@/sanity/lib/client'
-import { POST_QUERYResult } from '../../../sanity.types'
+import { POST_QUERYResult } from '../../sanity.types'
 
 import { Post } from './components/post'
 

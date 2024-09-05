@@ -1,5 +1,3 @@
-import SettingsNotificationPage from '@/src/pages/settings-notifications'
+import SettingsNotificationPage from '@/src/settings-notifications'
 
-export default function Page() {
-  return <SettingsNotificationPage />
-}
+export default SettingsNotificationPage

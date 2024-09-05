@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/card'
 import { Sheet, SheetContent, SheetHeader } from '@/components/ui/sheet'
 import { Separator } from '@/components/ui/separator'
 
-import { RESTAURANT_PRODUCTS_SHOTS_QUERYResult } from '../../../../sanity.types'
+import { RESTAURANT_PRODUCTS_SHOTS_QUERYResult } from '../../../sanity.types'
 
 import { Order } from '../types'
 

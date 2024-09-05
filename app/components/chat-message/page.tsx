@@ -1,5 +1,3 @@
-import ChatMessagePage from '@/src/pages/components-library/items/chat-message'
+import ChatMessagePage from '@/src/components-library/pages/chat-message'
 
-export default function Page() {
-  return <ChatMessagePage />
-}
+export default ChatMessagePage

@@ -5,7 +5,7 @@ import Controller from './controller'
 import { RESTAURANT_PRODUCTS_SHOTS_QUERY } from '@/sanity/lib/queries'
 
 import { sanityFetch } from '@/sanity/lib/client'
-import { RESTAURANT_PRODUCTS_SHOTS_QUERYResult } from '../../../sanity.types'
+import { RESTAURANT_PRODUCTS_SHOTS_QUERYResult } from '../../sanity.types'
 import { getOrders } from '@/lib/endpoints/orders'
 
 export const revalidate = 0

@@ -1,5 +1,3 @@
-import BlogPage from '@/src/pages/blog'
+import BlogPage from '@/src/blog'
 
-export default async function Page() {
-  return <BlogPage />
-}
+export default BlogPage

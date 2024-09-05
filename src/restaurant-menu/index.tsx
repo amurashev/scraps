@@ -8,7 +8,7 @@ import { sanityFetch } from '@/sanity/lib/client'
 import {
   RESTAURANT_CATEGORIES_QUERYResult,
   RESTAURANT_PRODUCTS_SHOTS_QUERYResult,
-} from '../../../sanity.types'
+} from '../../sanity.types'
 import Controller from './controller'
 
 export const dynamic = 'force-dynamic'

@@ -1,4 +1,4 @@
-import ComponentsLibraryLayout from '@/src/pages/components-library/layout'
+import ComponentsLibraryLayout from '@/src/components-library/layout'
 
 export default function Layout({
   children,

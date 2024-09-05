@@ -1,7 +1,5 @@
-import RestaurantMenuPage from '@/src/pages/restaurant-menu'
+import RestaurantMenuPage from '@/src/restaurant-menu'
 
 export const dynamic = 'force-dynamic'
 
-export default async function Page() {
-  return <RestaurantMenuPage />
-}
+export default RestaurantMenuPage

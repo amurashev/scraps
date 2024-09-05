@@ -8,7 +8,7 @@ import classNames from 'classnames'
 import {
   RESTAURANT_CATEGORIES_QUERYResult,
   RESTAURANT_PRODUCTS_SHOTS_QUERYResult,
-} from '../../../sanity.types'
+} from '../../sanity.types'
 import { restaurantOrdersRoute } from '@/constants/routes'
 import { postOrder } from '@/lib/endpoints/orders'
 

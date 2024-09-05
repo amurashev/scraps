@@ -1,4 +1,4 @@
-import SettingsLayout from '@/src/pages/settings/layout'
+import SettingsLayout from '@/src/settings/layout'
 
 export default function Layout({
   children, // will be a page or nested layout

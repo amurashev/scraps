@@ -1,5 +1,3 @@
-import QuestionnairePage from '@/src/pages/questionnaire'
+import QuestionnairePage from '@/src/questionnaire'
 
-export default function Page() {
-  return <QuestionnairePage />
-}
+export default QuestionnairePage

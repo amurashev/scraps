@@ -1,5 +1,3 @@
-import MessengerPage from '@/src/pages/messenger'
+import MessengerPage from '@/src/messenger'
 
-export default function Page() {
-  return <MessengerPage />
-}
+export default MessengerPage

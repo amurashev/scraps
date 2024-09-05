@@ -3,7 +3,7 @@ import { FaChevronLeft } from 'react-icons/fa6'
 
 import { Button } from '@/components/ui/button'
 
-import { RESTAURANT_PRODUCTS_SHOTS_QUERYResult } from '../../../../sanity.types'
+import { RESTAURANT_PRODUCTS_SHOTS_QUERYResult } from '../../../sanity.types'
 
 import { OrderItem } from './order-item'
 import { Order } from '../types'

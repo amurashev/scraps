@@ -1,5 +1,3 @@
-import JobsPage from '@/src/pages/jobs'
+import JobsPage from '@/src/jobs'
 
-export default async function Page() {
-  return <JobsPage />
-}
+export default JobsPage

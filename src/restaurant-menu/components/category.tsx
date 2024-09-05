@@ -7,7 +7,7 @@ import { urlFor } from '@/sanity/lib/image'
 
 import { Card } from '@/components/ui/card'
 
-import { RESTAURANT_CATEGORIES_QUERYResult } from '../../../../sanity.types'
+import { RESTAURANT_CATEGORIES_QUERYResult } from '../../../sanity.types'
 
 export function Category({
   item,

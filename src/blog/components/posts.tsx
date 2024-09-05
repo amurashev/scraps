@@ -10,7 +10,7 @@ import { blogPostRoute } from '@/constants/routes'
 import { urlFor } from '@/sanity/lib/image'
 import { getRandomUser } from '@/lib/fake-data'
 
-import { POSTS_QUERYResult } from '../../../../sanity.types'
+import { POSTS_QUERYResult } from '../../../sanity.types'
 
 const fakeUser = getRandomUser(0)
 

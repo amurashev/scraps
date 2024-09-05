@@ -1,5 +1,3 @@
-import LifePage from '@/src/pages/life'
+import LifePage from '@/src/life'
 
-export default function Page() {
-  return <LifePage />
-}
+export default LifePage

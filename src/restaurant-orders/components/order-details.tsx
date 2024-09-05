@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 
-import { RESTAURANT_PRODUCTS_SHOTS_QUERYResult } from '../../../../sanity.types'
+import { RESTAURANT_PRODUCTS_SHOTS_QUERYResult } from '../../../sanity.types'
 import { Order } from '../types'
 
 type FixedItems = { id: string; count: number }[]

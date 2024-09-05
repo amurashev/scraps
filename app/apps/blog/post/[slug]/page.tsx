@@ -7,7 +7,7 @@ import { POSTS_QUERY } from '@/sanity/lib/queries'
 import { client } from '@/sanity/lib/client'
 import { POSTS_QUERYResult } from '../../../../../sanity.types'
 
-import BlogPostPage from '@/src/pages/blog-post'
+import BlogPostPage from '@/src/blog-post'
 
 export async function generateStaticParams() {
   const posts = await client.fetch<POSTS_QUERYResult>(

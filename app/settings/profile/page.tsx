@@ -1,5 +1,3 @@
-import SettingsProfilePage from '@/src/pages/settings-profile'
+import SettingsProfilePage from '@/src/settings-profile'
 
-export default function Page() {
-  return <SettingsProfilePage />
-}
+export default SettingsProfilePage

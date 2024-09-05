@@ -12,7 +12,7 @@ export default function Menu({
     label: string
   }[]
 }) {
-  const pathname = usePathname() 
+  const pathname = usePathname()
 
   return (
     <nav className={classNames('flex flex-col space-y-2')}>

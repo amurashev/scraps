@@ -1,5 +1,3 @@
-import ComponentArticleCardV1Page from '@/src/pages/components-library/items/article-card-v-1'
+import ComponentArticleCardV1Page from '@/src/components-library/pages/article-card-v-1'
 
-export default function Page() {
-  return <ComponentArticleCardV1Page />
-}
+export default ComponentArticleCardV1Page

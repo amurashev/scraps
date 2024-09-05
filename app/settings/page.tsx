@@ -1,5 +1,3 @@
-import SettingsPage from '@/src/pages/settings'
+import SettingsPage from '@/src/settings'
 
-export default function Page() {
-  return <SettingsPage />
-}
+export default SettingsPage

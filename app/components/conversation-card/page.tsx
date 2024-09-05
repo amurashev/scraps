@@ -1,5 +1,3 @@
-import ComponentConversationCardPage from '@/src/pages/components-library/items/conversation-card'
+import ComponentConversationCardPage from '@/src/components-library/pages/conversation-card'
 
-export default function Page() {
-  return <ComponentConversationCardPage />
-}
+export default ComponentConversationCardPage

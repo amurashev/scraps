@@ -1,5 +1,3 @@
-import LoginPage from '@/src/pages/login'
+import LoginPage from '@/src/login'
 
-export default function Login() {
-  return <LoginPage />
-}
+export default LoginPage

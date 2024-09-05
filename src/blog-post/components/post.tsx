@@ -5,7 +5,7 @@ import { PortableText } from '@portabletext/react'
 import Link from 'next/link'
 
 import { urlFor } from '@/sanity/lib/image'
-import { POST_QUERYResult } from '../../../../sanity.types'
+import { POST_QUERYResult } from '../../../sanity.types'
 import { blogRoute } from '@/constants/routes'
 
 export function Post({ post }: { post: POST_QUERYResult }) {

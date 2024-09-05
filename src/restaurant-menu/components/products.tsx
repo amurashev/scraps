@@ -1,6 +1,6 @@
 /* eslint-disable camelcase, no-underscore-dangle */
 
-import { RESTAURANT_PRODUCTS_SHOTS_QUERYResult } from '../../../../sanity.types'
+import { RESTAURANT_PRODUCTS_SHOTS_QUERYResult } from '../../../sanity.types'
 
 import { Product } from './product'
 

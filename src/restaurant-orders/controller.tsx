@@ -8,7 +8,7 @@ import { Separator } from '@/components/ui/separator'
 import { useToast } from '@/components/ui/use-toast'
 
 import { putOrder } from '@/lib/endpoints/orders'
-import { RESTAURANT_PRODUCTS_SHOTS_QUERYResult } from '../../../sanity.types'
+import { RESTAURANT_PRODUCTS_SHOTS_QUERYResult } from '../../sanity.types'
 
 import { OrderItem } from './components/order-item'
 import { OrderDetails } from './components/order-details'

@@ -1,5 +1,3 @@
-import ComponentsLibraryPage from '@/src/pages/components-library'
+import ComponentsLibraryPage from '@/src/components-library'
 
-export default function Page() {
-  return <ComponentsLibraryPage />
-}
+export default ComponentsLibraryPage

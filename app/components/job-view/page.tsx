@@ -1,5 +1,3 @@
-import ComponentJobViewPage from '@/src/pages/components-library/items/job-view'
+import ComponentJobViewPage from '@/src/components-library/pages/job-view'
 
-export default function Page() {
-  return <ComponentJobViewPage />
-}
+export default ComponentJobViewPage

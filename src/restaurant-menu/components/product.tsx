@@ -3,7 +3,7 @@
 import Image from 'next/image'
 
 import { urlFor } from '@/sanity/lib/image'
-import { RESTAURANT_PRODUCTS_SHOTS_QUERYResult } from '../../../../sanity.types'
+import { RESTAURANT_PRODUCTS_SHOTS_QUERYResult } from '../../../sanity.types'
 import { Card } from '@/components/ui/card'
 
 export function Product({

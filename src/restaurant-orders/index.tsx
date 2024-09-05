@@ -5,7 +5,7 @@ import Controller from './controller'
 import { RESTAURANT_PRODUCTS_SHOTS_QUERY } from '@/sanity/lib/queries'
 import { sanityFetch } from '@/sanity/lib/client'
 import { getOrders } from '@/lib/endpoints/orders'
-import { RESTAURANT_PRODUCTS_SHOTS_QUERYResult } from '../../../sanity.types'
+import { RESTAURANT_PRODUCTS_SHOTS_QUERYResult } from '../../sanity.types'
 
 export const revalidate = 0
 export const dynamic = 'force-dynamic'

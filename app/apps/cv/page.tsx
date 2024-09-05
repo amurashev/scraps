@@ -1,5 +1,3 @@
-import CVPage from '@/src/pages/cv'
+import CVPage from '@/src/cv'
 
-export default function CV() {
-  return <CVPage />
-}
+export default CVPage
