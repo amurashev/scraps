@@ -17,7 +17,6 @@ type SettingsRoute = BaseRoute<{
   subPage: 'profile' | 'notifications'
 }>
 
-
 export const loginRoute = route('/login')
 
 export const cvRoute = route('/apps/cv')
@@ -33,8 +32,7 @@ export const restaurantMenuRoute = route('/apps/restaurant/menu')
 export const restaurantOrdersRoute = route('/apps/restaurant/orders')
 export const restaurantDashboardRoute = route('/apps/restaurant/dashboard')
 
-export const componentsRoute =
-  route<ComponentPageRoute>('/components')
+export const componentsRoute = route<ComponentPageRoute>('/components')
 export const componentPageRoute =
   route<ComponentPageRoute>('/components/[slug]')
 

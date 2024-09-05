@@ -29,7 +29,11 @@ export default function ComponentsLibraryLayout({
               'bg-muted flex-grow min-w-1 md:pl-[240px] overflow-x-auto'
             )}
           >
-            {children}
+            <div className="px-3 py-4 pb-10">
+              <div className="max-w-full bg-background lg:border border-border rounded-md h-auto px-3 md:px-6 py-4 pb-10">
+                {children}
+              </div>
+            </div>
           </div>
         </section>
       </main>

@@ -6,7 +6,7 @@ import { components } from './data'
 
 export default function ComponentsLibraryPage() {
   return (
-    <div className="w-full h-full px-4 py-4 space-y-4">
+    <div className="w-full h-full space-y-4">
       <h1 className="font-bold text-xl">Select component</h1>
       <ul className="list-disc pl-5">
         {Object.keys(components)

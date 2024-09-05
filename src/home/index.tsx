@@ -85,7 +85,7 @@ const apps = [
 export default function HomePage() {
   return (
     <BaseLayout>
-      <main className="flex min-h-screen flex-col items-center justify-between p-4 md:p-24">
+      <main className="bg-muted flex min-h-screen flex-col items-center justify-between p-4 md:p-24">
         <div className="z-10 w-full max-w-4xl items-center justify-between font-mono text-sm lg:flex">
           <div className="grid md:grid-cols-3 gap-4">
             {apps.map((item) => (
