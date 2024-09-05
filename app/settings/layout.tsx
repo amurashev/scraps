@@ -1,28 +1,9 @@
-import SidebarLayout from '@/components/layout/sidebar-layout'
-import CommonWithHeaderLayout from '../apps/layout'
+import SettingsLayout from '@/src/pages/settings/layout'
 
-export default function SettingsLayout({
+export default function Layout({
   children, // will be a page or nested layout
 }: {
   children: React.ReactNode
 }) {
-  return (
-    <CommonWithHeaderLayout>
-      <SidebarLayout
-        title="Settings"
-        pages={[
-          {
-            url: '/settings/profile',
-            label: 'Profile',
-          },
-          {
-            url: '/settings/notifications',
-            label: 'Notifications',
-          },
-        ]}
-      >
-        {children}
-      </SidebarLayout>
-    </CommonWithHeaderLayout>
-  )
+  return <SettingsLayout>{children}</SettingsLayout>
 }

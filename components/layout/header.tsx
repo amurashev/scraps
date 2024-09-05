@@ -32,7 +32,7 @@ type Props = {
 function Header(props: Props = {}) {
   const { user } = props
   const [isDark, setIsDark] = useState(false)
-  const pathname = usePathname()
+  const pathname = usePathname() || '/'
   const isHomePage = pathname === '/' || pathname === '/en' // TODO:
 
   return (

@@ -1,9 +1,5 @@
-import Controller from './controller'
+import MessengerPage from '@/src/pages/messenger'
 
-export default function MessengerPage() {
-  return (
-    <main className="w-full h-full">
-      <Controller />
-    </main>
-  )
+export default function Page() {
+  return <MessengerPage />
 }

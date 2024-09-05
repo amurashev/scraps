@@ -16,7 +16,7 @@ import {
   lifeRoute,
   questionnaireRoute,
 } from '@/constants/routes'
-import CommonWithHeaderLayout from './apps/layout'
+import CommonWithHeaderLayout from '@/components/layout/with-header'
 
 const apps = [
   {

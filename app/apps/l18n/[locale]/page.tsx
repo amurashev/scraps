@@ -1,21 +1,13 @@
 import { Locale } from '@/i18n-config'
-import Content from './components/content'
 
-import { getDictionary } from './dictionaries'
-import ServerIntlProvider from './serverIntlProvider'
+import L18nPage from '@/src/pages/l18n'
 
-export default async function l18n({
+export default async function Page({
   params: { locale },
 }: {
   params: {
     locale: Locale
   }
 }) {
-  const messages = await getDictionary(locale)
-
-  return (
-    <ServerIntlProvider locale={locale} messages={messages}>
-      <Content />
-    </ServerIntlProvider>
-  )
+  return <L18nPage locale={locale} />
 }

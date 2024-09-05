@@ -1,3 +1,5 @@
-export default function SettingsPage() {
-  return <div className="w-full h-full">SettingsPage</div>
+import SettingsPage from '@/src/pages/settings'
+
+export default function Page() {
+  return <SettingsPage />
 }
