@@ -20,6 +20,7 @@ import {
 import { buttonVariants } from '@/components/ui/button'
 
 import { logout } from '@/app/actions/auth'
+import { settingsRoute } from '@/constants/routes'
 
 type Props = {
   user?: {
@@ -106,7 +107,11 @@ function Header(props: Props = {}) {
                 <NavigationMenuContent>
                   <div className="w-[200px] flex flex-col divide-y divide-border divide-dashed">
                     <Link
-                      href="/settings"
+                      href={settingsRoute.getUrl({
+                        params: {
+                          subPage: 'profile',
+                        },
+                      })}
                       legacyBehavior
                       passHref
                       className="block w-full"

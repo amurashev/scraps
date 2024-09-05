@@ -2,23 +2,20 @@ import { route } from '@/lib/routing'
 
 type BaseRoute<Params = {}> = {
   params: Params
-} // TODO: Improve
+}
 
-type BlogPostRoute = {
-  params: {
-    slug: string
-  }
-}
-type ComponentPageRoute = {
-  params: {
-    slug: string
-  }
-}
-type L18nPostRoute = {
-  params: {
-    locale: string
-  }
-}
+type BlogPostRoute = BaseRoute<{
+  slug: string
+}>
+type ComponentPageRoute = BaseRoute<{
+  slug: string
+}>
+type L18nPostRoute = BaseRoute<{
+  locale: string
+}>
+type SettingsRoute = BaseRoute<{
+  subPage: 'profile' | 'notifications'
+}>
 
 export const cvRoute = route('/apps/cv')
 export const blogRoute = route('/apps/blog')
@@ -34,6 +31,7 @@ export const restaurantMenuRoute = route('/apps/restaurant/menu')
 export const restaurantOrdersRoute = route('/apps/restaurant/orders')
 export const restaurantDashboardRoute = route('/apps/restaurant/dashboard')
 
-
 export const componentPageRoute =
   route<ComponentPageRoute>('/components/[slug]')
+
+export const settingsRoute = route<SettingsRoute>('/settings/[subPage]')
