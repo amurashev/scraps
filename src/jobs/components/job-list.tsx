@@ -1,16 +1,16 @@
 'use client'
 
-import { Position, Company } from '@/lib/fake-data'
 import JobCard from '@/components/parts/jobs/job-card'
 import { Card } from '@/components/ui/card'
+
 import { cn } from '@/lib/utils'
+import { Position, Company } from '@/lib/fake-data'
 
 export default function JobList({
   positions,
   likedIds,
   selectedId,
   onItemClick,
-  onLikeClick,
 }: {
   positions: (Position & {
     company: Company
@@ -18,17 +18,18 @@ export default function JobList({
   likedIds: string[]
   selectedId: string | null
   onItemClick: (id: string) => void
-  onLikeClick: (id: string) => void
 }) {
   return (
-    <ul className="space-y-3 overflow-y-auto h-full px-3 py-5">
+    <>
       {positions.map((item) => {
+        const isSelected = selectedId === item.id
         return (
           <Card
             key={item.id}
             onClick={() => onItemClick(item.id)}
-            className={cn({
-              'ring ring-2 ring-ring': selectedId === item.id,
+            className={cn('mt-3 first:mt-0', {
+              'border-ring bg-muted/5': isSelected,
+              'border-border': !isSelected,
             })}
           >
             <JobCard
@@ -42,14 +43,12 @@ export default function JobList({
               locationType="remote"
               date="2024-08-12T16:15:53+02:00"
               description=""
-              // isSelected={selectedId === item.id}
               isLiked={likedIds.includes(item.id)}
-              onLikeClick={() => onLikeClick(item.id)}
               skills={[]}
             />
           </Card>
         )
       })}
-    </ul>
+    </>
   )
 }

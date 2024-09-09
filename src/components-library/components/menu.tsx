@@ -21,12 +21,12 @@ function ComponentLinkItem({
     <li
       className={cn(
         {
-          'bg-border rounded-md': isActive,
+          'bg-background ring-1': isActive,
         },
-        'py-2 px-4 text-sm'
+        'rounded-md px-4 ring-border text-sm hover:bg-background hover:ring-1'
       )}
     >
-      <Link className="h-full w-full block" href={url}>
+      <Link className="h-full w-full block py-2" href={url}>
         {label}
       </Link>
     </li>

@@ -30,7 +30,7 @@ export default function ComponentsLibraryLayout({
             )}
           >
             <div className="px-3 py-4 pb-10">
-              <div className="max-w-full bg-background lg:border border-border rounded-md h-auto px-3 md:px-6 py-4 pb-10">
+              <div className="max-w-full bg-background lg:border border-border rounded-md h-auto px-3 md:px-6 py-4 pb-6">
                 {children}
               </div>
             </div>

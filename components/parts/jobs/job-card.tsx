@@ -104,10 +104,6 @@ export interface JobCardProps {
    */
   salaryType?: 'yearly' | 'monthly' | 'hourly'
   /**
-   * Mark card as selected.
-   */
-  isSelected?: boolean
-  /**
    * Mark card as liked.
    */
   isLiked?: boolean
@@ -177,7 +173,6 @@ const JobCard = forwardRef<HTMLDivElement, JobCardProps>(function JobCard(
     companyAvatarUrl,
     skills = [],
     date,
-    isSelected = false,
     isLiked = false,
     onLikeClick,
   },
@@ -200,10 +195,7 @@ const JobCard = forwardRef<HTMLDivElement, JobCardProps>(function JobCard(
   return (
     <div
       ref={ref}
-      className={classNames('relative w-full px-4 py-4 cursor-pointer', {
-        'bg-primary-foreground': isSelected,
-        'hover:bg-gray-50 dark:hover:bg-gray-900': !isSelected,
-      })}
+      className={classNames('relative w-full px-4 py-4 cursor-pointer', {})}
     >
       <div>
         <div className="flex items-start space-x-3">
@@ -272,15 +264,29 @@ const JobCard = forwardRef<HTMLDivElement, JobCardProps>(function JobCard(
       </div>
 
       <div className="text-gray-600 absolute top-1 right-1">
-        <IconButton
-          onClick={(e) => {
-            e.stopPropagation()
-            onLikeClick?.()
-          }}
-          className="p-2"
-        >
-          {isLiked ? <IoBookmark size={16} /> : <IoBookmarkOutline size={16} />}
-        </IconButton>
+        {onLikeClick ? (
+          <IconButton
+            onClick={(e) => {
+              e.stopPropagation()
+              onLikeClick()
+            }}
+            className="p-2"
+          >
+            {isLiked ? (
+              <IoBookmark size={16} />
+            ) : (
+              <IoBookmarkOutline size={16} />
+            )}
+          </IconButton>
+        ) : (
+          <div className="p-2">
+            {isLiked ? (
+              <IoBookmark size={16} />
+            ) : (
+              <IoBookmarkOutline size={16} />
+            )}
+          </div>
+        )}
       </div>
     </div>
   )

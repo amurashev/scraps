@@ -1,59 +1,89 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import useLocalStorageState from 'use-local-storage-state'
 
-import {
-  Position,
-  Company,
-  getRandomPosition,
-  getRandomCompany,
-} from '@/lib/fake-data'
-import { cn, sleep } from '@/lib/utils'
-
-import JobView from '@/components/parts/jobs/job-view'
-import { Card } from '@/components/ui/card'
-import { JobCardSkeleton } from '@/components/parts/jobs/job-card'
+import { getRandomPosition, getRandomCompany } from '@/lib/fake-data'
+import { sleep } from '@/lib/utils'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 import JobList from './components/job-list'
+import FiltersList from './components/filters'
+import NoResult from './components/no-results'
+import SelectedPosition from './components/selected-position'
+import JobListSkeleton from './components/job-list-skeleton'
 
-const getFakeData = async () => {
-  return [
-    {
-      ...getRandomPosition(0),
-      company: getRandomCompany(0),
-    },
-    {
-      ...getRandomPosition(1),
-      company: getRandomCompany(1),
-    },
-    {
-      ...getRandomPosition(2),
-      company: getRandomCompany(2),
-    },
-    {
-      ...getRandomPosition(3),
-      company: getRandomCompany(3),
-    },
-    {
-      ...getRandomPosition(4),
-      company: getRandomCompany(4),
-    },
-    {
-      ...getRandomPosition(5),
-      company: getRandomCompany(5),
-    },
-  ]
+import { JobsPosition, Filters } from './types'
+
+const initialPositions: JobsPosition[] = [
+  {
+    ...getRandomPosition(0),
+    company: getRandomCompany(0),
+  },
+  {
+    ...getRandomPosition(1),
+    company: getRandomCompany(1),
+  },
+  {
+    ...getRandomPosition(2),
+    company: getRandomCompany(2),
+  },
+  {
+    ...getRandomPosition(3),
+    company: getRandomCompany(3),
+  },
+  {
+    ...getRandomPosition(4),
+    company: getRandomCompany(4),
+    location: getRandomPosition(0).location,
+  },
+  {
+    ...getRandomPosition(5),
+    company: getRandomCompany(5),
+    location: getRandomPosition(1).location,
+  },
+]
+
+const possibleCities = initialPositions.map((item, key) => ({
+  id: key.toString(),
+  label: item.location,
+}))
+
+const getFakeData = async (filters: {
+  query: string
+  cityId: string | null
+}) => {
+  const { query, cityId } = filters
+  await sleep(1000) // Emulate request delay
+
+  const cityQuery = cityId ? possibleCities[Number(cityId)].label : null // TODO
+
+  return initialPositions.filter((item) => {
+    const isCityMatched = cityQuery ? item.location === cityQuery : true
+    const isQueryMatched = query
+      ? item.title.toLocaleLowerCase().includes(query.toLocaleLowerCase())
+      : true
+
+    return isCityMatched && isQueryMatched
+  })
 }
 
-type JobsPosition = Position & {
-  company: Company
+const defaultFilters = {
+  query: '',
+  cityId: null,
 }
 
 export default function JobsPage() {
   const view = useRef<HTMLDivElement | null>(null)
+  const [isInitialListLoading, setIsInitialListLoading] = useState(true)
   const [positions, setPositions] = useState<JobsPosition[]>([])
   const [selectedJobId, setSelectedJobId] = useState<null | string>(null)
-  const [likedIds, setLikedIds] = useState<string[]>([])
+
+  const [likedIds, setLikedIds] = useLocalStorageState<string[]>('likedJobs', {
+    defaultValue: [],
+  })
+
+  const [filters, setFilters] = useState<Filters>(defaultFilters)
 
   const selectedPosition = selectedJobId
     ? positions.find((item) => item.id === selectedJobId)
@@ -72,13 +102,43 @@ export default function JobsPage() {
     setSelectedJobId(id)
   }
 
-  const initData = async () => {
-    await sleep(2000)
-    const data = await getFakeData()
-    setPositions(data)
+  const handleSearch = async (data: {
+    query: string
+    selectedCityId: string | null
+  }) => {
+    const { query, selectedCityId } = data
+
+    setFilters({
+      query,
+      cityId: selectedCityId,
+    })
+    setIsInitialListLoading(true)
+    setSelectedJobId(null)
+
+    const filteredPositions = await getFakeData({
+      query,
+      cityId: selectedCityId,
+    })
+    setPositions(filteredPositions)
+    setIsInitialListLoading(false)
+  }
+
+  const handleReset = async () => {
+    setFilters(defaultFilters)
+    setIsInitialListLoading(true)
+
+    await sleep(2000) // Emulate request delay
+    setPositions(initialPositions)
+    setIsInitialListLoading(false)
   }
 
   useEffect(() => {
+    const initData = async () => {
+      const data = await getFakeData(defaultFilters)
+      setPositions(data)
+      setIsInitialListLoading(false)
+    }
+
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') setSelectedJobId(null)
     })
@@ -87,58 +147,51 @@ export default function JobsPage() {
   }, [])
 
   return (
-    <main className="w-full h-[calc(100vh-60px)] overflow-hidden flex bg-muted relative">
-      <div className="max-w-5xl flex-grow relative mx-auto h-full">
-        <div
-          className={cn(
-            'w-[360px] flex-shrink-0 hidden md:block absolute inset-0 h-full flex-grow',
-            'lg:border-b-0 lg:border-r-[1px]'
-          )}
-        >
-          {positions.length === 0 ? (
-            <ul className="space-y-3 overflow-y-auto h-full px-3 py-5">
-              {Array.from({ length: 7 }, (_, i) => i + 1).map((_, key) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <Card key={key}>
-                  <JobCardSkeleton />
-                </Card>
-              ))}
-            </ul>
-          ) : (
-            <JobList
-              likedIds={likedIds}
-              positions={positions}
-              onItemClick={(id) => handleItemClick(id)}
-              onLikeClick={handleLikeClick}
-              selectedId={selectedJobId}
-            />
-          )}
+    <main className="w-full bg-muted relative h-[calc(100vh-60px)] overflow-hidden">
+      <div className="max-w-5xl flex flex-col flex-grow relative mx-auto h-full py-4">
+        <div className="">
+          <FiltersList
+            filters={filters}
+            possibleCities={possibleCities}
+            onSearchClick={handleSearch}
+          />
         </div>
-        <div className={cn('flex-grow min-w-1 w-full md:pl-[360px] h-full')}>
-          <div className="px-3 py-5 w-full h-full overflow-x-auto" ref={view}>
-            {selectedPosition ? (
-              <Card>
-                <JobView
-                  {...selectedPosition}
-                  position={selectedPosition.title}
-                  companyName={selectedPosition.company.name}
-                  companyAvatarUrl={selectedPosition.company.logo}
-                  positionTerm={selectedPosition.term || 'full'}
-                  positionLevel={selectedPosition.level || 'middle'}
-                  locationType={selectedPosition.locationType || 'on-site'}
-                  date="2024-08-12T16:15:53+02:00"
-                  onApplyClick={() => {}}
-                  isLiked={likedIds.includes(selectedPosition.id)}
-                  onLikeClick={() => handleLikeClick(selectedPosition.id)}
-                />
-              </Card>
-            ) : (
-              <div className="text-xl h-full grid items-center justify-center text-muted-foreground">
-                Click to job card to see details
-              </div>
-            )}
+        {!positions.length && !isInitialListLoading && (
+          <NoResult onResetClick={handleReset} />
+        )}
+        {(Boolean(positions.length) || isInitialListLoading) && (
+          <div className="flex flex-grow mt-4 py-0 min-h-0">
+            <div className="w-[360px] flex-shrink-0 flex-grow-0">
+              <ScrollArea className="h-full w-full pr-3">
+                {isInitialListLoading ? (
+                  <JobListSkeleton />
+                ) : (
+                  <JobList
+                    likedIds={likedIds}
+                    positions={positions}
+                    onItemClick={(id) => handleItemClick(id)}
+                    selectedId={selectedJobId}
+                  />
+                )}
+              </ScrollArea>
+            </div>
+            <div className="flex-grow h-full ml-4" ref={view}>
+              {selectedPosition ? (
+                <ScrollArea className="h-full w-full">
+                  <SelectedPosition
+                    selectedPosition={selectedPosition}
+                    isLiked={likedIds.includes(selectedPosition.id)}
+                    onLikeClick={() => handleLikeClick(selectedPosition.id)}
+                  />
+                </ScrollArea>
+              ) : (
+                <div className="text-xl h-full grid items-center justify-center text-muted-foreground">
+                  Click to job card to see details
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </main>
   )
