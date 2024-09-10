@@ -74,12 +74,6 @@ export default function JobsPage() {
     dispatch({ type: 'setSelectedJob', id: null })
   }
 
-  // useEffect(() => {
-  //   if (mobileScreen === 'details') {
-  //     view.current?.scrollIntoView({ block: 'start' })
-  //   }
-  // }, [mobileScreen]) // eslint-disable-line react-hooks/exhaustive-deps
-
   useEffect(() => {
     if (!initialListAreFetching) {
       if (data.length && selectedJobId !== data[0].id && !isMobile()) {

@@ -144,7 +144,10 @@ const JobView = forwardRef<HTMLDivElement, JobCardProps>(function JobView(
   const formattedDate = getDateLabel(date)
 
   useEffect(() => {
-    descriptionRef.current?.scrollIntoView()
+    const test = descriptionRef.current?.parentNode?.parentNode as HTMLDivElement
+
+    // make scroll to top of text
+    test?.scrollTo(0, 0)
   }, [description])
 
   return (
