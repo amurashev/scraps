@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Badge } from '@/components/ui/badge'
+import { cn } from '@/lib/utils'
 
 export default function FilterDropdown({
   label,
@@ -45,7 +46,9 @@ export default function FilterDropdown({
       <DropdownMenuTrigger asChild>
         <Button
           size="lg"
-          className="space-x-2"
+          className={cn('space-x-2', {
+            'ring-2 ring-ring': isOpened,
+          })}
           variant="outline"
           onClick={() => setIsOpened(true)}
         >

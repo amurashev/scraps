@@ -2,12 +2,15 @@
 
 import { useEffect, useRef, useReducer } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import JobList from './components/job-list'
 import FiltersList from './components/filters'
 import NoResult from './components/no-results'
 import SelectedPosition from './components/selected-position'
 import JobListSkeleton from './components/job-list-skeleton'
+
+import { jobsRoute } from '@/constants/routes'
 
 import defaultState from './state'
 import reducer from './reducers'
@@ -18,8 +21,11 @@ import { Separator } from '@/components/ui/separator'
 import { cn, isMobile } from '@/lib/utils'
 import BackButton from './components/back-button'
 import JobDetailsDrawer from './components/job-details-drawer'
+import { filterToQuery, queryToFilter } from './utils'
 
 export default function JobsPage() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
   const view = useRef<HTMLDivElement | null>(null)
   const [state, dispatch] = useReducer(reducer, defaultState)
   const [likedIds, setLikedIds] = useLocalStorageState<string[]>('likedJobs', {
@@ -36,9 +42,9 @@ export default function JobsPage() {
 
   const handleLikeClick = (id: string) => {
     if (likedIds.includes(id)) {
-      setLikedIds(likedIds.filter((item) => item !== id))
+      setLikedIds((oldValues) => oldValues.filter((item) => item !== id))
     } else {
-      setLikedIds([...likedIds, id])
+      setLikedIds((oldValues) => [...oldValues, id])
     }
   }
 
@@ -47,14 +53,16 @@ export default function JobsPage() {
   }
 
   const handleApplyFilter = async (newValue: Partial<State['filter']>) => {
+    const actualFilter = {
+      ...filter,
+      ...newValue,
+    }
+
     dispatch({ type: 'setFilterValue', value: newValue })
     dispatch({ type: 'setInitialListFetchStatus', value: true })
     dispatch({ type: 'setSelectedJob', id: null })
 
-    const filteredPositions = await fetchJobsList({
-      ...filter,
-      ...newValue,
-    })
+    const filteredPositions = await fetchJobsList(actualFilter)
 
     dispatch({ type: 'addJobsToList', payload: filteredPositions })
     dispatch({ type: 'setInitialListFetchStatus', value: false })
@@ -74,6 +82,18 @@ export default function JobsPage() {
     dispatch({ type: 'setSelectedJob', id: null })
   }
 
+  const handleApply = () => {
+    console.warn('handleApply')
+  }
+
+  useEffect(() => {
+    router.push(
+      jobsRoute.getUrl({
+        query: filterToQuery(filter),
+      })
+    )
+  }, [filter]) // eslint-disable-line react-hooks/exhaustive-deps
+
   useEffect(() => {
     if (!initialListAreFetching) {
       if (data.length && selectedJobId !== data[0].id && !isMobile()) {
@@ -83,19 +103,61 @@ export default function JobsPage() {
   }, [initialListAreFetching]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    const initData = async () => {
-      dispatch({ type: 'setInitialListFetchStatus', value: true })
-
-      const newJobs = await fetchJobsList(filter)
-      dispatch({ type: 'addJobsToList', payload: newJobs })
-      dispatch({ type: 'setInitialListFetchStatus', value: false })
-    }
-
-    document.addEventListener('keydown', function (e) {
+    const keyboardEvents = function (e: KeyboardEvent) {
       if (e.key === 'Escape') {
         dispatch({ type: 'setSelectedJob', id: null })
       }
-    })
+
+      if (e.key === 'f' && selectedJobId) {
+        handleLikeClick(selectedJobId)
+      }
+
+      if (e.key === 'Enter' && selectedJobId) {
+        handleApply()
+      }
+
+      if (e.key === 'ArrowDown' && selectedJobId) {
+        e.preventDefault()
+        const index = data.findIndex((item) => item.id === selectedJobId)
+
+        if (index >= 0 && data[index + 1]) {
+          handleItemClick(data[index + 1].id)
+        }
+      }
+
+      if (e.key === 'ArrowUp' && selectedJobId) {
+        e.preventDefault()
+        const index = data.findIndex((item) => item.id === selectedJobId)
+
+        if (index >= 0 && data[index - 1]) {
+          handleItemClick(data[index - 1].id)
+        }
+      }
+    }
+
+    document.addEventListener('keydown', keyboardEvents)
+
+    return () => {
+      document.removeEventListener('keydown', keyboardEvents)
+    }
+  }, [selectedJobId, likedIds]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    const initData = async () => {
+      const queryFilter = queryToFilter(searchParams)
+
+      const finalFilters = {
+        ...filter,
+        ...queryFilter,
+      }
+
+      dispatch({ type: 'setFilterValue', value: finalFilters })
+      dispatch({ type: 'setInitialListFetchStatus', value: true })
+
+      const newJobs = await fetchJobsList(finalFilters)
+      dispatch({ type: 'addJobsToList', payload: newJobs })
+      dispatch({ type: 'setInitialListFetchStatus', value: false })
+    }
 
     initData()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
@@ -156,6 +218,7 @@ export default function JobsPage() {
                   selectedPosition={selectedPosition}
                   isLiked={likedIds.includes(selectedPosition.id)}
                   onLikeClick={() => handleLikeClick(selectedPosition.id)}
+                  onApplyClick={handleApply}
                 />
               ) : (
                 <div className="text-xl h-full grid items-center justify-center text-muted-foreground">

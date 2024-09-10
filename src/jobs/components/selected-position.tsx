@@ -10,10 +10,12 @@ export default function SelectedPosition({
   isLiked,
   selectedPosition,
   onLikeClick,
+  onApplyClick,
 }: {
   isLiked: boolean
   selectedPosition: JobsPosition
   onLikeClick: () => void
+  onApplyClick: () => void
 }) {
   return (
     <Card className="md:overflow-hidden md:h-full">
@@ -26,7 +28,7 @@ export default function SelectedPosition({
         positionLevel={selectedPosition.level}
         locationType={selectedPosition.locationType}
         date="2024-08-12T16:15:53+02:00"
-        onApplyClick={() => {}}
+        onApplyClick={onApplyClick}
         isLiked={isLiked}
         onLikeClick={onLikeClick}
       />

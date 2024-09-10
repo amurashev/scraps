@@ -66,10 +66,11 @@ export default function Filters({
       <div
         className={cn(
           'flex flex-col px-3 py-2 space-y-1 bg-background border border-border rounded-md',
-          'md:pl-4 md:flex-row md:items-center md:space-x-3 md:space-y-0'
+          'md:pl-4 md:flex-row md:items-center md:space-x-3 md:space-y-0',
+          'focus-within:ring-2 focus-within:ring-ring'
         )}
       >
-        <div className="flex-grow">
+        <div className="flex-grow ">
           <FormInput
             icon={<IoSearch size={22} className="text-muted-foreground" />}
           >
