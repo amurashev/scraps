@@ -29,6 +29,10 @@ export const initialPositions: JobsPosition[] = [
     company: getRandomCompany(5),
     location: getRandomPosition(1).location,
   },
+  {
+    ...getRandomPosition(6),
+    company: getRandomCompany(3),
+  },
 ]
 
 export const possibleCities = initialPositions.map((item, key) => ({

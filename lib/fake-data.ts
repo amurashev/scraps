@@ -295,6 +295,32 @@ const positions: Position[] = [
 </ul>
     `,
   },
+  {
+    id: '7',
+    title: 'Social Media Manager',
+    skills: ['Copywriting', 'Email', 'Social Media', 'Web Content Writing'],
+    level: 'entry',
+    location: 'Lisbon, Portugal',
+    locationType: 'on-site',
+    type: 'full',
+    description: `
+     <h2>About Us:</h2>
+     <p>[Your Company Name] is a [brief description of your company – e.g., leading digital marketing agency, innovative tech company, etc.]. We are passionate about [company mission or values – e.g., creating compelling content, engaging with our audience, etc.]. We are looking for a creative and strategic Social Media Manager to elevate our online presence and drive engagement across social media platforms.</p>
+      <h2>Position Overview:</h2>
+      <p>The Social Media Manager will be responsible for developing and executing social media strategies to enhance our brand’s visibility and engagement. This role involves creating and curating content, managing social media accounts, and analyzing performance metrics to optimize our social media efforts. The ideal candidate will have a deep understanding of social media trends, excellent communication skills, and a passion for engaging with audiences.</p>
+      <h2>Qualifications:</h2>
+      <ul>
+      <li>Bachelor’s degree in Marketing, Communications, or a related field.</li>
+ <li>4 years of experience in social media management or a related role.</li>
+<li>Proven experience in developing and executing successful social media strategies and campaigns.</li>
+<li>Proficiency in social media platforms and tools (e.g., Hootsuite, Buffer, Sprout Social).</li>
+<li>Strong understanding of social media analytics and metrics (e.g., Google Analytics, platform-specific insights).</li>
+<li>Excellent written and verbal communication skills, with the ability to create engaging content.</li>
+<li>Creative thinking and problem-solving abilities.</li>
+<li>Ability to work independently and manage multiple projects and deadlines.</li>
+      </ul>
+    `,
+  },
 ]
 
 export const getRandomPosition = (index = 0) => {

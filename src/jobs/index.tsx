@@ -80,7 +80,7 @@ export default function JobsPage() {
   useEffect(() => {
     if (!initialListAreFetching) {
       if (data.length && selectedJobId !== data[0].id) {
-        handleItemClick(data[0].id)
+        dispatch({ type: 'setSelectedJob', id: data[0].id })
       }
     }
   }, [initialListAreFetching]) // eslint-disable-line react-hooks/exhaustive-deps
