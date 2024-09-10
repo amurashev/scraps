@@ -19,7 +19,7 @@ export default function SelectedPosition({
     <Card className="md:overflow-hidden md:h-full">
       <JobView
         {...selectedPosition}
-        position={selectedPosition.title}
+        title={selectedPosition.title}
         companyName={selectedPosition.company.name}
         companyAvatarUrl={selectedPosition.company.logo}
         positionTerm={selectedPosition.type}

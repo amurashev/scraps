@@ -17,6 +17,7 @@ import { fetchJobsList } from './requests'
 import { Separator } from '@/components/ui/separator'
 import { cn, isMobile } from '@/lib/utils'
 import BackButton from './components/back-button'
+import JobDetailsDrawer from './components/job-details-drawer'
 
 export default function JobsPage() {
   const view = useRef<HTMLDivElement | null>(null)
@@ -43,10 +44,6 @@ export default function JobsPage() {
 
   const handleItemClick = (id: string) => {
     dispatch({ type: 'setSelectedJob', id })
-
-    if (isMobile()) {
-      dispatch({ type: 'changeMobileScreen', screen: 'details' })
-    }
   }
 
   const handleApplyFilter = async (newValue: Partial<State['filter']>) => {
@@ -75,18 +72,17 @@ export default function JobsPage() {
 
   const handleBackToList = () => {
     dispatch({ type: 'setSelectedJob', id: null })
-    dispatch({ type: 'changeMobileScreen', screen: 'list' })
   }
 
-  useEffect(() => {
-    if (mobileScreen === 'details') {
-      view.current?.scrollIntoView({ block: 'start' })
-    }
-  }, [mobileScreen]) // eslint-disable-line react-hooks/exhaustive-deps
+  // useEffect(() => {
+  //   if (mobileScreen === 'details') {
+  //     view.current?.scrollIntoView({ block: 'start' })
+  //   }
+  // }, [mobileScreen]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!initialListAreFetching) {
-      if (data.length && selectedJobId !== data[0].id) {
+      if (data.length && selectedJobId !== data[0].id && !isMobile()) {
         dispatch({ type: 'setSelectedJob', id: data[0].id })
       }
     }
@@ -104,7 +100,6 @@ export default function JobsPage() {
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') {
         dispatch({ type: 'setSelectedJob', id: null })
-        dispatch({ type: 'changeMobileScreen', screen: 'list' })
       }
     })
 
@@ -177,6 +172,16 @@ export default function JobsPage() {
           </div>
         )}
       </div>
+
+      {selectedPosition && isMobile() && (
+        <JobDetailsDrawer
+          isOpen={Boolean(selectedJobId)}
+          selectedPosition={selectedPosition}
+          isLiked={likedIds.includes(selectedPosition.id)}
+          onLikeClick={() => handleLikeClick(selectedPosition.id)}
+          onClose={handleBackToList}
+        />
+      )}
     </main>
   )
 }

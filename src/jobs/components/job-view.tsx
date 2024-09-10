@@ -1,7 +1,7 @@
 'use client'
 
 import classNames from 'classnames'
-import { forwardRef } from 'react'
+import { forwardRef, useEffect, useRef } from 'react'
 import { formatDistance } from 'date-fns'
 import {
   IoLocationOutline,
@@ -24,7 +24,7 @@ export interface JobCardProps {
   /**
    * Job position name
    */
-  position: string
+  title: string
   /**
    * Company name
    */
@@ -122,7 +122,7 @@ function Salary({
 
 const JobView = forwardRef<HTMLDivElement, JobCardProps>(function JobView(
   {
-    position = '',
+    title = '',
     companyName = '',
     location,
     locationType = 'on-site',
@@ -140,7 +140,12 @@ const JobView = forwardRef<HTMLDivElement, JobCardProps>(function JobView(
   },
   ref
 ) {
+  const descriptionRef = useRef<HTMLDivElement>(null)
   const formattedDate = getDateLabel(date)
+
+  useEffect(() => {
+    descriptionRef.current?.scrollIntoView()
+  }, [description])
 
   return (
     <div
@@ -163,7 +168,7 @@ const JobView = forwardRef<HTMLDivElement, JobCardProps>(function JobView(
         </div>
 
         <div className="font-bold text-3xl flex-grow min-w-[1px] pr-8 mt-1">
-          {position}
+          {title}
         </div>
 
         <div className="mt-1 text-muted-foreground space-y-0.5 grid grid-cols-2">
@@ -202,7 +207,8 @@ const JobView = forwardRef<HTMLDivElement, JobCardProps>(function JobView(
         {description.length > 0 && (
           <ScrollArea className="pr-2">
             <div
-              className="mt-5 text-with-html"
+              ref={descriptionRef}
+              className="text-with-html pt-4"
               dangerouslySetInnerHTML={{
                 __html: description,
               }}

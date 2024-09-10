@@ -29,8 +29,6 @@ export type State = {
 
 export type Action =
   | { type: 'setSelectedJob'; id: string | null }
-  // Ui
-  | { type: 'changeMobileScreen'; screen: State['ui']['mobileScreen'] }
   // Filter
   | { type: 'setFilterValue'; value: Partial<State['filter']> }
   | { type: 'resetFilter' }

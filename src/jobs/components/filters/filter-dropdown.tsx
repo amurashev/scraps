@@ -64,7 +64,7 @@ export default function FilterDropdown({
       >
         <div className="p-2 space-y-3">
           {items.map((item) => (
-            <div className="flex items-center space-x-2 w-full">
+            <div className="flex items-center space-x-2 w-full" key={item.id}>
               <Checkbox
                 id={item.id}
                 defaultChecked={values[item.id]}
