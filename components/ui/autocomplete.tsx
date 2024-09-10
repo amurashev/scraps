@@ -8,12 +8,14 @@ import { cn } from '@/lib/utils'
 export default function AutoComplete({
   items,
   defaultValueId,
+  placeholder,
   onChange,
 }: {
   items: {
     id: string
     label: string
   }[]
+  placeholder?: string
   defaultValueId: string | null
   onChange: (id: string | null) => void
 }) {
@@ -47,6 +49,7 @@ export default function AutoComplete({
         <input
           className={cn('ring-0 outline-0 h-full w-full')}
           value={value}
+          placeholder={placeholder}
           onChange={(e) => {
             const newValue = e.target.value
 

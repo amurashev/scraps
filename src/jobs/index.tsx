@@ -1,10 +1,8 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useReducer } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 
-import { getRandomPosition, getRandomCompany } from '@/lib/fake-data'
-import { sleep } from '@/lib/utils'
 import { ScrollArea } from '@/components/ui/scroll-area'
 
 import JobList from './components/job-list'
@@ -13,80 +11,25 @@ import NoResult from './components/no-results'
 import SelectedPosition from './components/selected-position'
 import JobListSkeleton from './components/job-list-skeleton'
 
-import { JobsPosition, Filters } from './types'
-
-const initialPositions: JobsPosition[] = [
-  {
-    ...getRandomPosition(0),
-    company: getRandomCompany(0),
-  },
-  {
-    ...getRandomPosition(1),
-    company: getRandomCompany(1),
-  },
-  {
-    ...getRandomPosition(2),
-    company: getRandomCompany(2),
-  },
-  {
-    ...getRandomPosition(3),
-    company: getRandomCompany(3),
-  },
-  {
-    ...getRandomPosition(4),
-    company: getRandomCompany(4),
-    location: getRandomPosition(0).location,
-  },
-  {
-    ...getRandomPosition(5),
-    company: getRandomCompany(5),
-    location: getRandomPosition(1).location,
-  },
-]
-
-const possibleCities = initialPositions.map((item, key) => ({
-  id: key.toString(),
-  label: item.location,
-}))
-
-const getFakeData = async (filters: {
-  query: string
-  cityId: string | null
-}) => {
-  const { query, cityId } = filters
-  await sleep(1000) // Emulate request delay
-
-  const cityQuery = cityId ? possibleCities[Number(cityId)].label : null // TODO
-
-  return initialPositions.filter((item) => {
-    const isCityMatched = cityQuery ? item.location === cityQuery : true
-    const isQueryMatched = query
-      ? item.title.toLocaleLowerCase().includes(query.toLocaleLowerCase())
-      : true
-
-    return isCityMatched && isQueryMatched
-  })
-}
-
-const defaultFilters = {
-  query: '',
-  cityId: null,
-}
+import defaultState from './state'
+import reducer from './reducers'
+import { possibleCities } from './data'
+import { State } from './types'
+import { fetchJobsList } from './requests'
+import { Separator } from '@/components/ui/separator'
 
 export default function JobsPage() {
   const view = useRef<HTMLDivElement | null>(null)
-  const [isInitialListLoading, setIsInitialListLoading] = useState(true)
-  const [positions, setPositions] = useState<JobsPosition[]>([])
-  const [selectedJobId, setSelectedJobId] = useState<null | string>(null)
-
+  const [state, dispatch] = useReducer(reducer, defaultState)
   const [likedIds, setLikedIds] = useLocalStorageState<string[]>('likedJobs', {
     defaultValue: [],
   })
 
-  const [filters, setFilters] = useState<Filters>(defaultFilters)
+  const { selectedJobId, filter, jobs } = state
+  const { data, initialListAreFetching } = jobs
 
   const selectedPosition = selectedJobId
-    ? positions.find((item) => item.id === selectedJobId)
+    ? data.find((item) => item.id === selectedJobId)
     : undefined
 
   const handleLikeClick = (id: string) => {
@@ -99,76 +42,75 @@ export default function JobsPage() {
 
   const handleItemClick = (id: string) => {
     view.current?.scrollTo(0, 0)
-    setSelectedJobId(id)
+
+    dispatch({ type: 'setSelectedJob', id })
   }
 
-  const handleSearch = async (data: {
-    query: string
-    selectedCityId: string | null
-  }) => {
-    const { query, selectedCityId } = data
+  const handleApplyFilter = async (newValue: Partial<State['filter']>) => {
+    dispatch({ type: 'setFilterValue', value: newValue })
+    dispatch({ type: 'setInitialListFetchStatus', value: true })
+    dispatch({ type: 'setSelectedJob', id: null })
 
-    setFilters({
-      query,
-      cityId: selectedCityId,
+    const filteredPositions = await fetchJobsList({
+      ...filter,
+      ...newValue,
     })
-    setIsInitialListLoading(true)
-    setSelectedJobId(null)
 
-    const filteredPositions = await getFakeData({
-      query,
-      cityId: selectedCityId,
-    })
-    setPositions(filteredPositions)
-    setIsInitialListLoading(false)
+    dispatch({ type: 'addJobsToList', payload: filteredPositions })
+    dispatch({ type: 'setInitialListFetchStatus', value: false })
   }
 
   const handleReset = async () => {
-    setFilters(defaultFilters)
-    setIsInitialListLoading(true)
+    dispatch({ type: 'resetFilter' })
+    dispatch({ type: 'setInitialListFetchStatus', value: true })
 
-    await sleep(2000) // Emulate request delay
-    setPositions(initialPositions)
-    setIsInitialListLoading(false)
+    const newJobs = await fetchJobsList(defaultState.filter)
+
+    dispatch({ type: 'addJobsToList', payload: newJobs })
+    dispatch({ type: 'setInitialListFetchStatus', value: false })
   }
 
   useEffect(() => {
     const initData = async () => {
-      const data = await getFakeData(defaultFilters)
-      setPositions(data)
-      setIsInitialListLoading(false)
+      dispatch({ type: 'setInitialListFetchStatus', value: true })
+
+      const newJobs = await fetchJobsList(filter)
+      dispatch({ type: 'addJobsToList', payload: newJobs })
+      dispatch({ type: 'setInitialListFetchStatus', value: false })
     }
 
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') setSelectedJobId(null)
+      if (e.key === 'Escape') dispatch({ type: 'setSelectedJob', id: null })
     })
 
     initData()
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <main className="w-full bg-muted relative h-[calc(100vh-60px)] overflow-hidden">
-      <div className="max-w-5xl flex flex-col flex-grow relative mx-auto h-full py-4">
+    <main className="w-full bg-muted relative 1h-[calc(100vh-60px)] overflow-hidden">
+      <div className="max-w-5xl flex flex-col flex-grow relative mx-auto h-full py-4 px-2 md:px-4">
         <div className="">
           <FiltersList
-            filters={filters}
+            filter={filter}
             possibleCities={possibleCities}
-            onSearchClick={handleSearch}
+            onSearchClick={handleApplyFilter}
+            onApplyClick={handleApplyFilter}
           />
         </div>
-        {!positions.length && !isInitialListLoading && (
+        <Separator className="mt-4" />
+        {!data.length && !initialListAreFetching && (
           <NoResult onResetClick={handleReset} />
         )}
-        {(Boolean(positions.length) || isInitialListLoading) && (
-          <div className="flex flex-grow mt-4 py-0 min-h-0">
+        {(Boolean(data.length) || initialListAreFetching) && (
+          <div className="flex flex-grow mt-4 py-0 min-h-0 h-[calc(100vh-28px)]">
             <div className="w-[360px] flex-shrink-0 flex-grow-0">
               <ScrollArea className="h-full w-full pr-3">
-                {isInitialListLoading ? (
+                {initialListAreFetching ? (
                   <JobListSkeleton />
                 ) : (
                   <JobList
                     likedIds={likedIds}
-                    positions={positions}
+                    positions={data}
                     onItemClick={(id) => handleItemClick(id)}
                     selectedId={selectedJobId}
                   />
@@ -177,7 +119,7 @@ export default function JobsPage() {
             </div>
             <div className="flex-grow h-full ml-4" ref={view}>
               {selectedPosition ? (
-                <ScrollArea className="h-full w-full">
+                <ScrollArea className="h-full w-full pr-2">
                   <SelectedPosition
                     selectedPosition={selectedPosition}
                     isLiked={likedIds.includes(selectedPosition.id)}

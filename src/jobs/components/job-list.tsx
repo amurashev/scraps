@@ -38,9 +38,9 @@ export default function JobList({
               companyName={item.company.name}
               companyAvatarUrl={item.company.logo}
               location={item.location}
-              positionTerm="full"
-              positionLevel="entry"
-              locationType="remote"
+              positionTerm={item.type}
+              positionLevel={item.level}
+              locationType={item.locationType}
               date="2024-08-12T16:15:53+02:00"
               description=""
               isLiked={likedIds.includes(item.id)}

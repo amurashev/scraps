@@ -36,7 +36,7 @@ function Header(props: Props = {}) {
   const isHomePage = pathname === '/' || pathname === '/en' // TODO:
 
   return (
-    <header className="flex sticky px-6 h-[60px] top-0 z-50 w-full bg-background/95 backdrop-blur border-0 border-b-[1px] border-solid border-border print:hidden">
+    <header className="flex 1sticky px-6 h-[60px] top-0 z-50 w-full bg-background/95 backdrop-blur border-0 border-b-[1px] border-solid border-border print:hidden">
       <nav className="flex flex-1 items-center gap-6">
         <Link
           className={classNames(

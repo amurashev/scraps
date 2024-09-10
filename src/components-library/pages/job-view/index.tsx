@@ -24,7 +24,7 @@ const defaultProps: JobCardProps = {
   salaryType: position.salaryType,
   date: '2024-08-12T16:15:53+02:00',
   locationType: position.locationType || 'remote',
-  positionTerm: position.term || 'full',
+  positionTerm: position.type || 'full',
 }
 
 function ItemWrapper({ children }: { children: React.ReactNode }) {

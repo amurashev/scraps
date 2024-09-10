@@ -113,8 +113,8 @@ export type Position = {
   level: 'entry' | 'middle' | 'senior'
   salary?: number
   salaryType?: 'yearly' | 'monthly' | 'hourly'
-  locationType?: 'remote' | 'on-site' | 'hybrid'
-  term?: 'full' | 'part' | 'contract'
+  locationType: 'remote' | 'on-site' | 'hybrid'
+  type: 'full' | 'part' | 'contract'
 }
 
 const positions: Position[] = [
@@ -123,7 +123,9 @@ const positions: Position[] = [
     title: 'Business Analyst',
     skills: ['Business Process', 'Analytical Skills'],
     location: 'Paris, France',
+    locationType: 'remote',
     level: 'middle',
+    type: 'full',
     salary: 90000,
     salaryType: 'yearly',
     description: `<h2>About Us:</h2>
@@ -171,6 +173,8 @@ const positions: Position[] = [
     skills: ['SQL', 'AWS', 'Databases'],
     level: 'senior',
     location: 'London, UK',
+    locationType: 'on-site',
+    type: 'full',
     description: `
     <h2>About Us:</h2>
     <p>[Your Company Name] is a [brief description of your company – e.g., leading provider of data solutions, innovative tech company, etc.]. We are dedicated to leveraging data to drive strategic decision-making and deliver exceptional value to our clients. We are seeking a skilled and experienced Data Team Lead to oversee our data team and drive impactful data initiatives.</p>
@@ -194,6 +198,8 @@ const positions: Position[] = [
     skills: ['Copywriting', 'Email', 'Social Media', 'Web Content Writing'],
     level: 'middle',
     location: 'San Francisco, USA',
+    locationType: 'hybrid',
+    type: 'full',
     description: `
      <h2>About Us:</h2>
      <p>[Your Company Name] is a [brief description of your company – e.g., leading digital marketing agency, innovative tech company, etc.]. We are passionate about [company mission or values – e.g., creating compelling content, engaging with our audience, etc.]. We are looking for a creative and strategic Social Media Manager to elevate our online presence and drive engagement across social media platforms.</p>
@@ -218,6 +224,8 @@ const positions: Position[] = [
     skills: ['Artificial Intelligence', 'Deep Learning', 'Machine Learning'],
     level: 'senior',
     location: 'New York, USA',
+    locationType: 'on-site',
+    type: 'part',
     description: `
      <h2>About Us:</h2>
      <p>[Your Company Name] is a [brief description of your company – e.g., cutting-edge tech company, innovative data solutions provider, etc.]. We are dedicated to leveraging advanced technologies to drive transformative solutions and deliver exceptional value to our clients. We are seeking a visionary and experienced Head of Artificial Intelligence to lead our AI initiatives and shape the future of our AI capabilities.</p>
@@ -242,6 +250,8 @@ const positions: Position[] = [
     skills: ['Sales', 'Client Accounts'],
     level: 'middle',
     location: 'Berlin, Germany',
+    locationType: 'hybrid',
+    type: 'contract',
     description: `
      <h2>About Us:</h2>
      <p>[Your Company Name] is a [brief description of your company – e.g., leading provider of innovative products/services, dynamic tech firm, etc.]. We are committed to delivering exceptional value and building strong relationships with our clients. We are seeking a results-driven Sales Manager to lead our sales team and drive revenue growth.</p>
@@ -266,6 +276,8 @@ const positions: Position[] = [
     skills: ['Business Process', 'Analytical Skills'],
     level: 'middle',
     location: 'Lisbon, Portugal',
+    locationType: 'remote',
+    type: 'full',
     description: `
     <h2>About Us:</h2>
     <p>[Your Company Name] is a [brief description of your company – e.g., innovative technology firm, dynamic consumer goods company, etc.]. We are committed to [company mission or values – e.g., delivering cutting-edge solutions, fostering a creative work environment, etc.]. We are looking for a talented and strategic Marketing Manager to join our team and help drive our brand's growth and engagement.</p>
