@@ -47,7 +47,7 @@ export default function AutoComplete({
     <Popover.Root open={isReallyOpen} modal={false}>
       <div className="relative w-full h-full">
         <input
-          className={cn('ring-0 outline-0 h-full w-full')}
+          className={cn('ring-0 outline-0 bg-transparent h-full w-full')}
           value={value}
           placeholder={placeholder}
           onChange={(e) => {

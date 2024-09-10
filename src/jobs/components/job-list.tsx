@@ -28,7 +28,7 @@ export default function JobList({
             key={item.id}
             onClick={() => onItemClick(item.id)}
             className={cn('mt-3 first:mt-0', {
-              'border-ring bg-muted/5': isSelected,
+              'border-ring': isSelected,
               'border-border': !isSelected,
             })}
           >

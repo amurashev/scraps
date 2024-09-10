@@ -71,6 +71,14 @@ export default function JobsPage() {
   }
 
   useEffect(() => {
+    if (!initialListAreFetching) {
+      if (data.length && selectedJobId !== data[0].id) {
+        handleItemClick(data[0].id)
+      }
+    }
+  }, [initialListAreFetching]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
     const initData = async () => {
       dispatch({ type: 'setInitialListFetchStatus', value: true })
 
@@ -87,7 +95,7 @@ export default function JobsPage() {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <main className="w-full bg-muted relative 1h-[calc(100vh-60px)] overflow-hidden">
+    <main className="w-full bg-muted relative min-h-[100vh] overflow-hidden">
       <div className="max-w-5xl flex flex-col flex-grow relative mx-auto h-full py-4 px-2 md:px-4">
         <div className="">
           <FiltersList
@@ -102,9 +110,9 @@ export default function JobsPage() {
           <NoResult onResetClick={handleReset} />
         )}
         {(Boolean(data.length) || initialListAreFetching) && (
-          <div className="flex flex-grow mt-4 py-0 min-h-0 h-[calc(100vh-28px)]">
-            <div className="w-[360px] flex-shrink-0 flex-grow-0">
-              <ScrollArea className="h-full w-full pr-3">
+          <div className="flex flex-grow mt-0 py-0 min-h-0 h-[calc(100vh-28px)]">
+            <div className="w-[360px] pt-4 lg:border-r lg:border-border flex-shrink-0 flex-grow-0">
+              <ScrollArea className="h-full w-full pr-4">
                 {initialListAreFetching ? (
                   <JobListSkeleton />
                 ) : (
@@ -117,7 +125,7 @@ export default function JobsPage() {
                 )}
               </ScrollArea>
             </div>
-            <div className="flex-grow h-full ml-4" ref={view}>
+            <div className="flex-grow h-full ml-4 pt-4" ref={view}>
               {selectedPosition ? (
                 <ScrollArea className="h-full w-full pr-2">
                   <SelectedPosition

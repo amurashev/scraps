@@ -67,7 +67,7 @@ export default function Filters({
             icon={<IoSearch size={22} className="text-muted-foreground" />}
           >
             <input
-              className="ring-0 outline-0 h-full w-full"
+              className="ring-0 outline-0 h-full w-full bg-transparent"
               value={query}
               placeholder="Title or skill"
               onChange={(e) => setQuery(e.target.value)}
