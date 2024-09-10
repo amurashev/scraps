@@ -26,7 +26,7 @@ export default function JobDetailsDrawer({
   return (
     <Drawer open={isOpen} dismissible={false}>
       <DrawerTrigger>Open</DrawerTrigger>
-      <DrawerContent className="h-full">
+      <DrawerContent className="h-[calc(100%-4rem)]">
         <div className="overflow-y-hidden">
           <JobView
             {...selectedPosition}
