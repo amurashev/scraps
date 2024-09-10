@@ -15,7 +15,7 @@ export default function SelectedPosition({
   onLikeClick: () => void
 }) {
   return (
-    <Card>
+    <Card className="overflow-hidden h-full">
       <JobView
         {...selectedPosition}
         position={selectedPosition.title}

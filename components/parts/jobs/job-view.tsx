@@ -18,6 +18,7 @@ import { Badge } from '@/components/ui/badge'
 import { IconButton } from '@/components/ui/icon-button'
 import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 export interface JobCardProps {
   /**
@@ -142,8 +143,11 @@ const JobView = forwardRef<HTMLDivElement, JobCardProps>(function JobView(
   const formattedDate = getDateLabel(date)
 
   return (
-    <div ref={ref} className={classNames('relative w-full px-4 py-4')}>
-      <div>
+    <div
+      ref={ref}
+      className={classNames('w-full h-full px-4 py-4 min-h-0 relative')}
+    >
+      <div className="h-full min-h-0 flex flex-col">
         <div className="flex items-center space-x-2">
           <div className="flex-shrink-0">
             <Avatar type="square" size={6}>
@@ -162,52 +166,52 @@ const JobView = forwardRef<HTMLDivElement, JobCardProps>(function JobView(
           {position}
         </div>
 
-        <div>
-          <div className="mt-1 text-muted-foreground space-y-0.5 grid grid-cols-2">
-            <div className="flex items-center flex-shrink-0 gap-2">
-              <IoBusinessOutline size={14} />
-              <div>{locationTypeLabel[locationType]}</div>
-            </div>
-            <div className="flex items-center flex-shrink-0 gap-2">
-              <IoLocationOutline size={14} />
-              <div>{location}</div>
-            </div>
-
-            <div className="flex items-center flex-shrink-0 gap-2">
-              <IoBriefcaseOutline size={14} />
-              <div>{positionTermLabel[positionTerm]}</div>
-            </div>
-
-            <div className="flex items-center flex-shrink-0 gap-2">
-              <IoPersonOutline size={14} />
-              <div>{positionLevelLabel[positionLevel]}</div>
-            </div>
-
-            {salary && (
-              <div className="flex items-center flex-shrink-0 gap-2">
-                <IoPricetagOutline size={14} />
-                <Salary salary={salary} salaryType={salaryType} />
-              </div>
-            )}
+        <div className="mt-1 text-muted-foreground space-y-0.5 grid grid-cols-2">
+          <div className="flex items-center flex-shrink-0 gap-2">
+            <IoBusinessOutline size={14} />
+            <div>{locationTypeLabel[locationType]}</div>
+          </div>
+          <div className="flex items-center flex-shrink-0 gap-2">
+            <IoLocationOutline size={14} />
+            <div>{location}</div>
           </div>
 
-          <div className="mt-3">
-            <Button onClick={() => onApplyClick?.()}>Apply now</Button>
+          <div className="flex items-center flex-shrink-0 gap-2">
+            <IoBriefcaseOutline size={14} />
+            <div>{positionTermLabel[positionTerm]}</div>
           </div>
 
-          <Separator className="mt-3" />
-          {description.length > 0 && (
+          <div className="flex items-center flex-shrink-0 gap-2">
+            <IoPersonOutline size={14} />
+            <div>{positionLevelLabel[positionLevel]}</div>
+          </div>
+
+          {salary && (
+            <div className="flex items-center flex-shrink-0 gap-2">
+              <IoPricetagOutline size={14} />
+              <Salary salary={salary} salaryType={salaryType} />
+            </div>
+          )}
+        </div>
+
+        <div className="mt-3">
+          <Button onClick={() => onApplyClick?.()}>Apply now</Button>
+        </div>
+
+        <Separator className="mt-3" />
+        {description.length > 0 && (
+          <ScrollArea className="pr-2">
             <div
               className="mt-5 text-with-html"
               dangerouslySetInnerHTML={{
                 __html: description,
               }}
             />
-          )}
+          </ScrollArea>
+        )}
 
-          <div className="text-sm text-muted-foreground mt-2">
-            {formattedDate}
-          </div>
+        <div className="text-sm text-muted-foreground mt-2">
+          {formattedDate}
         </div>
 
         {skills.length > 0 && (

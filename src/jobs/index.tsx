@@ -3,8 +3,6 @@
 import { useEffect, useRef, useReducer } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 
-import { ScrollArea } from '@/components/ui/scroll-area'
-
 import JobList from './components/job-list'
 import FiltersList from './components/filters'
 import NoResult from './components/no-results'
@@ -95,8 +93,8 @@ export default function JobsPage() {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <main className="w-full bg-muted relative min-h-[100vh] overflow-hidden">
-      <div className="max-w-5xl flex flex-col flex-grow relative mx-auto h-full py-4 px-2 md:px-4">
+    <main className="w-full bg-muted relative min-h-[100vh]">
+      <div className="max-w-5xl flex flex-col flex-grow mx-auto py-4 px-2 md:px-4">
         <div className="">
           <FiltersList
             filter={filter}
@@ -110,30 +108,29 @@ export default function JobsPage() {
           <NoResult onResetClick={handleReset} />
         )}
         {(Boolean(data.length) || initialListAreFetching) && (
-          <div className="flex flex-grow mt-0 py-0 min-h-0 h-[calc(100vh-28px)]">
-            <div className="w-[360px] pt-4 lg:border-r lg:border-border flex-shrink-0 flex-grow-0">
-              <ScrollArea className="h-full w-full pr-4">
-                {initialListAreFetching ? (
-                  <JobListSkeleton />
-                ) : (
-                  <JobList
-                    likedIds={likedIds}
-                    positions={data}
-                    onItemClick={(id) => handleItemClick(id)}
-                    selectedId={selectedJobId}
-                  />
-                )}
-              </ScrollArea>
+          <div className="flex flex-grow mt-0 py-0 min-h-0">
+            <div className="w-[360px] pt-4 flex-shrink-0 flex-grow-0">
+              {initialListAreFetching ? (
+                <JobListSkeleton />
+              ) : (
+                <JobList
+                  likedIds={likedIds}
+                  positions={data}
+                  onItemClick={(id) => handleItemClick(id)}
+                  selectedId={selectedJobId}
+                />
+              )}
             </div>
-            <div className="flex-grow h-full ml-4 pt-4" ref={view}>
+            <div
+              className="flex-grow ml-4 pt-4 sticky top-1 left-0 h-[calc(100vh-1rem)]"
+              ref={view}
+            >
               {selectedPosition ? (
-                <ScrollArea className="h-full w-full pr-2">
-                  <SelectedPosition
-                    selectedPosition={selectedPosition}
-                    isLiked={likedIds.includes(selectedPosition.id)}
-                    onLikeClick={() => handleLikeClick(selectedPosition.id)}
-                  />
-                </ScrollArea>
+                <SelectedPosition
+                  selectedPosition={selectedPosition}
+                  isLiked={likedIds.includes(selectedPosition.id)}
+                  onLikeClick={() => handleLikeClick(selectedPosition.id)}
+                />
               ) : (
                 <div className="text-xl h-full grid items-center justify-center text-muted-foreground">
                   Click to job card to see details
