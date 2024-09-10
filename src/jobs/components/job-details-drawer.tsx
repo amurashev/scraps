@@ -24,9 +24,9 @@ export default function JobDetailsDrawer({
   onClose: () => void
 }) {
   return (
-    <Drawer open={isOpen}>
+    <Drawer open={isOpen} dismissible={false}>
       <DrawerTrigger>Open</DrawerTrigger>
-      <DrawerContent className="h-[100vh]">
+      <DrawerContent className="h-full">
         <div className="overflow-y-hidden">
           <JobView
             {...selectedPosition}
