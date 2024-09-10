@@ -6,6 +6,8 @@ import { IoSearch, IoLocationOutline } from 'react-icons/io5'
 import { Button } from '@/components/ui/button'
 import AutoComplete from '@/components/ui/autocomplete'
 
+import { cn } from '@/lib/utils'
+
 import { experienceLevel, jobType, remote } from '../../data'
 import { JobLevel, JobLocationType, JobType, State } from '../../types'
 
@@ -61,7 +63,12 @@ export default function Filters({
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center p-2 pl-4 space-x-3 bg-background border border-border rounded-md">
+      <div
+        className={cn(
+          'flex flex-col px-3 py-2 space-y-1 bg-background border border-border rounded-md',
+          'md:pl-4 md:flex-row md:items-center md:space-x-3 md:space-y-0'
+        )}
+      >
         <div className="flex-grow">
           <FormInput
             icon={<IoSearch size={22} className="text-muted-foreground" />}
@@ -74,7 +81,10 @@ export default function Filters({
             />
           </FormInput>
         </div>
-        <span className="h-[36px] w-[1px] bg-border flex">&nbsp;</span>
+        <span className="h-[36px] w-[1px] bg-border  hidden md:flex">
+          &nbsp;
+        </span>
+        <span className="h-[1px] w-full bg-border flex md:hidden">&nbsp;</span>
         <div className="flex-grow">
           <FormInput
             icon={
@@ -101,7 +111,7 @@ export default function Filters({
           Search
         </Button>
       </div>
-      <div className="space-x-3">
+      <div className="flex gap-1 flex-wrap md:gap-3">
         <FilterDropdown
           label="Experience level"
           items={experienceLevel}

@@ -1,7 +1,8 @@
 'use client'
 
-import JobView from '@/components/parts/jobs/job-view'
 import { Card } from '@/components/ui/card'
+
+import JobView from './job-view'
 
 import { JobsPosition } from '../types'
 

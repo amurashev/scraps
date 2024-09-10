@@ -69,7 +69,7 @@ const menuStructure: {
   },
   {
     label: 'Jobs',
-    items: ['job-card', 'job-view'],
+    items: ['job-card'],
   },
   {
     label: 'Other',

@@ -15,6 +15,8 @@ import { possibleCities } from './data'
 import { State } from './types'
 import { fetchJobsList } from './requests'
 import { Separator } from '@/components/ui/separator'
+import { cn } from '@/lib/utils'
+import BackButton from './components/back-button'
 
 export default function JobsPage() {
   const view = useRef<HTMLDivElement | null>(null)
@@ -23,8 +25,9 @@ export default function JobsPage() {
     defaultValue: [],
   })
 
-  const { selectedJobId, filter, jobs } = state
+  const { selectedJobId, filter, jobs, ui } = state
   const { data, initialListAreFetching } = jobs
+  const { mobileScreen } = ui
 
   const selectedPosition = selectedJobId
     ? data.find((item) => item.id === selectedJobId)
@@ -42,6 +45,7 @@ export default function JobsPage() {
     view.current?.scrollTo(0, 0)
 
     dispatch({ type: 'setSelectedJob', id })
+    dispatch({ type: 'changeMobileScreen', screen: 'details' })
   }
 
   const handleApplyFilter = async (newValue: Partial<State['filter']>) => {
@@ -68,6 +72,11 @@ export default function JobsPage() {
     dispatch({ type: 'setInitialListFetchStatus', value: false })
   }
 
+  const handleBackToList = () => {
+    dispatch({ type: 'setSelectedJob', id: null })
+    dispatch({ type: 'changeMobileScreen', screen: 'list' })
+  }
+
   useEffect(() => {
     if (!initialListAreFetching) {
       if (data.length && selectedJobId !== data[0].id) {
@@ -86,7 +95,10 @@ export default function JobsPage() {
     }
 
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') dispatch({ type: 'setSelectedJob', id: null })
+      if (e.key === 'Escape') {
+        dispatch({ type: 'setSelectedJob', id: null })
+        dispatch({ type: 'changeMobileScreen', screen: 'list' })
+      }
     })
 
     initData()
@@ -109,7 +121,15 @@ export default function JobsPage() {
         )}
         {(Boolean(data.length) || initialListAreFetching) && (
           <div className="flex flex-grow mt-0 py-0 min-h-0">
-            <div className="w-[360px] pt-4 flex-shrink-0 flex-grow-0">
+            <div
+              className={cn(
+                'w-full pt-4 flex-shrink-0 flex-grow-0',
+                'md:w-[320px] lg:w-[360px]',
+                {
+                  'hidden md:block': mobileScreen === 'details',
+                }
+              )}
+            >
               {initialListAreFetching ? (
                 <JobListSkeleton />
               ) : (
@@ -122,9 +142,19 @@ export default function JobsPage() {
               )}
             </div>
             <div
-              className="flex-grow ml-4 pt-4 sticky top-1 left-0 h-[calc(100vh-1rem)]"
+              className={cn(
+                'flex-grow pt-4',
+                'md:block md:sticky md:top-1 md:h-[calc(100vh-1rem)] md:ml-4',
+                {
+                  hidden: mobileScreen === 'list',
+                }
+              )}
               ref={view}
             >
+              <div className="mb-2 md:hidden">
+                <BackButton onClick={handleBackToList} />
+              </div>
+
               {selectedPosition ? (
                 <SelectedPosition
                   selectedPosition={selectedPosition}

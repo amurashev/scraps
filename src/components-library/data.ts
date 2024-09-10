@@ -20,10 +20,6 @@ export const components: Record<
     description:
       'Display a job information with some details like: location, salary, position level',
   },
-  'job-view': {
-    name: 'Job View',
-    description: 'Display full job position description',
-  },
   'article-card-v-1': {
     name: 'Article Card (Type 1)',
     description: 'Display short information about article for some blogs',
