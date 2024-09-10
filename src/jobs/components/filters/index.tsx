@@ -145,6 +145,7 @@ export default function Filters({
 
         <Button
           variant="ghost"
+          size="lg"
           onClick={() =>
             onApplyClick({
               type: [],

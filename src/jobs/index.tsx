@@ -15,7 +15,7 @@ import { possibleCities } from './data'
 import { State } from './types'
 import { fetchJobsList } from './requests'
 import { Separator } from '@/components/ui/separator'
-import { cn } from '@/lib/utils'
+import { cn, isMobile } from '@/lib/utils'
 import BackButton from './components/back-button'
 
 export default function JobsPage() {
@@ -42,10 +42,11 @@ export default function JobsPage() {
   }
 
   const handleItemClick = (id: string) => {
-    view.current?.scrollTo(0, 0)
-
     dispatch({ type: 'setSelectedJob', id })
-    dispatch({ type: 'changeMobileScreen', screen: 'details' })
+
+    if (isMobile()) {
+      dispatch({ type: 'changeMobileScreen', screen: 'details' })
+    }
   }
 
   const handleApplyFilter = async (newValue: Partial<State['filter']>) => {
@@ -76,6 +77,12 @@ export default function JobsPage() {
     dispatch({ type: 'setSelectedJob', id: null })
     dispatch({ type: 'changeMobileScreen', screen: 'list' })
   }
+
+  useEffect(() => {
+    if (mobileScreen === 'details') {
+      view.current?.scrollIntoView({ block: 'start' })
+    }
+  }, [mobileScreen]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!initialListAreFetching) {
