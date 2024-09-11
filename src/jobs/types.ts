@@ -12,11 +12,14 @@ export type State = {
   selectedJobId: string | null
   ui: {
     mobileScreen: 'list' | 'details'
+    isApplyModalOpen: boolean
   }
   jobs: {
     data: JobsPosition[]
     initialListAreFetching: boolean
     nextListAreFetching: boolean
+    applied: string[]
+    ignored: string[]
   }
   filter: {
     query: string
@@ -29,11 +32,15 @@ export type State = {
 
 export type Action =
   | { type: 'setSelectedJob'; id: string | null }
+  // UI
+  | { type: 'setApplyModalOpen'; value: boolean }
   // Filter
   | { type: 'setFilterValue'; value: Partial<State['filter']> }
   | { type: 'resetFilter' }
-  // Conversations
+  // Jobs
   | { type: 'setInitialListFetchStatus'; value: boolean }
   | { type: 'setNextListFetchStatus'; value: boolean }
+  | { type: 'addAppliedJob'; id: string }
+  | { type: 'addIgnoredJob'; id: string }
   | { type: 'resetList' }
   | { type: 'addJobsToList'; payload: JobsPosition[] }

@@ -4,28 +4,31 @@ import { useEffect, useRef, useReducer } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 import { useRouter, useSearchParams } from 'next/navigation'
 
+import { useToast } from '@/components/ui/use-toast'
+import { Separator } from '@/components/ui/separator'
+
+import { jobsRoute } from '@/constants/routes'
+import { cn, isMobile } from '@/lib/utils'
+
 import JobList from './components/job-list'
 import FiltersList from './components/filters'
 import NoResult from './components/no-results'
 import SelectedPosition from './components/selected-position'
 import JobListSkeleton from './components/job-list-skeleton'
-
-import { jobsRoute } from '@/constants/routes'
+import JobDetailsDrawer from './components/job-details-drawer'
+import { ApplyDialog } from './components/apply-dialog'
 
 import defaultState from './state'
 import reducer from './reducers'
 import { possibleCities } from './data'
 import { State } from './types'
 import { fetchJobsList } from './requests'
-import { Separator } from '@/components/ui/separator'
-import { cn, isMobile } from '@/lib/utils'
-import BackButton from './components/back-button'
-import JobDetailsDrawer from './components/job-details-drawer'
 import { filterToQuery, queryToFilter } from './utils'
 
 export default function JobsPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const { toast } = useToast()
   const view = useRef<HTMLDivElement | null>(null)
   const [state, dispatch] = useReducer(reducer, defaultState)
   const [likedIds, setLikedIds] = useLocalStorageState<string[]>('likedJobs', {
@@ -33,12 +36,16 @@ export default function JobsPage() {
   })
 
   const { selectedJobId, filter, jobs, ui } = state
-  const { data, initialListAreFetching } = jobs
-  const { mobileScreen } = ui
+  const { data, initialListAreFetching, applied, ignored } = jobs
+  const { mobileScreen, isApplyModalOpen } = ui
 
   const selectedPosition = selectedJobId
     ? data.find((item) => item.id === selectedJobId)
     : undefined
+
+  const jobsToShow = data.filter(
+    (item) => !applied.includes(item.id) && !ignored.includes(item.id)
+  )
 
   const handleLikeClick = (id: string) => {
     if (likedIds.includes(id)) {
@@ -82,8 +89,52 @@ export default function JobsPage() {
     dispatch({ type: 'setSelectedJob', id: null })
   }
 
+  const onApplyClick = () => {
+    dispatch({ type: 'setApplyModalOpen', value: true })
+  }
+
   const handleApply = () => {
-    console.warn('handleApply')
+    dispatch({ type: 'setApplyModalOpen', value: false })
+
+    if (selectedPosition) {
+      toast({
+        title: `You have applied to ${selectedPosition?.title} position`,
+      })
+
+      const index = jobsToShow.findIndex((item) => item.id === selectedJobId)
+
+      if (index >= 0 && jobsToShow[index + 1]) {
+        handleItemClick(jobsToShow[index + 1].id)
+      } else {
+        dispatch({ type: 'setSelectedJob', id: null })
+      }
+
+      dispatch({ type: 'addAppliedJob', id: selectedPosition?.id })
+    }
+  }
+
+  const handleIgnore = () => {
+    if (!selectedPosition) {
+      return
+    }
+
+    toast({
+      title: `You have hidden ${selectedPosition?.title} position`,
+    })
+
+    const index = jobsToShow.findIndex((item) => item.id === selectedJobId)
+
+    if (index >= 0 && jobsToShow[index + 1]) {
+      handleItemClick(jobsToShow[index + 1].id)
+    } else {
+      dispatch({ type: 'setSelectedJob', id: null })
+    }
+
+    dispatch({ type: 'addIgnoredJob', id: selectedPosition?.id })
+  }
+
+  const onApplyModalClose = () => {
+    dispatch({ type: 'setApplyModalOpen', value: false })
   }
 
   useEffect(() => {
@@ -96,15 +147,19 @@ export default function JobsPage() {
 
   useEffect(() => {
     if (!initialListAreFetching) {
-      if (data.length && selectedJobId !== data[0].id && !isMobile()) {
-        dispatch({ type: 'setSelectedJob', id: data[0].id })
+      if (
+        jobsToShow.length &&
+        selectedJobId !== jobsToShow[0].id &&
+        !isMobile()
+      ) {
+        dispatch({ type: 'setSelectedJob', id: jobsToShow[0].id })
       }
     }
   }, [initialListAreFetching]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const keyboardEvents = function (e: KeyboardEvent) {
-      if (e.key === 'Escape') {
+      if (e.key === 'Escape' && !isApplyModalOpen) {
         dispatch({ type: 'setSelectedJob', id: null })
       }
 
@@ -113,24 +168,27 @@ export default function JobsPage() {
       }
 
       if (e.key === 'Enter' && selectedJobId) {
-        handleApply()
+        // if (!isApplyModalOpen) {
+        //   e.preventDefault()
+        //   onApplyClick()
+        // }
       }
 
       if (e.key === 'ArrowDown' && selectedJobId) {
         e.preventDefault()
-        const index = data.findIndex((item) => item.id === selectedJobId)
+        const index = jobsToShow.findIndex((item) => item.id === selectedJobId)
 
-        if (index >= 0 && data[index + 1]) {
-          handleItemClick(data[index + 1].id)
+        if (index >= 0 && jobsToShow[index + 1]) {
+          handleItemClick(jobsToShow[index + 1].id)
         }
       }
 
       if (e.key === 'ArrowUp' && selectedJobId) {
         e.preventDefault()
-        const index = data.findIndex((item) => item.id === selectedJobId)
+        const index = jobsToShow.findIndex((item) => item.id === selectedJobId)
 
-        if (index >= 0 && data[index - 1]) {
-          handleItemClick(data[index - 1].id)
+        if (index >= 0 && jobsToShow[index - 1]) {
+          handleItemClick(jobsToShow[index - 1].id)
         }
       }
     }
@@ -140,7 +198,7 @@ export default function JobsPage() {
     return () => {
       document.removeEventListener('keydown', keyboardEvents)
     }
-  }, [selectedJobId, likedIds]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [selectedJobId, likedIds, isApplyModalOpen]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const initData = async () => {
@@ -174,10 +232,10 @@ export default function JobsPage() {
           />
         </div>
         <Separator className="mt-4" />
-        {!data.length && !initialListAreFetching && (
+        {!jobsToShow.length && !initialListAreFetching && (
           <NoResult onResetClick={handleReset} />
         )}
-        {(Boolean(data.length) || initialListAreFetching) && (
+        {(Boolean(jobsToShow.length) || initialListAreFetching) && (
           <div className="flex flex-grow mt-0 py-0 min-h-0">
             <div
               className={cn(
@@ -193,7 +251,7 @@ export default function JobsPage() {
               ) : (
                 <JobList
                   likedIds={likedIds}
-                  positions={data}
+                  positions={jobsToShow}
                   onItemClick={(id) => handleItemClick(id)}
                   selectedId={selectedJobId}
                 />
@@ -209,16 +267,13 @@ export default function JobsPage() {
               )}
               ref={view}
             >
-              <div className="mb-2 md:hidden">
-                <BackButton onClick={handleBackToList} />
-              </div>
-
               {selectedPosition ? (
                 <SelectedPosition
                   selectedPosition={selectedPosition}
                   isLiked={likedIds.includes(selectedPosition.id)}
                   onLikeClick={() => handleLikeClick(selectedPosition.id)}
-                  onApplyClick={handleApply}
+                  onApplyClick={onApplyClick}
+                  onIgnoreClick={handleIgnore}
                 />
               ) : (
                 <div className="text-xl h-full grid items-center justify-center text-muted-foreground">
@@ -237,6 +292,16 @@ export default function JobsPage() {
           isLiked={likedIds.includes(selectedPosition.id)}
           onLikeClick={() => handleLikeClick(selectedPosition.id)}
           onClose={handleBackToList}
+        />
+      )}
+
+      {selectedPosition && (
+        <ApplyDialog
+          jobTitle={selectedPosition.title}
+          companyName={selectedPosition.company.name}
+          isOpen={isApplyModalOpen}
+          onClose={onApplyModalClose}
+          onApply={handleApply}
         />
       )}
     </main>

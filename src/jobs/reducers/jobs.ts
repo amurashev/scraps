@@ -20,6 +20,12 @@ function jobsReducer(state: State['jobs'], action: Action): State['jobs'] {
     case 'addJobsToList': {
       return { ...state, data: action.payload }
     }
+    case 'addAppliedJob': {
+      return { ...state, applied: [...state.applied, action.id] }
+    }
+    case 'addIgnoredJob': {
+      return { ...state, ignored: [...state.ignored, action.id] }
+    }
 
     default: {
       return state

@@ -72,6 +72,10 @@ export interface JobCardProps {
    * Handle apply button click
    */
   onApplyClick?: () => void
+  /**
+   * Handle ignore button click
+   */
+  onIgnoreClick?: () => void
 }
 
 const getDateLabel = (date: string | Date) =>
@@ -137,6 +141,7 @@ const JobView = forwardRef<HTMLDivElement, JobCardProps>(function JobView(
     isLiked = false,
     onLikeClick,
     onApplyClick,
+    onIgnoreClick,
   },
   ref
 ) {
@@ -203,8 +208,11 @@ const JobView = forwardRef<HTMLDivElement, JobCardProps>(function JobView(
           )}
         </div>
 
-        <div className="mt-3">
+        <div className="mt-3 space-x-2">
           <Button onClick={() => onApplyClick?.()}>Apply now</Button>
+          <Button variant="outline" onClick={() => onIgnoreClick?.()}>
+            Ignore
+          </Button>
         </div>
 
         <Separator className="mt-3" />
