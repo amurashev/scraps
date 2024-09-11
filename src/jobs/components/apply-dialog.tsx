@@ -36,6 +36,7 @@ export function ApplyDialog({
           e.stopPropagation()
           onClose()
         }}
+        data-test="jobs_applyDialog"
       >
         <DialogHeader>
           <DialogTitle>Apply to {jobTitle}</DialogTitle>
@@ -53,13 +54,18 @@ export function ApplyDialog({
               id="coverLetter"
               rows={8}
               onBlur={(e) => setText(e.target.value)}
+              data-test="jobs_applyDialog_coverLetter"
               placeholder="Hi! My name is [UserName] and here's a little bit about me and what I'm looking for..."
             />
           </div>
         </div>
 
         <DialogFooter>
-          <Button type="submit" onClick={() => onApply(text)}>
+          <Button
+            type="submit"
+            onClick={() => onApply(text)}
+            data-test="jobs_applyDialog_submit"
+          >
             Apply
           </Button>
         </DialogFooter>

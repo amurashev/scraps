@@ -70,7 +70,7 @@ export default function Filters({
           'focus-within:ring-2 focus-within:ring-ring'
         )}
       >
-        <div className="flex-grow ">
+        <div className="flex-grow">
           <FormInput
             icon={<IoSearch size={22} className="text-muted-foreground" />}
           >
@@ -78,6 +78,7 @@ export default function Filters({
               className="ring-0 outline-0 h-full w-full bg-transparent"
               value={query}
               placeholder="Title or skill"
+              data-test="jobs_filter_query"
               onChange={(e) => setQuery(e.target.value)}
             />
           </FormInput>
@@ -94,6 +95,7 @@ export default function Filters({
           >
             <AutoComplete
               placeholder="Select city"
+              dataTestPrefix="jobs_filter"
               defaultValueId={selectedCityId}
               items={possibleCities}
               onChange={(id) => setSelectedCityId(id)}
@@ -108,6 +110,7 @@ export default function Filters({
               cityId: selectedCityId,
             })
           }}
+          data-test="jobs_filter_search"
         >
           Search
         </Button>
@@ -117,6 +120,7 @@ export default function Filters({
           label="Experience level"
           items={experienceLevel}
           defaultValue={filter.level}
+          dataTestPrefix="jobs_filter_level"
           onApplyClick={(newValues) => {
             onApplyClick({
               level: newValues as JobLevel[],
@@ -127,6 +131,7 @@ export default function Filters({
           label="Remote"
           items={remote}
           defaultValue={filter.locationType}
+          dataTestPrefix="jobs_filter_remote"
           onApplyClick={(newValues) => {
             onApplyClick({
               locationType: newValues as JobLocationType[],
@@ -137,6 +142,7 @@ export default function Filters({
           label="Job type"
           items={jobType}
           defaultValue={filter.type}
+          dataTestPrefix="jobs_filter_jobType"
           onApplyClick={(newValues) => {
             onApplyClick({
               type: newValues as JobType[],
@@ -147,6 +153,7 @@ export default function Filters({
         <Button
           variant="ghost"
           size="lg"
+          data-test="jobs_filter_reset"
           onClick={() =>
             onApplyClick({
               type: [],

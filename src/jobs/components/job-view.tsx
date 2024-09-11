@@ -160,6 +160,7 @@ const JobView = forwardRef<HTMLDivElement, JobCardProps>(function JobView(
     <div
       ref={ref}
       className={classNames('w-full h-full px-4 py-4 min-h-0 relative')}
+      data-test="jobs_jobView"
     >
       <div className="h-full min-h-0 flex flex-col">
         <div className="flex items-center space-x-2">
@@ -176,7 +177,10 @@ const JobView = forwardRef<HTMLDivElement, JobCardProps>(function JobView(
           </div>
         </div>
 
-        <div className="font-bold text-3xl flex-grow min-w-[1px] pr-8 mt-1">
+        <div
+          className="font-bold text-3xl flex-grow min-w-[1px] pr-8 mt-1"
+          data-test="jobs_jobView_title"
+        >
           {title}
         </div>
 
@@ -209,8 +213,17 @@ const JobView = forwardRef<HTMLDivElement, JobCardProps>(function JobView(
         </div>
 
         <div className="mt-3 space-x-2">
-          <Button onClick={() => onApplyClick?.()}>Apply now</Button>
-          <Button variant="outline" onClick={() => onIgnoreClick?.()}>
+          <Button
+            onClick={() => onApplyClick?.()}
+            data-test="jobs_jobView_apply"
+          >
+            Apply now
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => onIgnoreClick?.()}
+            data-test="jobs_jobView_ignore"
+          >
             Ignore
           </Button>
         </div>
@@ -221,6 +234,7 @@ const JobView = forwardRef<HTMLDivElement, JobCardProps>(function JobView(
             <div
               ref={descriptionRef}
               className="text-with-html pt-4"
+              data-test="jobs_jobView_description"
               dangerouslySetInnerHTML={{
                 __html: description,
               }}

@@ -17,6 +17,7 @@ export default function FilterDropdown({
   label,
   items = [],
   defaultValue = [],
+  dataTestPrefix = '',
   onApplyClick,
 }: {
   label: string
@@ -25,6 +26,7 @@ export default function FilterDropdown({
     id: string
     label: string
   }[]
+  dataTestPrefix: string
   onApplyClick: (values: string[]) => void
 }) {
   const [isOpened, setIsOpened] = useState(false)
@@ -51,10 +53,13 @@ export default function FilterDropdown({
           })}
           variant="outline"
           onClick={() => setIsOpened(true)}
+          data-test={`${dataTestPrefix}_button`}
         >
           <span className="font-bold">{label}</span>
           {defaultValue.length > 0 && (
-            <Badge size="sm">{defaultValue.length}</Badge>
+            <Badge size="sm" data-test={`CI_${dataTestPrefix}_badge`}>
+              {defaultValue.length}
+            </Badge>
           )}
         </Button>
       </DropdownMenuTrigger>

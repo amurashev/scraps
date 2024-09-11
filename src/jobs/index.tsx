@@ -223,14 +223,12 @@ export default function JobsPage() {
   return (
     <main className="w-full bg-muted relative min-h-[100vh]">
       <div className="max-w-5xl flex flex-col flex-grow mx-auto py-4 px-2 md:px-4">
-        <div className="">
-          <FiltersList
-            filter={filter}
-            possibleCities={possibleCities}
-            onSearchClick={handleApplyFilter}
-            onApplyClick={handleApplyFilter}
-          />
-        </div>
+        <FiltersList
+          filter={filter}
+          possibleCities={possibleCities}
+          onSearchClick={handleApplyFilter}
+          onApplyClick={handleApplyFilter}
+        />
         <Separator className="mt-4" />
         {!jobsToShow.length && !initialListAreFetching && (
           <NoResult onResetClick={handleReset} />
@@ -245,6 +243,7 @@ export default function JobsPage() {
                   'hidden md:block': mobileScreen === 'details',
                 }
               )}
+              data-test="jobs_list"
             >
               {initialListAreFetching ? (
                 <JobListSkeleton />

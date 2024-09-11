@@ -30,6 +30,8 @@ export default function JobList({
             className={cn('mt-3 first:mt-0', {
               'ring-ring ring-2': isSelected,
             })}
+            data-test="jobs_list_item"
+            data-test-id={item.id}
           >
             <JobCard
               {...item}

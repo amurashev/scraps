@@ -9,6 +9,7 @@ export default function AutoComplete({
   items,
   defaultValueId,
   placeholder,
+  dataTestPrefix,
   onChange,
 }: {
   items: {
@@ -17,6 +18,7 @@ export default function AutoComplete({
   }[]
   placeholder?: string
   defaultValueId: string | null
+  dataTestPrefix: string
   onChange: (id: string | null) => void
 }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -50,6 +52,7 @@ export default function AutoComplete({
           className={cn('ring-0 outline-0 bg-transparent h-full w-full')}
           value={value}
           placeholder={placeholder}
+          data-test={`${dataTestPrefix}_autocomplete`}
           onChange={(e) => {
             const newValue = e.target.value
 
