@@ -163,9 +163,9 @@ export default function JobsPage() {
         dispatch({ type: 'setSelectedJob', id: null })
       }
 
-      if (e.key === 'f' && selectedJobId) {
-        handleLikeClick(selectedJobId)
-      }
+      // if (e.key === 'f' && selectedJobId) {
+      //   handleLikeClick(selectedJobId)
+      // }
 
       if (e.key === 'Enter' && selectedJobId) {
         // if (!isApplyModalOpen) {

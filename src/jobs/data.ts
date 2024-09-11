@@ -35,10 +35,14 @@ export const initialPositions: JobsPosition[] = [
   },
 ]
 
-export const possibleCities = initialPositions.map((item, key) => ({
-  id: key.toString(),
-  label: item.location,
-}))
+export const possibleCities = [
+  getRandomPosition(0).location,
+  getRandomPosition(1).location,
+  getRandomPosition(2).location,
+  getRandomPosition(3).location,
+  getRandomPosition(4).location,
+  getRandomPosition(5).location,
+].map((label, id) => ({ id: id.toString(), label }))
 
 export const experienceLevel: {
   id: JobLevel

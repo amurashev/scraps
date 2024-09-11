@@ -6,7 +6,7 @@ import { IoSearch, IoLocationOutline } from 'react-icons/io5'
 import { Button } from '@/components/ui/button'
 import AutoComplete from '@/components/ui/autocomplete'
 
-import { cn } from '@/lib/utils'
+import { cn, sleep } from '@/lib/utils'
 
 import { experienceLevel, jobType, remote } from '../../data'
 import { JobLevel, JobLocationType, JobType, State } from '../../types'
@@ -61,6 +61,8 @@ export default function Filters({
     }
   }, [filter]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  const selectedCity = possibleCities.find((item) => item.id === selectedCityId)
+
   return (
     <div className="space-y-3">
       <div
@@ -96,9 +98,19 @@ export default function Filters({
             <AutoComplete
               placeholder="Select city"
               dataTestPrefix="jobs_filter"
-              defaultValueId={selectedCityId}
-              items={possibleCities}
+              defaultValue={selectedCity ? selectedCity?.label : ''}
+              // items={possibleCities}
               onChange={(id) => setSelectedCityId(id)}
+              fetchData={async (str) => {
+                await sleep(2000)
+                return Promise.resolve(
+                  possibleCities.filter((item) =>
+                    item.label
+                      .toLocaleLowerCase()
+                      .includes(str.trim().toLocaleLowerCase())
+                  )
+                )
+              }}
             />
           </FormInput>
         </div>
