@@ -15,6 +15,7 @@ import {
   l18nRoute,
   lifeRoute,
   questionnaireRoute,
+  farmerRoute,
 } from '@/constants/routes'
 import BaseLayout from '@/components/layout/base'
 
@@ -49,6 +50,7 @@ const apps = [
   {
     title: 'Jobs',
     description: 'Simple example of using some components',
+    tags: ['Cypress'],
     href: jobsRoute.getUrl(),
   },
   {
@@ -61,6 +63,11 @@ const apps = [
     description:
       'An example of page with questionnaire. Myers-Briggs Type Indicator is used as example',
     href: questionnaireRoute.getUrl(),
+  },
+  {
+    title: 'Farmer game',
+    description: 'Lets try some frontend game dev',
+    href: farmerRoute.getUrl(),
   },
   // {
   //   title: 'Blog',

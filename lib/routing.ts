@@ -38,7 +38,7 @@ const addParamsToString = ({
 
   const queryString = new URLSearchParams(query).toString()
 
-  return `${finalStr}?${queryString}`
+  return `${finalStr}${queryString ? `?${queryString}` : ''}`
 }
 
 export type Route<RouteType extends BaseRouteType> = {
