@@ -1,4 +1,4 @@
-export default function Cabbage({ size = 24 }: { size: number }) {
+export default function Cabbage({ size = '100%' }: { size?: number | string }) {
   return (
     <svg
       width={size}

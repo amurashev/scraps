@@ -1,4 +1,4 @@
-export default function Corn({ size = 24 }: { size: number }) {
+export default function Corn({ size = '100%' }: { size?: number | string }) {
   return (
     <svg
       width={size}

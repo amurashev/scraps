@@ -1,11 +1,14 @@
-export type GridItem = {
+export type GridPoint = string
+
+export type CellState = {
   itemId: string
 }
-export type GridState = Record<string, GridItem>
+export type GridState = Record<GridPoint, CellState>
 
 export type State = {
   grid: GridState
   money: number
+  seeds: Record<string, number>
 }
 
 export type Entity = {
@@ -13,4 +16,4 @@ export type Entity = {
   name: string
 }
 
-export type Action = { type: 'setSelectedJob'; id: string | null }
+export type Action = { type: 'plantSeed'; id: string; point: GridPoint }

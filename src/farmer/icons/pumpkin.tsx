@@ -1,4 +1,4 @@
-export default function Pumpkin({ size = 24 }: { size: number }) {
+export default function Pumpkin({ size = '100%' }: { size?: number | string }) {
   return (
     <svg
       height={size}

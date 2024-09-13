@@ -1,45 +1,19 @@
 import { cn } from '@/lib/utils'
 
-import Carrot from './icons/carrot'
-import Cabbage from './icons/cabbage'
-import Pumpkin from './icons/pumpkin'
-import Corn from './icons/corn'
+import { GridPoint } from '../types'
+import { getCellPoint } from '../utils/cell'
+import { useStateContext } from '../context'
 
-import { GridState } from '../types'
+import Cell from './cell'
 
-const mapItemIcon = {
-  '1': <Carrot size={64} />,
-  '2': <Cabbage size={64} />,
-  '3': <Pumpkin size={52} />,
-  '4': <Corn size={58} />,
-}
-
-function SmallCell({
+function BigCell({
   isActive,
-  size,
-  children,
+  onPlantSeed,
 }: {
   isActive: boolean
-  size: number
-  children: React.ReactNode
+  onPlantSeed: (id: string, point: GridPoint) => void
 }) {
-  return (
-    <div
-      className={cn('h-full cursor-pointer flex items-center justify-center', {
-        'bg-[#92766c] hover:bg-[#92766c]/80': isActive,
-        // 'bg-gray-200/40': !isActive,
-      })}
-      style={{
-        width: `${size}%`,
-        height: `100%`,
-      }}
-    >
-      {children}
-    </div>
-  )
-}
-
-function BigCell({ isActive, state }: { isActive: boolean; state: GridState }) {
+  const { grid } = useStateContext()
   const rowsArray = [0, 1, 2]
   const size = 100 / rowsArray.length
   const size1 = 300
@@ -58,6 +32,7 @@ function BigCell({ isActive, state }: { isActive: boolean; state: GridState }) {
     >
       {rowsArray.map((row) => (
         <div
+          key={row}
           className={cn('w-full flex flex-row', {
             'divide-x-8 divide-[#b4937e]': isActive,
           })}
@@ -66,14 +41,17 @@ function BigCell({ isActive, state }: { isActive: boolean; state: GridState }) {
           }}
         >
           {rowsArray.map((col) => {
-            const cellState = state[`${row},${col}`]
+            const cellPoint = getCellPoint(row, col)
+            const cellState = grid[cellPoint]
 
             return (
-              <SmallCell key={col} size={size} isActive={isActive}>
-                {cellState
-                  ? mapItemIcon[cellState.itemId as keyof typeof mapItemIcon]
-                  : null}
-              </SmallCell>
+              <Cell
+                key={col}
+                size={size}
+                isActive={isActive}
+                cellState={cellState}
+                onPlantSeed={(id) => onPlantSeed(id, cellPoint)}
+              />
             )
           })}
         </div>
@@ -82,17 +60,24 @@ function BigCell({ isActive, state }: { isActive: boolean; state: GridState }) {
   )
 }
 
-export default function Grid({ state }: { state: GridState }) {
+export default function Grid({
+  onPlantSeed,
+}: {
+  onPlantSeed: (id: string, point: GridPoint) => void
+}) {
   // const rowsArray = Array.from({ length: 30 }, (_, i) => i + 1)
 
   return (
-    <div className="flex h-full justify-center items-center relative p-5">
-      <div className="flex flex-col divide-y-0 divide-[#b4937e] border-8 border-[#b4937e]">
+    <div className="flex h-full justify-center items-center relative p-5 ">
+      <div className="flex flex-col divide-y-0 divide-[#b4937e] border-8 border-[#b4937e] rounded-md">
         {[0].map((row) => (
-          <div className="flex flex-row divide-x-0 divide-[#b4937e]">
+          <div key={row} className="flex flex-row divide-x-0 divide-[#b4937e]">
             {[0].map((col) => (
-              <div>
-                <BigCell isActive={row === 0 && col === 0} state={state} />
+              <div key={col}>
+                <BigCell
+                  isActive={row === 0 && col === 0}
+                  onPlantSeed={onPlantSeed}
+                />
               </div>
             ))}
           </div>
