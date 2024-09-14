@@ -1,28 +1,40 @@
 'use client'
 
-import { useReducer } from 'react'
+import { useEffect } from 'react'
 
 import Grid from './components/grid'
 
-import defaultState from './state'
-import reducer from './reducers'
+import StoreProvider from './StoreProvider'
+import { useAppSelector, useAppDispatch } from './hooks'
+import { increaseDay } from './slices/day'
 
-import { StateContext } from './context'
+function App() {
+  const dispatch = useAppDispatch()
+  useAppSelector((state) => state.day)
 
-export default function FarmerPage() {
-  const [state, dispatch] = useReducer(reducer, defaultState)
+  console.warn('render')
 
-  console.warn(state)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      dispatch(increaseDay())
+    }, 3000)
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [dispatch])
 
   return (
-    <StateContext.Provider value={state}>
-      <main className="h-[calc(100vh-60px)] bg-[#bfda95]">
-        <Grid
-          onPlantSeed={(id, point) => {
-            dispatch({ type: 'plantSeed', id, point })
-          }}
-        />
-      </main>
-    </StateContext.Provider>
+    <main className="h-[calc(100vh-60px)]">
+      <Grid />
+    </main>
+  )
+}
+
+export default function FarmerPage() {
+  return (
+    <StoreProvider>
+      <App />
+    </StoreProvider>
   )
 }

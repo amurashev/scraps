@@ -1,3 +1,5 @@
+import { memo } from 'react'
+
 import Carrot from '../icons/carrot'
 import Cabbage from '../icons/cabbage'
 import Pumpkin from '../icons/pumpkin'
@@ -10,7 +12,13 @@ const mapItemIcon = {
   '4': Corn,
 }
 
-export default function ItemIcon({ id }: { id: string }) {
+export default memo(function ItemIcon({
+  size = '100%',
+  id,
+}: {
+  id: string
+  size?: string
+}) {
   const IconComponent = mapItemIcon[id as keyof typeof mapItemIcon]
-  return IconComponent ? <IconComponent /> : <div>null</div>
-}
+  return IconComponent ? <IconComponent size={size} /> : <div>null</div>
+})
