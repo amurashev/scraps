@@ -32,6 +32,7 @@ export default memo(function ProductItem({
         {
           'ring ring-primary': hasRing,
           'cursor-pointer': isClickable,
+          'cursor-auto': !isClickable,
         }
       )}
     >

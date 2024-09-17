@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 
 import Grid from './components/grid'
 // import Panel from './components/panel'
@@ -51,15 +51,16 @@ function App() {
         if (item.producing) {
           const { endTime, productId, cycles, power } = item.producing
           const itemData = entities[productId]
+          const warehouseId = '1' // TODO
 
           if (endTime < now) {
             dispatch(
               putToWarehouse({
-                warehouseId: '1',
+                warehouseId,
                 productId,
                 count: power,
               })
-            ) // TODO
+            )
 
             if (cycles === undefined || cycles > 1) {
               dispatch(
@@ -68,6 +69,7 @@ function App() {
                   productId,
                   cycles: cycles === undefined ? undefined : cycles - 1,
                   power,
+                  warehouseId: item.warehouseId as string,
                 })
               )
             } else {
@@ -109,21 +111,33 @@ function App() {
       <BuildingDetailsDialog
         isOpen={Boolean(farmDetailsId)}
         item={selectedFarm}
-        onClose={() => dispatch(toggleFarmDetailsModal(undefined))}
-        onApply={(productId) => {
-          if (farmDetailsId) {
-            dispatch(
-              startProducing({
-                farmId: farmDetailsId,
-                productId,
-                cycles: 1,
-                power: 8,
-              })
-            )
+        warehouses={warehouses}
+        onClose={useCallback(
+          () => dispatch(toggleFarmDetailsModal(undefined)),
+          [dispatch]
+        )}
+        onStop={useCallback(() => {
+          dispatch(endProducing({ farmId: farmDetailsId as string }))
+        }, [dispatch, farmDetailsId])}
+        onApply={useCallback(
+          (data) => {
+            const { productId, cycles, power, warehouseId } = data
+            if (farmDetailsId) {
+              dispatch(
+                startProducing({
+                  farmId: farmDetailsId,
+                  productId,
+                  cycles,
+                  power,
+                  warehouseId,
+                })
+              )
 
-            dispatch(toggleFarmDetailsModal(undefined))
-          }
-        }}
+              dispatch(toggleFarmDetailsModal(undefined))
+            }
+          },
+          [dispatch, farmDetailsId]
+        )}
       />
       <Toaster />
     </main>

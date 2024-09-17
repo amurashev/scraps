@@ -53,7 +53,9 @@ export default memo(function WarehouseCell({
             </div>
           </div>
         </TooltipTrigger>
-        <TooltipContent>{name}</TooltipContent>
+        <TooltipContent>
+          <h3 className="font-bold text-base">{name}</h3>
+        </TooltipContent>
       </Tooltip>
     </TooltipProvider>
   )

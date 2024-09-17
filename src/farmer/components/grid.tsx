@@ -28,30 +28,28 @@ export default function Grid() {
       {farms.map((item) => {
         return (
           <div
+            key={item.id}
             className="p-[1px]"
             style={{
               width: `${3 * cellSize}px`,
               height: `${3 * cellSize}px`,
             }}
           >
-            <Farm key={item.id} farm={item} />
+            <Farm farm={item} />
           </div>
         )
       })}
       {warehouses.map((item) => {
         return (
           <div
+            key={item.id}
             className="p-[1px]"
             style={{
               width: `${cellSize}px`,
               height: `${cellSize}px`,
             }}
           >
-            <Warehouse
-              key={item.id}
-              item={item}
-              onClick={() => onItemClick(item.id)}
-            />
+            <Warehouse item={item} onClick={() => onItemClick(item.id)} />
           </div>
         )
       })}

@@ -16,6 +16,7 @@ import ItemIcon from '../../products/item-icon'
 import FarmIcon from '../../../icons/buildings/farm'
 
 import ProgressBar from './progress-bar'
+import entities from '@/src/farmer/data/items'
 
 type Props = {
   producing?: FarmProducing
@@ -59,8 +60,9 @@ export default memo(function Cell({
   }
 
   return (
-    <button
-      type="button"
+    <div
+      role="button"
+      tabIndex={0}
       className={cn(
         'h-1/3 w-1/3 flex items-center justify-center relative p-4 focus-visible:outline-none',
         {
@@ -87,7 +89,23 @@ export default memo(function Cell({
             <TooltipTrigger>
               <FarmIcon />
             </TooltipTrigger>
-            <TooltipContent>{farmName}</TooltipContent>
+            <TooltipContent>
+              <h3 className="font-bold text-base">{farmName}</h3>
+              {producing && (
+                <ul className="text-sm">
+                  <li>
+                    <b>Produces:</b> {entities[producing.productId].name}
+                  </li>
+                  <li>
+                    <b>Cycles:</b>{' '}
+                    {!producing.cycles ? 'Infinity' : producing.cycles}
+                  </li>
+                  <li>
+                    <b>Power:</b> {producing.power}
+                  </li>
+                </ul>
+              )}
+            </TooltipContent>
           </Tooltip>
         </TooltipProvider>
       ) : (
@@ -104,6 +122,6 @@ export default memo(function Cell({
           <ProgressBar progress={progress} />
         </div>
       )}
-    </button>
+    </div>
   )
 }, arePropsEqual)

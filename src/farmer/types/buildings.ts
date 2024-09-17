@@ -15,6 +15,7 @@ export type FarmProducing = {
   endTime: number
   power: number
   cycles: number | undefined
+  status: 'active' | 'noWarehouse' | 'warehouseIsFull'
 }
 
 export type Farm = Building & {

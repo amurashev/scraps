@@ -1,6 +1,11 @@
 import { useMemo, memo } from 'react'
 
-import { Dialog, DialogContent, DialogHeader } from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 
 import WarehouseIcon from '../icons/buildings/warehouse'
 
@@ -48,9 +53,11 @@ export default memo(function WarehouseDetailsDialog({
               <div className="flex-shrink-0">
                 <WarehouseIcon size={124} />
               </div>
-              <DialogHeader className="font-semibold">{name}</DialogHeader>
+              <DialogHeader className="font-semibold">
+                <DialogTitle>{name}</DialogTitle>
+              </DialogHeader>
 
-              <div className="font-bold text-xl">
+              <div className="font-bold text-xl mt-1">
                 {currentCapacity}/{capacity}
               </div>
             </div>

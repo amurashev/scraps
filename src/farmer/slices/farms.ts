@@ -26,20 +26,23 @@ const slice = createSlice({
         productId: string
         cycles: number | undefined
         power: number
+        warehouseId: string
       }>
     ) => {
-      const { farmId, productId, cycles, power } = action.payload
+      const { farmId, productId, cycles, power, warehouseId } = action.payload
       const { growthTime } = entities[productId]
       const now = getNow()
       const timeFinal = Math.floor(
-        getRandomInteger(growthTime[0], growthTime[1]) * 0.05
+        getRandomInteger(growthTime[0], growthTime[1]) * 0.03
       )
 
       return state.map((item) => {
         if (item.id === farmId) {
           return {
             ...item,
+            warehouseId,
             producing: {
+              status: 'active',
               productId,
               startTime: now,
               endTime: now + timeFinal,
@@ -73,6 +76,7 @@ const slice = createSlice({
               endTime: now + timeFinal,
               power: 8,
               cycles: undefined,
+              status: 'active',
             },
           } satisfies Farm
         }
