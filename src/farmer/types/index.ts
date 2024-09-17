@@ -1,3 +1,5 @@
+import { Farm, Warehouse } from './buildings'
+
 export type GridPoint = string
 
 export type CellState = {
@@ -13,10 +15,17 @@ export type State = {
   grid: GridState
   seeds: Record<string, number>
   barn: Record<string, number>
+  ui: {
+    farmDetailsId?: string
+    warehouseDetailsId?: string
+  }
+  farms: Farm[]
+  warehouses: Warehouse[]
 }
 
-export type Entity = {
+export type Product = {
   id: string
   name: string
   growthTime: [number, number]
+  price: number
 }

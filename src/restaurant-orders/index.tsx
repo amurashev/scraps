@@ -1,5 +1,7 @@
 /* eslint-disable camelcase, no-underscore-dangle */
 
+import { Toaster } from '@/components/ui/toaster'
+
 import Controller from './controller'
 
 import { RESTAURANT_PRODUCTS_SHOTS_QUERY } from '@/sanity/lib/queries'
@@ -29,5 +31,10 @@ export default async function RestaurantOrdersPage() {
     (a, b) => Number(new Date(a.created_at)) - Number(new Date(b.created_at))
   )
 
-  return <Controller orders={orders || []} productsObject={productsObject} />
+  return (
+    <>
+      <Controller orders={orders || []} productsObject={productsObject} />
+      <Toaster />
+    </>
+  )
 }

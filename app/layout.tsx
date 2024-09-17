@@ -1,7 +1,6 @@
 import { Inter } from 'next/font/google'
 
 import { cn } from '@/lib/utils'
-import { Toaster } from '@/components/ui/toaster'
 
 import './globals.css' // eslint-disable-line import/extensions
 
@@ -20,7 +19,6 @@ export default async function RootLayout({
         className={cn('bg-background font-sans antialiased', inter.className)}
       >
         {children}
-        <Toaster />
       </body>
     </html>
   )

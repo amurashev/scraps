@@ -1,4 +1,8 @@
-export default function Carrot({ size = '100%' }: { size?: number | string }) {
+export default function CarrotIcon({
+  size = '100%',
+}: {
+  size?: number | string
+}) {
   return (
     <svg
       width={size}

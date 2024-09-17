@@ -1,15 +1,15 @@
 import { memo } from 'react'
 
-import Carrot from '../icons/carrot'
-import Cabbage from '../icons/cabbage'
-import Pumpkin from '../icons/pumpkin'
-import Corn from '../icons/corn'
+import Carrot from '../../icons/products/carrot'
+import Cabbage from '../../icons/products/cabbage'
+import Pumpkin from '../../icons/products/pumpkin'
+import Corn from '../../icons/products/corn'
 
 const mapItemIcon = {
   '1': Carrot,
   '2': Cabbage,
-  '3': Pumpkin,
-  '4': Corn,
+  '3': Corn,
+  '4': Pumpkin,
 }
 
 export default memo(function ItemIcon({

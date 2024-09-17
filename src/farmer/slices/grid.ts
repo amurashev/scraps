@@ -18,7 +18,8 @@ const slice = createSlice({
       const { id, point } = action.payload
       const { growthTime } = entities[id]
       const now = getNow()
-      const growthTimeFinal = getRandomInteger(growthTime[0], growthTime[1]) * 0.01
+      const growthTimeFinal =
+        getRandomInteger(growthTime[0], growthTime[1]) * 0.05
 
       state[point] = {
         itemId: id,

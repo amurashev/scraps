@@ -1,4 +1,8 @@
-export default function Cabbage({ size = '100%' }: { size?: number | string }) {
+export default function CabbageIcon({
+  size = '100%',
+}: {
+  size?: number | string
+}) {
   return (
     <svg
       width={size}

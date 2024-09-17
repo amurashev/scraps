@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 
 import { useToast } from '@/components/ui/use-toast'
 import { Separator } from '@/components/ui/separator'
+import { Toaster } from '@/components/ui/toaster'
 
 import { jobsRoute } from '@/constants/routes'
 import { cn, isMobile } from '@/lib/utils'
@@ -303,6 +304,7 @@ export default function JobsPage() {
           onApply={handleApply}
         />
       )}
+      <Toaster />
     </main>
   )
 }

@@ -1,4 +1,4 @@
-import { useMemo, useState, memo } from 'react'
+import { useState, memo } from 'react'
 import { IoTrashOutline } from 'react-icons/io5'
 
 import { cn, sleep } from '@/lib/utils'
@@ -9,18 +9,18 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-import { getNow } from '../../utils/time'
-import { CellState, State } from '../../types'
+import { getNow } from '../../../utils/time'
+import { CellState } from '../../../types'
 
 import ProgressBar from './progress-bar'
 import SeedsDropDown from './seeds-dropdown'
-import ItemIcon from '../icons'
+import ItemIcon from '../../products/item-icon'
 
 type Props = {
   isActive: boolean
   cellSize: number
-  seeds: State['seeds']
   cellState: CellState | null
+  availableMoney: number
   onPlantSeed: (id: string) => void
   onRemovePlant: () => void
   onCollectHarvest: () => void
@@ -41,7 +41,7 @@ export default memo(function Cell({
   isActive,
   cellSize,
   cellState,
-  seeds,
+  availableMoney,
   onPlantSeed,
   onRemovePlant,
   onCollectHarvest,
@@ -65,15 +65,7 @@ export default memo(function Cell({
 
   const isGrowthEnd = progress === 100
 
-  const possibleSeedsId = useMemo(
-    () =>
-      Object.keys(seeds)
-        .filter((id) => seeds[id])
-        .map((id) => id),
-    [seeds]
-  )
-
-  // console.warn('Cell:render', progress)
+  const possibleSeedsId = ['1', '2']
 
   return (
     <DropdownMenu open={isOpened}>
@@ -82,11 +74,12 @@ export default memo(function Cell({
           role="button"
           tabIndex={0}
           className={cn(
-            'h-full flex items-center justify-center relative p-4',
+            'h-full flex items-center justify-center relative p-4 focus-visible:outline-none',
             {
               'bg-[#92766c]': isActive && !isGrowthEnd,
               'bg-[#738a75]': isActive && isGrowthEnd,
-              'cursor-pointer hover:bg-[#92766c]/80': !hasCellState,
+              'bg-[#b4b092]': !isActive,
+              'cursor-pointer hover:bg-[#92766c]/80': !hasCellState && isActive,
             }
           )}
           style={{
@@ -96,7 +89,7 @@ export default memo(function Cell({
           onClick={() => {
             if (isGrowthEnd) {
               onCollectHarvest()
-            } else {
+            } else if (isActive) {
               setIsOpened(true)
             }
           }}
@@ -124,7 +117,7 @@ export default memo(function Cell({
         {!hasCellState ? (
           <SeedsDropDown
             possibleSeedsId={possibleSeedsId}
-            seeds={seeds}
+            availableMoney={availableMoney}
             onClick={async (itemId) => {
               setIsOpened(false)
               await sleep(100) // TODO: because of animation
