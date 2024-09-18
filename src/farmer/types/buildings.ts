@@ -11,8 +11,10 @@ export type Warehouse = Building & {
 
 export type FarmProducing = {
   productId: string
-  startTime: number
-  endTime: number
+  // startTime: number
+  // endTime: number
+  startDay: number
+  endDay: number
   power: number
   cycles: number | undefined
   status: 'active' | 'noWarehouse' | 'warehouseIsFull'

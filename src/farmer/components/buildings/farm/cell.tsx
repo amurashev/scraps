@@ -9,7 +9,6 @@ import {
 
 import { cn } from '@/lib/utils'
 
-import { getNow } from '../../../utils/time'
 import { FarmProducing } from '../../../types/buildings'
 
 import ItemIcon from '../../products/item-icon'
@@ -17,12 +16,14 @@ import FarmIcon from '../../../icons/buildings/farm'
 
 import ProgressBar from './progress-bar'
 import entities from '@/src/farmer/data/items'
+import { Day } from '@/src/farmer/types'
 
 type Props = {
   producing?: FarmProducing
   isBeingUsed: boolean
   isCenter: boolean
   farmName: string
+  day: Day
   onBaseClick: () => void
 }
 
@@ -42,18 +43,17 @@ export default memo(function Cell({
   isBeingUsed,
   isCenter,
   farmName,
+  day,
   onBaseClick,
 }: Props) {
-  // const hasCellState = Boolean(producing)
-
   let progress = 0
   let iconSize = MIN_ICON_SIZE
 
   if (producing) {
-    const { startTime, endTime } = producing
-    const now = getNow()
-    const dGrowth = endTime - startTime
-    const dNow = endTime - now
+    const { startDay, endDay } = producing
+
+    const dGrowth = endDay - startDay
+    const dNow = endDay - day
 
     progress = Math.floor(Math.min((100 * (dGrowth - dNow)) / dGrowth, 100))
     iconSize = MIN_ICON_SIZE + ((100 - MIN_ICON_SIZE) * progress) / 100
@@ -102,6 +102,9 @@ export default memo(function Cell({
                   </li>
                   <li>
                     <b>Power:</b> {producing.power}
+                  </li>
+                  <li>
+                    <b>End in:</b> {producing.endDay - day} days
                   </li>
                 </ul>
               )}

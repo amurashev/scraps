@@ -1,4 +1,5 @@
 import { useMemo, useState, memo, useEffect } from 'react'
+import * as SliderPrimitive from '@radix-ui/react-slider'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -17,11 +18,14 @@ import {
 } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
 
-import entities from '../data/items'
-import FarmIcon from '../icons/buildings/farm'
+import entities from '../../data/items'
+import FarmIcon from '../../icons/buildings/farm'
 
-import ProductItem from './products'
-import { Farm, FarmProducing } from '../types/buildings'
+import ProductItem from '../products'
+import { Farm, FarmProducing } from '../../types/buildings'
+import { Day } from '../../types'
+import { cn } from '@/lib/utils'
+import { Separator } from '@/components/ui/separator'
 
 const CYCLES_INF = 'inf'
 
@@ -55,8 +59,8 @@ function AddProducingForm({
   )
 
   return (
-    <div className="flex flex-col gap-3">
-      <div className="flex gap-3">
+    <div className="flex flex-col gap-4">
+      <div className="flex gap-2 justify-start">
         {possibleItemsId.map((itemId) => (
           <ProductItem
             key={itemId}
@@ -67,28 +71,69 @@ function AddProducingForm({
         ))}
       </div>
 
-      <div className="grid grid-cols-3 gap-2 items-center">
-        <Label>Cycles count:</Label>
-        <Select
-          value={cycles?.toString()}
-          onValueChange={(value) => onCycleChange(value)}
-        >
-          <SelectTrigger className="col-span-2">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {[1, 3, 5, CYCLES_INF].map((item) => (
-              <SelectItem key={item} value={item ? item.toString() : ''}>
-                {item === CYCLES_INF ? 'Infinity' : item}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+      <ul className="text-sm">
+        <li className="flex justify-between">
+          <strong>Growth period:</strong>
+          <span>
+            {entities[selectedProductId].growthTime[0]}
+            &nbsp;&ndash;&nbsp;{entities[selectedProductId].growthTime[1]} days
+          </span>
+        </li>
+        <li className="flex justify-between">
+          <strong>Produce cost:</strong>
+          <span>{entities[selectedProductId].produceCost} / day</span>
+        </li>
+      </ul>
+
+      <Separator />
 
       <div className="grid grid-cols-3 gap-2 items-center">
+        <Label>Cycles count:</Label>
+        <div className="col-span-2 flex gap-1 justify-between">
+          {[1, 3, 5, CYCLES_INF].map((item) => {
+            return (
+              <Button
+                key={item}
+                onClick={() => onCycleChange(item.toString())}
+                size="icon"
+                variant={item.toString() === cycles ? 'default' : 'secondary'}
+              >
+                {item === CYCLES_INF ? <>&infin;</> : item}
+              </Button>
+            )
+          })}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-3 gap-2 items-center py-2">
         <Label>Power:</Label>
-        <Select
+
+        <div className="col-span-2">
+          <SliderPrimitive.Root
+            className={cn(
+              'relative flex w-full touch-none select-none items-center'
+            )}
+            defaultValue={[Number(power)]}
+            max={8}
+            min={1}
+            step={1}
+            onValueChange={(value) => onPowerChange(value[0].toString())}
+          >
+            <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-secondary">
+              <SliderPrimitive.Range className="absolute h-full bg-primary" />
+            </SliderPrimitive.Track>
+            <SliderPrimitive.Thumb className="block h-5 w-5 rounded-full border-2 border-primary bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" />
+          </SliderPrimitive.Root>
+          <div className="flex justify-between mt-2 px-1.5">
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
+              <div key={item} className="font-semibold text-[10px]">
+                {item}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* <Select
           value={power.toString()}
           onValueChange={(value) => onPowerChange(value)}
         >
@@ -102,7 +147,7 @@ function AddProducingForm({
               </SelectItem>
             ))}
           </SelectContent>
-        </Select>
+        </Select> */}
       </div>
 
       <div className="grid grid-cols-3 gap-2 items-center">
@@ -127,9 +172,15 @@ function AddProducingForm({
   )
 }
 
-function ActualProducing({ producing }: { producing: FarmProducing }) {
+function ActualProducing({
+  producing,
+  day,
+}: {
+  producing: FarmProducing
+  day: Day
+}) {
   return (
-    <div className="border border-border p-2 flex gap-2 items-center rounded-sm">
+    <div className="border border-border p-2 bg-green-600/10 flex gap-2 items-start rounded-sm">
       <ProductItem itemId={producing.productId} />
       <div>
         <ul className="text-sm">
@@ -142,22 +193,19 @@ function ActualProducing({ producing }: { producing: FarmProducing }) {
           <li>
             <b>Power:</b> {producing.power}
           </li>
+          <li>
+            <b>End in:</b> {producing.endDay - day} days
+          </li>
         </ul>
       </div>
     </div>
   )
 }
 
-export default memo(function BuildingDetailsDialog({
-  isOpen,
-  item,
-  warehouses = [],
-  onClose,
-  onApply,
-  onStop,
-}: {
+type Props = {
   isOpen: boolean
   item?: Farm
+  day: Day
   warehouses: { id: string; name: string }[]
   onClose: () => void
   onApply: (data: {
@@ -167,7 +215,26 @@ export default memo(function BuildingDetailsDialog({
     warehouseId: string
   }) => void
   onStop: () => void
-}) {
+}
+const arePropsEqual = (prevProps: Props, nextProps: Props) => {
+  if (
+    JSON.stringify(prevProps.isOpen) === JSON.stringify(nextProps.isOpen) &&
+    prevProps.isOpen === false
+  ) {
+    return true
+  }
+  return false
+}
+
+export default memo(function BuildingDetailsDialog({
+  isOpen,
+  item,
+  warehouses = [],
+  day,
+  onClose,
+  onApply,
+  onStop,
+}: Props) {
   const [selectedProductId, setSelectedProductId] = useState<string>('')
   const [selectedWarehouseId, setSelectedWarehouseId] = useState('1')
   const [cycles, setCycles] = useState<number | 'inf'>(1)
@@ -195,18 +262,19 @@ export default memo(function BuildingDetailsDialog({
 
   const { name, producing } = item || {}
 
-  console.warn('BuildingDetailsDialog', {
-    selectedProductId,
-    selectedWarehouseId,
-    cycles,
-    power,
-    producing,
-  })
+  // console.warn('BuildingDetailsDialog', {
+  //   selectedProductId,
+  //   selectedWarehouseId,
+  //   cycles,
+  //   power,
+  //   producing,
+  //   day,
+  // })
 
   return (
     <Dialog open={isOpen}>
       <DialogContent
-        className="sm:max-w-[540px]"
+        className="sm:max-w-[560px]"
         onClose={onClose}
         onEscapeKeyDown={(e) => {
           e.stopPropagation()
@@ -226,7 +294,7 @@ export default memo(function BuildingDetailsDialog({
           <div className="pl-4 flex-grow">
             {producing ? (
               <div>
-                <ActualProducing producing={producing} />
+                <ActualProducing day={day} producing={producing} />
               </div>
             ) : (
               <AddProducingForm
@@ -280,4 +348,4 @@ export default memo(function BuildingDetailsDialog({
       </DialogContent>
     </Dialog>
   )
-})
+}, arePropsEqual)

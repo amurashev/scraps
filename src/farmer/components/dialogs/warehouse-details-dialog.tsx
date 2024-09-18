@@ -7,10 +7,10 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 
-import WarehouseIcon from '../icons/buildings/warehouse'
+import WarehouseIcon from '../../icons/buildings/warehouse'
 
-import ProductItem, { ProductItemCount } from './products'
-import { Warehouse } from '../types/buildings'
+import ProductItem, { ProductItemCount } from '../products'
+import { Warehouse } from '../../types/buildings'
 
 export default memo(function WarehouseDetailsDialog({
   isOpen,

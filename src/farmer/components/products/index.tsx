@@ -1,7 +1,8 @@
 import { memo } from 'react'
 
-import ItemIcon from './item-icon'
 import { cn } from '@/lib/utils'
+
+import ItemIcon from './item-icon'
 
 export function ProductItemCount({ count = 0 }: { count: number }) {
   return (
@@ -28,9 +29,10 @@ export default memo(function ProductItem({
       type="button"
       onClick={onClick}
       className={cn(
-        'w-[64px] h-[64px] relative p-3 bg-muted border border-border rounded-sm',
+        'w-[64px] h-[64px] relative p-3 bg-muted border-2 rounded-sm',
         {
-          'ring ring-primary': hasRing,
+          'border-primary': hasRing,
+          'border-border': !hasRing,
           'cursor-pointer': isClickable,
           'cursor-auto': !isClickable,
         }

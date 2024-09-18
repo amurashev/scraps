@@ -4,13 +4,12 @@ import { useCallback, useEffect } from 'react'
 
 import Grid from './components/grid'
 // import Panel from './components/panel'
-import BuildingDetailsDialog from './components/building-details-dialog'
-import WarehouseDetailsDialog from './components/warehouse-details-dialog'
+import BuildingDetailsDialog from './components/dialogs/farm-details-dialog'
+import WarehouseDetailsDialog from './components/dialogs/warehouse-details-dialog'
 
 import StoreProvider from './StoreProvider'
 import { useAppSelector, useAppDispatch } from './hooks'
 import { useToast } from './hooks/use-toast'
-import { getNow } from './utils/time'
 
 import { increaseDay } from './slices/day'
 import { startProducing, endProducing } from './slices/farms'
@@ -21,7 +20,8 @@ import {
 } from './slices/ui'
 
 import { Toaster } from './components/toaster'
-import entities from './data/items'
+import products from './data/items'
+import { Farm } from './types/buildings'
 
 function App() {
   const { toast } = useToast()
@@ -29,71 +29,73 @@ function App() {
   const { farmDetailsId, warehouseDetailsId } = useAppSelector(
     (state) => state.ui
   )
-  useAppSelector((state) => state.day)
+  const day = useAppSelector((state) => state.day)
   const farms = useAppSelector((state) => state.farms)
   const warehouses = useAppSelector((state) => state.warehouses)
 
-  // console.warn('render', isBarnOpened)
+  // console.warn('render', day, farms[0])
 
   const selectedWarehouse = warehouses.find(
     (item) => item.id === warehouseDetailsId
   )
-
   const selectedFarm = farms.find((item) => item.id === farmDetailsId)
+
+  useEffect(() => {
+    const dayFarmCheck = (item: Farm) => {
+      if (item.producing) {
+        const { endDay, productId, cycles, power } = item.producing
+        const itemData = products[productId]
+        const warehouseId = '1' // TODO
+
+        if (endDay === day) {
+          dispatch(
+            putToWarehouse({
+              warehouseId,
+              productId,
+              count: power,
+            })
+          )
+
+          if (cycles === undefined || cycles > 1) {
+            dispatch(
+              startProducing({
+                day,
+                farmId: item.id,
+                productId,
+                cycles: cycles === undefined ? undefined : cycles - 1,
+                power,
+                warehouseId: item.warehouseId as string,
+              })
+            )
+          } else {
+            dispatch(endProducing({ farmId: item.id }))
+          }
+
+          toast({
+            messageType: 'productMovedToWarehouse',
+            additional: {
+              productCount: power,
+              productId,
+              productName: itemData.name,
+              warehouseName: 'Warehouse 1', // TODO
+            },
+          })
+        }
+      }
+    }
+
+    farms.forEach(dayFarmCheck)
+  }, [farms, day, dispatch, toast])
 
   useEffect(() => {
     const interval = setInterval(() => {
       dispatch(increaseDay())
-
-      const now = getNow()
-
-      farms.forEach((item) => {
-        if (item.producing) {
-          const { endTime, productId, cycles, power } = item.producing
-          const itemData = entities[productId]
-          const warehouseId = '1' // TODO
-
-          if (endTime < now) {
-            dispatch(
-              putToWarehouse({
-                warehouseId,
-                productId,
-                count: power,
-              })
-            )
-
-            if (cycles === undefined || cycles > 1) {
-              dispatch(
-                startProducing({
-                  farmId: item.id,
-                  productId,
-                  cycles: cycles === undefined ? undefined : cycles - 1,
-                  power,
-                  warehouseId: item.warehouseId as string,
-                })
-              )
-            } else {
-              dispatch(endProducing({ farmId: item.id }))
-            }
-
-            toast({
-              messageType: 'productMovedToWarehouse',
-              additional: {
-                productCount: power,
-                productId,
-                productName: itemData.name,
-                warehouseName: 'Warehouse 1', // TODO
-              },
-            })
-          }
-        }
-      })
     }, 1000)
 
     return () => {
       clearInterval(interval)
     }
-  }, [dispatch, farms, toast])
+  }, [dispatch])
 
   return (
     <main className="h-[calc(100vh-60px)] relative bg-[#bfda95] flex flex-col items-center">
@@ -112,6 +114,7 @@ function App() {
         isOpen={Boolean(farmDetailsId)}
         item={selectedFarm}
         warehouses={warehouses}
+        day={day}
         onClose={useCallback(
           () => dispatch(toggleFarmDetailsModal(undefined)),
           [dispatch]
@@ -125,6 +128,7 @@ function App() {
             if (farmDetailsId) {
               dispatch(
                 startProducing({
+                  day,
                   farmId: farmDetailsId,
                   productId,
                   cycles,
@@ -136,7 +140,7 @@ function App() {
               dispatch(toggleFarmDetailsModal(undefined))
             }
           },
-          [dispatch, farmDetailsId]
+          [dispatch, farmDetailsId, day]
         )}
       />
       <Toaster />

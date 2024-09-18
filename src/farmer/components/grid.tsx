@@ -10,6 +10,7 @@ import { toggleWarehouseDetailsModal } from '../slices/ui'
 export default function Grid() {
   const dispatch = useAppDispatch()
   const farms = useAppSelector((state) => state.farms)
+  const day = useAppSelector((state) => state.day)
   const warehouses = useAppSelector((state) => state.warehouses)
 
   const onItemClick = useCallback(
@@ -35,7 +36,7 @@ export default function Grid() {
               height: `${3 * cellSize}px`,
             }}
           >
-            <Farm farm={item} />
+            <Farm day={day} farm={item} />
           </div>
         )
       })}

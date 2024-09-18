@@ -2,12 +2,12 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 import { getRandomInteger } from '../utils/random'
-import { getNow } from '../utils/time'
 
-import entities from '../data/items'
+import products from '../data/items'
 
 import { State } from '../types'
 import { Farm } from '../types/buildings'
+import { TIME_BOOST } from '../config/main'
 
 const slice = createSlice({
   name: 'farms',
@@ -22,6 +22,7 @@ const slice = createSlice({
     startProducing: (
       state: State['farms'],
       action: PayloadAction<{
+        day: number
         farmId: string
         productId: string
         cycles: number | undefined
@@ -29,11 +30,12 @@ const slice = createSlice({
         warehouseId: string
       }>
     ) => {
-      const { farmId, productId, cycles, power, warehouseId } = action.payload
-      const { growthTime } = entities[productId]
-      const now = getNow()
+      const { farmId, productId, cycles, power, warehouseId, day } =
+        action.payload
+      const { growthTime } = products[productId]
+
       const timeFinal = Math.floor(
-        getRandomInteger(growthTime[0], growthTime[1]) * 0.03
+        getRandomInteger(growthTime[0], growthTime[1]) * TIME_BOOST
       )
 
       return state.map((item) => {
@@ -44,39 +46,10 @@ const slice = createSlice({
             producing: {
               status: 'active',
               productId,
-              startTime: now,
-              endTime: now + timeFinal,
+              startDay: day,
+              endDay: day + timeFinal,
               power,
               cycles,
-            },
-          } satisfies Farm
-        }
-
-        return item
-      })
-    },
-    restartProducing: (
-      state: State['farms'],
-      action: PayloadAction<{ farmId: string; productId: string }>
-    ) => {
-      const { farmId, productId } = action.payload
-      const { growthTime } = entities[productId]
-      const now = getNow()
-      const timeFinal = Math.floor(
-        getRandomInteger(growthTime[0], growthTime[1]) * 0.1
-      )
-
-      return state.map((item) => {
-        if (item.id === farmId) {
-          return {
-            ...item,
-            producing: {
-              productId,
-              startTime: now,
-              endTime: now + timeFinal,
-              power: 8,
-              cycles: undefined,
-              status: 'active',
             },
           } satisfies Farm
         }

@@ -7,7 +7,7 @@ import { toggleFarmDetailsModal } from '../../../slices/ui'
 import Cell from './cell'
 import { Farm } from '../../../types/buildings'
 
-export default function FarmCell({ farm }: { farm: Farm }) {
+export default function FarmCell({ day, farm }: { day: number; farm: Farm }) {
   const dispatch = useAppDispatch()
 
   return (
@@ -31,6 +31,7 @@ export default function FarmCell({ farm }: { farm: Farm }) {
           return (
             <Cell
               key={item}
+              day={day}
               farmName={farm.name}
               producing={farm.producing}
               isBeingUsed={isProducingAvailableForCell}

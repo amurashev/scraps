@@ -28,4 +28,7 @@ export type Product = {
   name: string
   growthTime: [number, number]
   price: number
+  produceCost: number
 }
+
+export type Day = number

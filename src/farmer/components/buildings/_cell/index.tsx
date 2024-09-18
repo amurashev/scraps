@@ -9,7 +9,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-import { getNow } from '../../../utils/time'
 import { CellState } from '../../../types'
 
 import ProgressBar from './progress-bar'
@@ -55,7 +54,7 @@ export default memo(function Cell({
 
   if (cellState) {
     const { startGrowthTime, endGrowthTime } = cellState
-    const now = getNow()
+    const now = 0
     const dGrowth = endGrowthTime - startGrowthTime
     const dNow = endGrowthTime - now
 
