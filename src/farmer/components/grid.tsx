@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { useAppSelector, useAppDispatch } from '../hooks'
+import { useAppSelector, useAppDispatch } from '../hooks/redux'
 
 import Farm from './buildings/farm'
 import Warehouse from './buildings/warehouse'
@@ -40,20 +40,22 @@ export default function Grid() {
           </div>
         )
       })}
-      {warehouses.map((item) => {
-        return (
-          <div
-            key={item.id}
-            className="p-[1px]"
-            style={{
-              width: `${cellSize}px`,
-              height: `${cellSize}px`,
-            }}
-          >
-            <Warehouse item={item} onClick={() => onItemClick(item.id)} />
-          </div>
-        )
-      })}
+      {warehouses
+        .filter((item) => item.position)
+        .map((item) => {
+          return (
+            <div
+              key={item.id}
+              className="p-[1px]"
+              style={{
+                width: `${cellSize}px`,
+                height: `${cellSize}px`,
+              }}
+            >
+              <Warehouse item={item} onClick={() => onItemClick(item.id)} />
+            </div>
+          )
+        })}
     </div>
   )
 }

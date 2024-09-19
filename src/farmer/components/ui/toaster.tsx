@@ -4,9 +4,9 @@ import * as ToastPrimitives from '@radix-ui/react-toast'
 
 import { cn } from '@/lib/utils'
 
-import { useToast } from '../hooks/use-toast'
+import { useToast } from '../../hooks/use-toast'
 
-import ItemIcon from './products/item-icon'
+import { ProductIcon } from '../cards/product'
 
 export function Toaster() {
   const { toasts } = useToast()
@@ -27,7 +27,7 @@ export function Toaster() {
               <div className="flex gap-2 items-center">
                 {additional.productId && (
                   <div className="w-4 h-4">
-                    <ItemIcon id={additional.productId} />
+                    <ProductIcon id={additional.productId} />
                   </div>
                 )}
 
@@ -54,7 +54,7 @@ export function Toaster() {
           </ToastPrimitives.Toast>
         )
       })}
-      <ToastPrimitives.Viewport className="fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px] space-y-2 w-auto" />
+      <ToastPrimitives.Viewport className="fixed top-0 z-[100] flex max-h-screen flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px] space-y-2 w-auto" />
     </ToastPrimitives.Provider>
   )
 }

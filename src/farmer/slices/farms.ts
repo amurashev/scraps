@@ -3,9 +3,9 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 import { getRandomInteger } from '../utils/random'
 
-import products from '../data/items'
+import products from '../data/products'
 
-import { State } from '../types'
+import { State } from '../types/state'
 import { Farm } from '../types/buildings'
 import { TIME_BOOST } from '../config/main'
 
@@ -17,7 +17,7 @@ const slice = createSlice({
       name: 'Farm 1',
       position: [1, 1],
     },
-  ] satisfies State['farms'],
+  ] as State['farms'],
   reducers: {
     startProducing: (
       state: State['farms'],
@@ -55,7 +55,7 @@ const slice = createSlice({
         }
 
         return item
-      })
+      }) satisfies Farm[]
     },
     endProducing: (
       state: State['farms'],

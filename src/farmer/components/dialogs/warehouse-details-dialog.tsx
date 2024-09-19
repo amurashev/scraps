@@ -8,9 +8,9 @@ import {
 } from '@/components/ui/dialog'
 
 import WarehouseIcon from '../../icons/buildings/warehouse'
+import ProductCard, { ProductCardCount } from '../cards/product'
 
-import ProductItem, { ProductItemCount } from '../products'
-import { Warehouse } from '../../types/buildings'
+import type { Warehouse } from '../../types/buildings'
 
 export default memo(function WarehouseDetailsDialog({
   isOpen,
@@ -69,9 +69,9 @@ export default memo(function WarehouseDetailsDialog({
               ) : (
                 <div className="flex gap-2">
                   {possibleItemsId.map((itemId) => (
-                    <ProductItem key={itemId} itemId={itemId}>
-                      <ProductItemCount count={products[itemId]} />
-                    </ProductItem>
+                    <ProductCard key={itemId} itemId={itemId}>
+                      <ProductCardCount count={products[itemId]} />
+                    </ProductCard>
                   ))}
                 </div>
               )}

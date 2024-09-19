@@ -9,16 +9,16 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-import { CellState } from '../../../types'
+// import { CellState } from '../../../types'
 
-import ProgressBar from './progress-bar'
+// import ProgressBar from './progress-bar'
 import SeedsDropDown from './seeds-dropdown'
-import ItemIcon from '../../products/item-icon'
+// import ItemIcon from '../../products/item-icon'
 
 type Props = {
   isActive: boolean
   cellSize: number
-  cellState: CellState | null
+  cellState: any
   availableMoney: number
   onPlantSeed: (id: string) => void
   onRemovePlant: () => void
@@ -34,7 +34,7 @@ const arePropsEqual = () => {
   return false
 }
 
-const MIN_ICON_SIZE = 40
+// const MIN_ICON_SIZE = 40
 
 export default memo(function Cell({
   isActive,
@@ -50,7 +50,7 @@ export default memo(function Cell({
   const hasCellState = Boolean(cellState)
 
   let progress = 0
-  let iconSize = MIN_ICON_SIZE
+  // let iconSize = MIN_ICON_SIZE
 
   if (cellState) {
     const { startGrowthTime, endGrowthTime } = cellState
@@ -59,7 +59,7 @@ export default memo(function Cell({
     const dNow = endGrowthTime - now
 
     progress = Math.floor(Math.min((100 * (dGrowth - dNow)) / dGrowth, 100))
-    iconSize = MIN_ICON_SIZE + ((100 - MIN_ICON_SIZE) * progress) / 100
+    // iconSize = MIN_ICON_SIZE + ((100 - MIN_ICON_SIZE) * progress) / 100
   }
 
   const isGrowthEnd = progress === 100
@@ -93,14 +93,14 @@ export default memo(function Cell({
             }
           }}
         >
-          {cellState ? (
+          {/* {cellState ? (
             <ItemIcon id={cellState.itemId} size={`${iconSize}%`} />
           ) : null}
           {hasCellState && progress !== 100 && (
             <div className="absolute bottom-0 left-0 right-0 ">
               <ProgressBar progress={progress} />
             </div>
-          )}
+          )} */}
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent

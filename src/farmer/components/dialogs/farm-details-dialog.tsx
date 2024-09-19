@@ -17,15 +17,16 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
+import { Separator } from '@/components/ui/separator'
 
-import entities from '../../data/items'
+import { cn } from '@/lib/utils'
+
+import entities from '../../data/products'
 import FarmIcon from '../../icons/buildings/farm'
 
-import ProductItem from '../products'
+import ProductCard from '../cards/product'
 import { Farm, FarmProducing } from '../../types/buildings'
 import { Day } from '../../types'
-import { cn } from '@/lib/utils'
-import { Separator } from '@/components/ui/separator'
 
 const CYCLES_INF = 'inf'
 
@@ -62,7 +63,7 @@ function AddProducingForm({
     <div className="flex flex-col gap-4">
       <div className="flex gap-2 justify-start">
         {possibleItemsId.map((itemId) => (
-          <ProductItem
+          <ProductCard
             key={itemId}
             itemId={itemId}
             hasRing={itemId === selectedProductId}
@@ -122,7 +123,7 @@ function AddProducingForm({
             <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-secondary">
               <SliderPrimitive.Range className="absolute h-full bg-primary" />
             </SliderPrimitive.Track>
-            <SliderPrimitive.Thumb className="block h-5 w-5 rounded-full border-2 border-primary bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" />
+            <SliderPrimitive.Thumb className="cursor-pointer block h-5 w-5 rounded-full border-2 border-primary bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" />
           </SliderPrimitive.Root>
           <div className="flex justify-between mt-2 px-1.5">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
@@ -181,7 +182,7 @@ function ActualProducing({
 }) {
   return (
     <div className="border border-border p-2 bg-green-600/10 flex gap-2 items-start rounded-sm">
-      <ProductItem itemId={producing.productId} />
+      <ProductCard itemId={producing.productId} />
       <div>
         <ul className="text-sm">
           <li>

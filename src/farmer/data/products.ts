@@ -31,4 +31,6 @@ const products: Record<string, Product> = {
   },
 }
 
+export const allProductsId = Object.keys(products).map((id) => id)
+
 export default products

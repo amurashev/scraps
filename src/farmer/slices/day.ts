@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { State } from '../types'
+import { State } from '../types/state'
 
 const daySlice = createSlice({
   name: 'day',

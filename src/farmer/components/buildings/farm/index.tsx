@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 
-import { useAppDispatch } from '../../../hooks'
+import { useAppDispatch } from '../../../hooks/redux'
 
 import { toggleFarmDetailsModal } from '../../../slices/ui'
 

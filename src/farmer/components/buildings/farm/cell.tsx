@@ -11,11 +11,11 @@ import { cn } from '@/lib/utils'
 
 import { FarmProducing } from '../../../types/buildings'
 
-import ItemIcon from '../../products/item-icon'
 import FarmIcon from '../../../icons/buildings/farm'
+import { ProductIcon } from '../../cards/product'
 
 import ProgressBar from './progress-bar'
-import entities from '@/src/farmer/data/items'
+import products from '@/src/farmer/data/products'
 import { Day } from '@/src/farmer/types'
 
 type Props = {
@@ -94,7 +94,7 @@ export default memo(function Cell({
               {producing && (
                 <ul className="text-sm">
                   <li>
-                    <b>Produces:</b> {entities[producing.productId].name}
+                    <b>Produces:</b> {products[producing.productId].name}
                   </li>
                   <li>
                     <b>Cycles:</b>{' '}
@@ -115,7 +115,7 @@ export default memo(function Cell({
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
           {producing && isBeingUsed ? (
-            <ItemIcon id={producing.productId} size={`${iconSize}%`} />
+            <ProductIcon id={producing.productId} size={`${iconSize}%`} />
           ) : null}
         </>
       )}

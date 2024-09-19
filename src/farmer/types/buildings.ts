@@ -1,7 +1,7 @@
 type Building = {
   id: string
   name: string
-  position: [number, number]
+  position: [number, number] | null
 }
 
 export type Warehouse = Building & {
@@ -11,8 +11,6 @@ export type Warehouse = Building & {
 
 export type FarmProducing = {
   productId: string
-  // startTime: number
-  // endTime: number
   startDay: number
   endDay: number
   power: number
