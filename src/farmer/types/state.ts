@@ -13,15 +13,15 @@ export type GridState = Record<GridPoint, CellState | null>
 export type State = {
   day: number
   money: number
-  grid: GridState
   seeds: Record<string, number>
-  barn: Record<string, number>
   ui: {
     farmDetailsId?: string
     warehouseDetailsId?: string
     isTransportModal: boolean
     isShipmentModal: boolean
+    cellSize: number
   }
+  roads: [number, number][]
   farms: Farm[]
   warehouses: Warehouse[]
   transports: Pick<Transport, 'id' | 'type'>[]

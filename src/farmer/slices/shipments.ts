@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 import { State } from '../types/state'
-import { Day } from '../types'
 import { Shipment, Cargo } from '../types/transport'
+import { Point } from '../types/grid'
 
 const slice = createSlice({
   name: 'shipments',
@@ -15,11 +15,10 @@ const slice = createSlice({
         from: string
         to: string
         transportId: string
-        day: Day
         cargo: Cargo[]
       }>
     ) => {
-      const { from, to, transportId, cargo, day } = action.payload
+      const { from, to, transportId, cargo } = action.payload
 
       return [
         ...state,
@@ -31,9 +30,8 @@ const slice = createSlice({
           shouldWait: false,
           cargoPlan: cargo,
           cargoShipment: [],
+          position: [],
           status: 'new' as const,
-          statusStartDay: day,
-          statusDuration: 1,
         },
       ]
     },
@@ -42,20 +40,18 @@ const slice = createSlice({
       action: PayloadAction<{
         id: string
         status: Shipment['status']
-        duration: number
-        startDay: Day
         cargo?: Cargo[]
+        position: Point
       }>
     ) => {
-      const { id, status, duration, startDay, cargo } = action.payload
+      const { id, status, cargo, position } = action.payload
 
       return state.map((item) => {
         if (item.id === id) {
           const newItem = {
             ...item,
             status,
-            statusDuration: duration,
-            statusStartDay: startDay,
+            position,
           } satisfies Shipment
 
           if (cargo) {

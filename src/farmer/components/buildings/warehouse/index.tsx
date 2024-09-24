@@ -28,14 +28,14 @@ export default memo(function WarehouseCell({
   return (
     <TooltipProvider delayDuration={300}>
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger className="w-full h-full">
           <div
             role="button"
             tabIndex={0}
             className={cn(
-              'h-full w-full flex items-center justify-center relative p-3 focus-visible:outline-none cursor-pointer',
+              'w-full h-full flex items-center justify-center relative p-3 focus-visible:outline-none cursor-pointer',
               {
-                'border-0 border-[#b4937e] rounded-md shadow-sm shadow-[#b4937e]':
+                'border border-gray-400 1shadow-sm 1shadow-[#b4937e] rounded-sm':
                   true,
                 'bg-[#c6c6bf]': true,
                 'hover:bg-[#c5c4b4]': true,

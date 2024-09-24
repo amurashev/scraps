@@ -1,4 +1,4 @@
-import { Product } from '../types'
+import { Product } from '../types/products'
 
 const products: Record<string, Product> = {
   '1': {

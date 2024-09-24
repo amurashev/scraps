@@ -66,7 +66,9 @@ function AddProducingForm({
           <ProductCard
             key={itemId}
             itemId={itemId}
-            hasRing={itemId === selectedProductId}
+            className={cn({
+              'ring-primary ring-2': itemId === selectedProductId,
+            })}
             onClick={() => onProductChange(itemId)}
           />
         ))}

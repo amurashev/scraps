@@ -1,3 +1,5 @@
+import { Point } from './grid'
+
 export type Transport = {
   id: string
   type: number
@@ -18,8 +20,7 @@ export type Shipment = {
   transportId: string
   shouldWait: boolean
   status: 'new' | 'goToP1' | 'collectCargo' | 'goToP2' | 'deliverCargo'
-  statusDuration: number
-  statusStartDay: number
+  position: Point
   cargoPlan: Cargo[]
   cargoShipment: Cargo[]
 }

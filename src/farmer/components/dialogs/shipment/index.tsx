@@ -1,7 +1,5 @@
 import { memo, useEffect, useMemo, useState } from 'react'
 
-import { IoTrashOutline } from 'react-icons/io5'
-
 import {
   Dialog,
   DialogContent,
@@ -20,71 +18,64 @@ import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 
 import transportsData from '../../../data/transports'
-
-import TransportCard from '../../cards/transport'
-import ProductCard, { ProductCardBase } from '../../cards/product'
 import ShipmentsIcon from '../../../icons/shipments'
 
 import SelectCargo from './select-cargo'
+import ShipmentItem from './item'
 
-import type { Warehouse } from '@/src/farmer/types/buildings'
-import type { Shipment, Transport } from '../../../types/transport'
+import type { Warehouse } from '../../../types/buildings'
+import type { Cargo, Shipment, Transport } from '../../../types/transport'
+import {
+  type WarehousesObject,
+  type TransportsObject,
+  CargoSlots,
+} from './types'
 
-type WarehousesObject = Record<string, Warehouse>
-type TransportsObject = Record<string, Pick<Transport, 'id' | 'type'>>
-
-function ShipmentItem({
-  item,
-  warehousesObject,
-  transportsObject,
-  onDeleteClick,
+function FormRow({
+  label,
+  children,
 }: {
-  item: Shipment
-  warehousesObject: WarehousesObject
-  transportsObject: TransportsObject
-  onDeleteClick: () => void
+  label: string
+  children: React.ReactNode
 }) {
-  const transportType = transportsObject[item.transportId].type
-  // const transportData = transportsData[transportType]
-
   return (
-    <div>
-      <div className="relative flex items-center gap-4 py-2 w-full">
-        <TransportCard type={transportType} />
-        <strong className="font-bold">{item.transportId}</strong>
-        <div className="flex flex-col flex-grow">
-          <div className="text-sm">{warehousesObject[item.from].name}</div>
-          <div className="text-sm">{warehousesObject[item.to].name}</div>
-        </div>
-        <Button size="icon" variant="destructive" onClick={onDeleteClick}>
-          <IoTrashOutline />
-        </Button>
-      </div>
-      <div className="flex flex-col gap-2">
-        <div className="flex gap-1">
-          <strong>Status:</strong>
-          <div>{item.status}</div>
-        </div>
-        <div className="flex gap-2 items-center">
-          <strong>Cargo:</strong>
-          <div>
-            <div className="flex gap-1">
-              {item.cargoPlan.map((cargo, i) => {
-                const key = `${i}_${cargo.itemId}`
-                if (item.cargoShipment[i]) {
-                  return (
-                    <ProductCard key={key} itemId={cargo.itemId} size="sm" />
-                  )
-                }
-
-                return <ProductCardBase key={key} size="sm" />
-              })}
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="grid grid-cols-3 gap-2 items-start">
+      <Label className="min-h-[40px] flex items-center">{label}:</Label>
+      {children}
     </div>
   )
+}
+
+function FormRowWithSelect({
+  label,
+  value,
+  children,
+  onChange,
+}: {
+  label: string
+  value: string
+  children: React.ReactNode
+  onChange: (value: string) => void
+}) {
+  return (
+    <FormRow label={label}>
+      <Select value={value} onValueChange={(newValue) => onChange(newValue)}>
+        <SelectTrigger className="col-span-2">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>{children}</SelectContent>
+      </Select>
+    </FormRow>
+  )
+}
+
+const cargoFromSlotsToArray = (cargoSlots: CargoSlots): Cargo[] => {
+  return Object.keys(cargoSlots)
+    .filter((key) => cargoSlots[key])
+    .map((key) => ({
+      itemId: cargoSlots[key] as string,
+      count: 1,
+    }))
 }
 
 export default memo(function ShipmentsDialog({
@@ -105,10 +96,7 @@ export default memo(function ShipmentsDialog({
     from: string
     to: string
     transportId: string
-    cargo: {
-      itemId: string
-      count: number
-    }[]
+    cargo: Cargo[]
   }) => void
   onDeleteShipment: (id: string) => void
 }) {
@@ -117,9 +105,7 @@ export default memo(function ShipmentsDialog({
   const [selectedWarehouseFromId, setSelectedWarehouseFromId] = useState('2')
   const [selectedWarehouseToId, setSelectedWarehouseToId] = useState('1')
   const [selectedTransportId, setSelectedTransportId] = useState('')
-  const [cargoSlots, setCargoSlots] = useState<Record<string, string | null>>(
-    {}
-  )
+  const [cargoSlots, setCargoSlots] = useState<CargoSlots>({})
 
   const selectedTransport = transports.find(
     (item) => item.id === selectedTransportId
@@ -151,12 +137,18 @@ export default memo(function ShipmentsDialog({
     }
   }, [isOpen])
 
+  useEffect(() => {
+    if (selectedTransportId) {
+      setCargoSlots({})
+    }
+  }, [selectedTransportId])
+
   // console.warn('ShipmentsDialog', shipments, warehousesObject, transportsObject)
 
   return (
     <Dialog open={isOpen}>
       <DialogContent
-        className="sm:max-w-[625px]"
+        className="sm:max-w-[725px]"
         onClose={onClose}
         onEscapeKeyDown={(e) => {
           e.stopPropagation()
@@ -176,63 +168,44 @@ export default memo(function ShipmentsDialog({
           <div className="pl-4 flex-grow">
             {isAddForm && (
               <div className="mt-2 flex flex-col gap-3">
-                <div className="grid grid-cols-3 gap-2 items-center">
-                  <Label>From:</Label>
-                  <Select
-                    value={selectedWarehouseFromId}
-                    onValueChange={(value) => setSelectedWarehouseFromId(value)}
-                  >
-                    <SelectTrigger className="col-span-2">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {warehouses.map((item) => (
-                        <SelectItem key={item.id} value={item.id}>
-                          {item.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="grid grid-cols-3 gap-2 items-center">
-                  <Label>To:</Label>
-                  <Select
-                    value={selectedWarehouseToId}
-                    onValueChange={(value) => setSelectedWarehouseToId(value)}
-                  >
-                    <SelectTrigger className="col-span-2">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {warehouses.map((item) => (
-                        <SelectItem key={item.id} value={item.id}>
-                          {item.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="grid grid-cols-3 gap-2 items-center">
-                  <Label>Transport:</Label>
-                  <Select
-                    value={selectedTransportId}
-                    onValueChange={(value) => setSelectedTransportId(value)}
-                  >
-                    <SelectTrigger className="col-span-2">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {transports.map((item) => (
-                        <SelectItem key={item.id} value={item.id}>
-                          {item.id}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="grid grid-cols-3 gap-2 items-start">
-                  <Label className="h-[40px] flex items-center">Cargo:</Label>
-                  {selectedTransportData && (
+                <FormRowWithSelect
+                  label="From"
+                  value={selectedWarehouseFromId}
+                  onChange={(value) => setSelectedWarehouseFromId(value)}
+                >
+                  {warehouses.map((item) => (
+                    <SelectItem key={item.id} value={item.id}>
+                      {item.name}
+                    </SelectItem>
+                  ))}
+                </FormRowWithSelect>
+
+                <FormRowWithSelect
+                  label="To"
+                  value={selectedWarehouseToId}
+                  onChange={(value) => setSelectedWarehouseToId(value)}
+                >
+                  {warehouses.map((item) => (
+                    <SelectItem key={item.id} value={item.id}>
+                      {item.name}
+                    </SelectItem>
+                  ))}
+                </FormRowWithSelect>
+
+                <FormRowWithSelect
+                  label="Transport"
+                  value={selectedTransportId}
+                  onChange={(value) => setSelectedTransportId(value)}
+                >
+                  {transports.map((item) => (
+                    <SelectItem key={item.id} value={item.id}>
+                      {item.id}
+                    </SelectItem>
+                  ))}
+                </FormRowWithSelect>
+
+                {selectedTransportData && (
+                  <FormRow label="Cargo">
                     <SelectCargo
                       capacity={selectedTransportData.capacity}
                       cargoSlots={cargoSlots}
@@ -243,8 +216,8 @@ export default memo(function ShipmentsDialog({
                         })
                       }}
                     />
-                  )}
-                </div>
+                  </FormRow>
+                )}
               </div>
             )}
             {!isAddForm && (
@@ -274,22 +247,13 @@ export default memo(function ShipmentsDialog({
         </div>
         {isAddForm && (
           <DialogFooter>
-            <Button
-              variant="secondary"
-              onClick={() => {
-                setIsAddForm(false)
-              }}
-            >
+            <Button variant="secondary" onClick={() => setIsAddForm(false)}>
               Return to list
             </Button>
             <Button
               onClick={() => {
-                const cargoArray = Object.keys(cargoSlots)
-                  .filter((key) => cargoSlots[key])
-                  .map((key) => ({
-                    itemId: cargoSlots[key] as string,
-                    count: 1,
-                  }))
+                const cargoArray = cargoFromSlotsToArray(cargoSlots)
+
                 onAddShipment({
                   from: selectedWarehouseFromId,
                   to: selectedWarehouseToId,
@@ -305,14 +269,7 @@ export default memo(function ShipmentsDialog({
         )}
         {!isAddForm && (
           <DialogFooter>
-            <Button
-              // variant="secondary"
-              onClick={() => {
-                setIsAddForm(true)
-              }}
-            >
-              Add shipment
-            </Button>
+            <Button onClick={() => setIsAddForm(true)}>Add shipment</Button>
           </DialogFooter>
         )}
       </DialogContent>

@@ -24,7 +24,7 @@ export default memo(function TransportsDialog({
   transports: Pick<Transport, 'id' | 'type'>[]
   onClose: () => void
 }) {
-  console.warn('TransportsDialog')
+  // console.warn('TransportsDialog')
 
   return (
     <Dialog open={isOpen}>

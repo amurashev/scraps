@@ -10,7 +10,7 @@ export default function Panel() {
   const money = useAppSelector((state) => state.money)
 
   return (
-    <div className="flex justify-center items-center relative p-6 space-x-2">
+    <div className="flex justify-center items-center relative p-3 space-x-2">
       <div className="bg-primary/20 py-2 px-4 rounded-md">
         <div className="flex items-center gap-2">
           <Coin size={24} />
@@ -21,6 +21,7 @@ export default function Panel() {
       <button
         type="button"
         aria-label="Transport"
+        title="Transport"
         className="bg-primary/20 py-2 px-4 rounded-md cursor-pointer"
         onClick={() => dispatch(toggleTransportsModal())}
       >
@@ -30,6 +31,7 @@ export default function Panel() {
       <button
         type="button"
         aria-label="Shipment"
+        title="Shipment"
         className="bg-primary/20 py-2 px-4 rounded-md cursor-pointer"
         onClick={() => dispatch(toggleShipmentModal())}
       >

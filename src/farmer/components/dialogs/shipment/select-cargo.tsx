@@ -10,19 +10,21 @@ import ProductCard, { ProductCardBase } from '../../cards/product'
 
 import DropdownListOfProducts from './products-list'
 
+import type { CargoSlots } from './types'
+
 export default function SelectCargo({
   capacity,
   cargoSlots,
   onSelectItem,
 }: {
   capacity: number
-  cargoSlots: Record<string, string | null>
+  cargoSlots: CargoSlots
   onSelectItem: (slotIndex: number, productId: string | null) => void
 }) {
   const [openedItem, setOpenedItem] = useState<null | number>(null)
 
   return (
-    <div className="col-span-2 grid grid-cols-4 gap-2">
+    <div className="col-span-2 flex flex-wrap gap-2">
       {Array.from({ length: capacity }, (_, i) => i + 1).map((slotIndex) => (
         <DropdownMenu open={openedItem === slotIndex} key={slotIndex}>
           <DropdownMenuTrigger asChild key={slotIndex}>

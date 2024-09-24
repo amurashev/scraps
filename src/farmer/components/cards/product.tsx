@@ -35,27 +35,32 @@ export function ProductCardCount({ count = 0 }: { count: number }) {
 
 type Props = {
   children?: React.ReactNode
-  hasRing?: boolean
+  className?: string
+  // hasRing?: boolean
   size?: 'md' | 'sm'
   onClick?: () => void
 }
 
 export const ProductCardBase = forwardRef<HTMLButtonElement, Props>(
-  ({ hasRing = false, size = 'md', children, onClick }, ref) => {
+  ({ size = 'md', className, children, onClick }, ref) => {
     const isClickable = Boolean(onClick)
     return (
       <button
         ref={ref}
         type="button"
         onClick={onClick}
-        className={cn('relative bg-muted border rounded-sm', {
-          'w-[64px] h-[64px] p-3': size === 'md',
-          'w-[32px] h-[32px] p-1': size === 'sm',
-          'border-primary': hasRing,
-          'border-border': !hasRing,
-          'cursor-pointer': isClickable,
-          'cursor-auto': !isClickable,
-        })}
+        className={cn(
+          'relative bg-muted border rounded-sm flex items-center justify-center',
+          {
+            'w-[64px] h-[64px] p-3': size === 'md',
+            'w-[32px] h-[32px] p-1': size === 'sm',
+            // 'border-primary': hasRing,
+            // 'border-border': !hasRing,
+            'cursor-pointer': isClickable,
+            'cursor-auto': !isClickable,
+          },
+          className
+        )}
       >
         {children}
       </button>

@@ -15,7 +15,7 @@ const slice = createSlice({
     {
       id: '1',
       name: 'Farm 1',
-      position: [1, 1],
+      position: [2, 2],
     },
   ] as State['farms'],
   reducers: {

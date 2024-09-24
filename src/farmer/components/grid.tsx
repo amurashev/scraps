@@ -1,61 +1,32 @@
-import { useCallback } from 'react'
+import { memo } from 'react'
+import { GRID_LENGTH } from '../config/main'
+import { useAppSelector } from '../hooks/redux'
 
-import { useAppSelector, useAppDispatch } from '../hooks/redux'
+export default memo(function Grid() {
+  const fieldArray = Array.from({ length: GRID_LENGTH }, (_, i) => i)
 
-import Farm from './buildings/farm'
-import Warehouse from './buildings/warehouse'
-
-import { toggleWarehouseDetailsModal } from '../slices/ui'
-
-export default function Grid() {
-  const dispatch = useAppDispatch()
-  const farms = useAppSelector((state) => state.farms)
-  const day = useAppSelector((state) => state.day)
-  const warehouses = useAppSelector((state) => state.warehouses)
-
-  const onItemClick = useCallback(
-    (itemId: string) => {
-      dispatch(toggleWarehouseDetailsModal(itemId))
-    },
-    [dispatch]
-  )
-
-  // console.warn('farms', farms)
-
-  const cellSize = 75
+  const { cellSize } = useAppSelector((state) => state.ui)
 
   return (
-    <div className="flex justify-center items-center gap-0 relative p-5">
-      {farms.map((item) => {
-        return (
-          <div
-            key={item.id}
-            className="p-[1px]"
-            style={{
-              width: `${3 * cellSize}px`,
-              height: `${3 * cellSize}px`,
-            }}
-          >
-            <Farm day={day} farm={item} />
-          </div>
-        )
-      })}
-      {warehouses
-        .filter((item) => item.position)
-        .map((item) => {
-          return (
-            <div
-              key={item.id}
-              className="p-[1px]"
-              style={{
-                width: `${cellSize}px`,
-                height: `${cellSize}px`,
-              }}
-            >
-              <Warehouse item={item} onClick={() => onItemClick(item.id)} />
-            </div>
-          )
-        })}
+    <div className="absolute top-0 left-0 right-0 bottom-0">
+      {fieldArray.map((item) => (
+        <div
+          key={item}
+          className="h-[1px] w-full left-0 right-0 absolute bg-[#b1ce85]"
+          style={{
+            top: `${(item + 1) * cellSize}px`,
+          }}
+        />
+      ))}
+      {fieldArray.map((item) => (
+        <div
+          key={item}
+          className="h-full w-[1px] top-0 bottom-0 absolute bg-[#b1ce85]"
+          style={{
+            left: `${(item + 1) * cellSize}px`,
+          }}
+        />
+      ))}
     </div>
   )
-}
+})

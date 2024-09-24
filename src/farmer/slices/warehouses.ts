@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 import type { Warehouse } from '../types/buildings'
 import type { State } from '../types/state'
-import type { Product } from '../types'
+import type { Product } from '../types/products'
 
 const slice = createSlice({
   name: 'warehouses',
@@ -12,18 +12,26 @@ const slice = createSlice({
       id: '1',
       name: 'Shop Warehouse',
       capacity: 100,
-      position: [0, 0],
+      position: [21, 21],
       products: {},
     },
     {
       id: '2',
       name: 'Warehouse 1',
       capacity: 100,
-      position: [2, 3],
+      position: [11, 2],
       products: {
-        '1': 3,
+        '1': 5,
+        '2': 5,
       },
     },
+    // {
+    //   id: '3',
+    //   name: 'Warehouse 2',
+    //   capacity: 100,
+    //   position: [21, 2],
+    //   products: {},
+    // },
   ] as State['warehouses'],
   reducers: {
     putToWarehouse: (

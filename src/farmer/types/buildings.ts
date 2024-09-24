@@ -1,7 +1,7 @@
 type Building = {
   id: string
   name: string
-  position: [number, number] | null
+  position: [number, number]
 }
 
 export type Warehouse = Building & {

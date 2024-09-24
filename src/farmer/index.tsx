@@ -1,61 +1,84 @@
 'use client'
 
-import { useCallback, useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
+
+import StoreProvider from './StoreProvider'
 
 import Grid from './components/grid'
 import Panel from './components/panel'
-import BuildingDetailsDialog from './components/dialogs/farm-details-dialog'
-import WarehouseDetailsDialog from './components/dialogs/warehouse-details-dialog'
-import TransportsDialog from './components/dialogs/transports-dialog'
-import ShipmentsDialog from './components/dialogs/shipment'
+import { Toaster } from './components/ui/toaster'
 
-import StoreProvider from './StoreProvider'
+import DialogsController from './controllers/dialogs'
+import TimeController from './controllers/time'
+import BuildingsController from './controllers/buildings'
+
+import { GRID_LENGTH } from './config/main'
+
+import products from './data/products'
+
 import { useAppSelector, useAppDispatch, useAppStore } from './hooks/redux'
 import { useToast } from './hooks/use-toast'
 
-import { increaseDay } from './slices/day'
 import { startProducing, endProducing } from './slices/farms'
 import { putToWarehouse, pickUpFromWarehouse } from './slices/warehouses'
-import {
-  toggleFarmDetailsModal,
-  toggleWarehouseDetailsModal,
-  toggleTransportsModal,
-  toggleShipmentModal,
-} from './slices/ui'
+import { updateShipmentStatus } from './slices/shipments'
 
-import { Toaster } from './components/ui/toaster'
-import products from './data/products'
-import { Farm, Warehouse } from './types/buildings'
 import {
-  addShipment,
-  deleteShipment,
-  updateShipmentStatus,
-} from './slices/shipments'
-import { Cargo, Shipment } from './types/transport'
-import { Product } from './types'
+  alignAvailableCargo,
+  convertCargoFromArrayToObject,
+  getAvailableCargoArray,
+} from './utils/shipment'
+import { getPath, getAllSegments } from './utils/grid'
+import { getWarehouseRoadPoint } from './utils/warehouse'
+
+import type { Shipment } from './types/transport'
+import type { PossibleRoads } from './types/grid'
+import type { Farm, Warehouse } from './types/buildings'
 
 function App() {
   const { toast } = useToast()
   const dispatch = useAppDispatch()
-  const {
-    farmDetailsId,
-    warehouseDetailsId,
-    isTransportModal,
-    isShipmentModal,
-  } = useAppSelector((state) => state.ui)
+  const appStore = useAppStore()
+
+  const { cellSize } = useAppSelector((state) => state.ui)
   const day = useAppSelector((state) => state.day)
   const farms = useAppSelector((state) => state.farms)
   const warehouses = useAppSelector((state) => state.warehouses)
-  const transports = useAppSelector((state) => state.transports)
   const shipments = useAppSelector((state) => state.shipments)
-  const appStore = useAppStore()
+  const roads = useAppSelector((state) => state.roads)
 
-  // console.warn('render', day, shipments[0])
+  const allSegments = useMemo(() => getAllSegments(roads), [roads])
 
-  const selectedWarehouse = warehouses.find(
-    (item) => item.id === warehouseDetailsId
-  )
-  const selectedFarm = farms.find((item) => item.id === farmDetailsId)
+  const possibleRoads = useMemo(() => {
+    const points: Record<Warehouse['id'], Warehouse['position']> = {}
+    warehouses.forEach((warehouse) => {
+      points[warehouse.id] = warehouse.position
+    })
+
+    const pairs = warehouses.flatMap((v, i) =>
+      warehouses.slice(i + 1).map((w) => `${v.id}-${w.id}`)
+    )
+
+    const obj: PossibleRoads = {}
+    pairs.forEach((pair) => {
+      const [id1, id2] = pair.split('-')
+      const w1Point = getWarehouseRoadPoint(points[id1])
+      const w2Point = getWarehouseRoadPoint(points[id2])
+
+      const path = getPath({
+        allSegments,
+        p1: w1Point,
+        p2: w2Point,
+      })
+
+      obj[pair] = path
+    })
+
+    // console.warn('possibleRoads', warehouses, points, pairs)
+    return obj
+  }, [roads, warehouses]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // console.warn('render', shipments[0])
 
   useEffect(() => {
     const dayFarmCheck = (farm: Farm) => {
@@ -107,221 +130,165 @@ function App() {
     }
 
     const dayShipmentCheck = (shipment: Shipment) => {
-      const {
-        id,
-        from,
-        to,
-        cargoPlan,
-        cargoShipment,
-        status,
-        statusDuration,
-        statusStartDay,
-      } = shipment
-      const statusEndDay = statusStartDay + statusDuration
-      const isDayForNextCycle = day >= statusEndDay
+      const { id, from, to, cargoPlan, cargoShipment, status, position } =
+        shipment
+      const shipmentPath = possibleRoads[`${from}-${to}`]
 
-      if (status === 'new' && isDayForNextCycle) {
-        dispatch(
-          updateShipmentStatus({
-            id,
-            status: 'goToP1',
-            duration: 5,
-            startDay: day,
-          })
-        )
-      }
-
-      if (status === 'goToP1' && isDayForNextCycle) {
-        dispatch(
-          updateShipmentStatus({
-            id,
-            status: 'collectCargo',
-            duration: 1,
-            startDay: day,
-          })
-        )
-      }
-
-      if (status === 'collectCargo' && isDayForNextCycle) {
+      if (status === 'new') {
         const currentWarehouses = appStore.getState().warehouses
         const currentWarehouse = currentWarehouses.find(
           (item) => item.id === from
         ) as Warehouse
 
-        const cargoToObject: Record<Product['id'], number> = {}
-        cargoPlan.forEach((item) => {
-          let countToGet = 0
-          const productId = item.itemId
+        // console.warn('new', currentWarehouse)
+        dispatch(
+          updateShipmentStatus({
+            id,
+            status: 'collectCargo',
+            position: currentWarehouse.position,
+          })
+        )
+      }
 
-          if (cargoToObject[productId]) {
-            countToGet = cargoToObject[productId] + item.count
-          } else {
-            countToGet = item.count
-          }
+      if (status === 'collectCargo') {
+        const currentWarehouses = appStore.getState().warehouses
+        const currentWarehouse = currentWarehouses.find(
+          (item) => item.id === from
+        ) as Warehouse
 
-          const countOnWarehouse = currentWarehouse.products[productId] || 0
-          cargoToObject[productId] = Math.min(countToGet, countOnWarehouse)
-        })
+        const cargoObject = convertCargoFromArrayToObject(cargoPlan)
+        const cargoObjectAvailable = alignAvailableCargo(
+          cargoObject,
+          currentWarehouse.products
+        )
 
         dispatch(
           pickUpFromWarehouse({
             warehouseId: from,
-            productsToPickUp: cargoToObject,
+            productsToPickUp: cargoObjectAvailable,
           })
         )
 
-        const cargoToObjectCopy = { ...cargoToObject }
-        const cargoTookFromWarehouse: Cargo[] = []
-
-        cargoPlan.forEach((item) => {
-          if (cargoToObjectCopy[item.itemId] > 0) {
-            cargoTookFromWarehouse.push(item)
-            cargoToObjectCopy[item.itemId] -= 1
-          }
-        })
+        const cargoTookFromWarehouse = getAvailableCargoArray(
+          cargoPlan,
+          cargoObjectAvailable
+        )
 
         dispatch(
           updateShipmentStatus({
             id,
             status: 'goToP2',
-            duration: 7,
-            startDay: day,
+            position: shipmentPath[0],
             cargo: cargoTookFromWarehouse,
           })
         )
       }
 
-      if (status === 'goToP2' && isDayForNextCycle) {
-        dispatch(
-          updateShipmentStatus({
-            id,
-            status: 'deliverCargo',
-            duration: 1,
-            startDay: day,
-          })
+      if (status === 'goToP2') {
+        const currentPositionIndex = shipmentPath.findIndex(
+          (item) => item[0] === position[0] && item[1] === position[1]
         )
+
+        const nextPosition = shipmentPath[currentPositionIndex + 1]
+        if (nextPosition) {
+          dispatch(
+            updateShipmentStatus({
+              id,
+              status: 'goToP2',
+              position: nextPosition,
+            })
+          )
+        } else {
+          const currentWarehouses = appStore.getState().warehouses
+          const currentWarehouse = currentWarehouses.find(
+            (item) => item.id === to
+          ) as Warehouse
+
+          dispatch(
+            updateShipmentStatus({
+              id,
+              status: 'deliverCargo',
+              position: currentWarehouse.position,
+            })
+          )
+        }
       }
 
-      if (status === 'deliverCargo' && isDayForNextCycle) {
-        const cargoToObject: Record<Product['id'], number> = {}
-        cargoShipment.forEach((item) => {
-          if (cargoToObject[item.itemId]) {
-            cargoToObject[item.itemId] += item.count
-          } else {
-            cargoToObject[item.itemId] = item.count
-          }
-        })
+      if (status === 'deliverCargo') {
+        const cargoObject = convertCargoFromArrayToObject(cargoShipment)
 
         dispatch(
           putToWarehouse({
             warehouseId: to,
-            productsToPut: cargoToObject,
+            productsToPut: cargoObject,
           })
         )
         dispatch(
           updateShipmentStatus({
             id,
             status: 'goToP1',
-            duration: 10,
-            startDay: day,
+            position: shipmentPath[shipmentPath.length - 1],
             cargo: [],
           })
         )
+      }
+
+      if (status === 'goToP1') {
+        const currentPositionIndex = shipmentPath.findIndex(
+          (item) => item[0] === position[0] && item[1] === position[1]
+        )
+
+        if (shipmentPath[currentPositionIndex - 1]) {
+          dispatch(
+            updateShipmentStatus({
+              id,
+              status: 'goToP1',
+              position: shipmentPath[currentPositionIndex - 1],
+            })
+          )
+        } else {
+          const currentWarehouses = appStore.getState().warehouses
+          const currentWarehouse = currentWarehouses.find(
+            (item) => item.id === from
+          ) as Warehouse
+          dispatch(
+            updateShipmentStatus({
+              id,
+              status: 'collectCargo',
+              position: currentWarehouse.position,
+            })
+          )
+        }
       }
     }
 
     farms.forEach(dayFarmCheck)
     shipments.forEach(dayShipmentCheck)
-  }, [farms, day, shipments, warehouses, dispatch, toast, appStore])
+  }, [day, dispatch, toast, appStore]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      dispatch(increaseDay())
-    }, 1000)
-
-    return () => {
-      clearInterval(interval)
-    }
-  }, [dispatch])
+    document.body.style.overscrollBehaviorX = 'none'
+  }, [])
 
   return (
-    <main className="h-[calc(100vh-60px)] relative bg-[#bfda95] flex flex-col items-center">
-      <div className="absolute top-0 left-0 right-0">
+    <main className="p-0 relative overflow-auto h-full">
+      <div className="fixed top-[0] left-0 right-0">
         <Panel />
       </div>
-      <div className="flex-grow flex flex-row items-center">
+      <div
+        className="relative bg-[#bfda95] border border-[#b1ce85]"
+        style={{
+          width: `${GRID_LENGTH * cellSize + 1}px`,
+          height: `${GRID_LENGTH * cellSize + 1}px`,
+        }}
+      >
         <Grid />
+        <BuildingsController possibleRoads={possibleRoads} />
       </div>
-      <WarehouseDetailsDialog
-        isOpen={Boolean(warehouseDetailsId)}
-        item={selectedWarehouse}
-        onClose={() => dispatch(toggleWarehouseDetailsModal(undefined))}
-      />
-      <TransportsDialog
-        isOpen={isTransportModal}
-        transports={transports}
-        onClose={useCallback(
-          () => dispatch(toggleTransportsModal()),
-          [dispatch]
-        )}
-      />
-      <ShipmentsDialog
-        isOpen={isShipmentModal}
-        shipments={shipments}
-        warehouses={warehouses}
-        transports={transports}
-        onClose={useCallback(() => dispatch(toggleShipmentModal()), [dispatch])}
-        onAddShipment={useCallback(
-          (data) => {
-            dispatch(
-              addShipment({
-                ...data,
-                day,
-              })
-            )
-          },
-          [dispatch, day]
-        )}
-        onDeleteShipment={useCallback(
-          (id) => {
-            dispatch(deleteShipment(id))
-          },
-          [dispatch]
-        )}
-      />
-      <BuildingDetailsDialog
-        isOpen={Boolean(farmDetailsId)}
-        item={selectedFarm}
-        warehouses={warehouses}
-        day={day}
-        onClose={useCallback(
-          () => dispatch(toggleFarmDetailsModal(undefined)),
-          [dispatch]
-        )}
-        onStop={useCallback(() => {
-          dispatch(endProducing({ farmId: farmDetailsId as string }))
-        }, [dispatch, farmDetailsId])}
-        onApply={useCallback(
-          (data) => {
-            const { productId, cycles, power, warehouseId } = data
-            if (farmDetailsId) {
-              dispatch(
-                startProducing({
-                  day,
-                  farmId: farmDetailsId,
-                  productId,
-                  cycles,
-                  power,
-                  warehouseId,
-                })
-              )
 
-              dispatch(toggleFarmDetailsModal(undefined))
-            }
-          },
-          [dispatch, farmDetailsId, day]
-        )}
-      />
+      <TimeController />
+      <DialogsController />
+
       <Toaster />
     </main>
   )
