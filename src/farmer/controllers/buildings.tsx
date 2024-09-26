@@ -4,13 +4,20 @@ import { useAppSelector, useAppDispatch } from '../hooks/redux'
 
 import Farm from '../components/buildings/farm'
 import Warehouse from '../components/buildings/warehouse'
-
-import { toggleWarehouseDetailsModal } from '../slices/ui'
-import buildings from '../data/buildings'
-// import { toggleRoad } from '../slices/roads'
+import Grid from '../components/grid'
 import Roads from '../components/roads'
+import Paths from '../components/paths'
+import EditGrid from '../components/editGrid'
 import { TransportIcon } from '../components/cards/transport'
+
+import { toggleWarehouseDetailsModal, toggleShopModal } from '../slices/ui'
+import { createWarehouse } from '../slices/warehouses'
+import { createFarm } from '../slices/farms'
+import { toggleRoad } from '../slices/roads'
+
+import buildings from '../data/buildings'
 import { PossibleRoads } from '../types/grid'
+import SimpleBuildings from '../components/simpleBuildings'
 
 function Wrapper({
   position,
@@ -46,7 +53,9 @@ export default function BuildingsController({
   const roads = useAppSelector((state) => state.roads)
   const shipments = useAppSelector((state) => state.shipments)
   const warehouses = useAppSelector((state) => state.warehouses)
-  const { cellSize } = useAppSelector((state) => state.ui)
+  const simpleBuildings = useAppSelector((state) => state.simpleBuildings)
+  const { cellSize, hasPaths } = useAppSelector((state) => state.ui)
+  const { createItem } = useAppSelector((state) => state.editMode)
 
   const onItemClick = useCallback(
     (itemId: string) => {
@@ -55,22 +64,54 @@ export default function BuildingsController({
     [dispatch]
   )
 
-  // console.warn('Buildings', shipments)
+  const onCreateItem = useCallback(
+    (point: number[]) => {
+      console.warn('onCreateItem', createItem, point)
+      if (createItem === 'road') {
+        dispatch(toggleRoad(point))
+      }
+
+      if (createItem === 'warehouse') {
+        dispatch(
+          createWarehouse({
+            position: point,
+          })
+        )
+      }
+
+      if (createItem === 'farm') {
+        dispatch(
+          createFarm({
+            position: point,
+          })
+        )
+      }
+    },
+    [createItem, dispatch]
+  )
+
+  // console.warn('Buildings', JSON.stringify(roads))
 
   return (
-    <div
-      className="absolute top-0 left-0 right-0 bottom-0"
+    <div className="absolute top-0 left-0 right-0 bottom-0">
+      <Grid cellSize={cellSize} />
 
-      // onClick={(e) => {
-      //   const { pageX, pageY } = e
-      //   const x = Math.floor(pageX / cellSize)
-      //   const y = Math.floor((pageY - 60) / cellSize)
+      <SimpleBuildings
+        cellSize={cellSize}
+        buildings={simpleBuildings}
+        onShopClick={useCallback(() => {
+          dispatch(toggleShopModal('1')) // TODO
+        }, [dispatch])}
+      />
 
-      //   dispatch(toggleRoad([x, y]))
+      {createItem && (
+        <EditGrid
+          item={createItem}
+          cellSize={cellSize}
+          onClick={onCreateItem}
+        />
+      )}
 
-      //   console.warn('onClick', pageX, pageY, x, y)
-      // }}
-    >
       {farms.map((item) => (
         <Wrapper key={item.id} position={item.position} cellSize={cellSize}>
           <div
@@ -96,7 +137,21 @@ export default function BuildingsController({
         </Wrapper>
       ))}
 
-      <Roads roads={roads} cellSize={cellSize} possibleRoads={possibleRoads} />
+      <Roads
+        roads={roads}
+        cellSize={cellSize}
+        mode={createItem === 'road' ? 'edit' : 'regular'}
+        onRoadClick={useCallback(
+          (point) => {
+            if (createItem === 'road') {
+              dispatch(toggleRoad(point))
+            }
+          },
+          [createItem, dispatch]
+        )}
+      />
+
+      {hasPaths && <Paths cellSize={cellSize} possibleRoads={possibleRoads} />}
 
       {shipments.map((item) => (
         <Wrapper key={item.id} position={item.position} cellSize={cellSize}>
@@ -104,8 +159,10 @@ export default function BuildingsController({
             style={{
               width: `${1 * cellSize - 2}px`,
               height: `${1 * cellSize - 2}px`,
+              left: `${1 * cellSize}px`,
+              // top: `${1 * cellSize}px`,
             }}
-            className="bg-background flex items-center justify-center"
+            className="bg-background8 flex items-center justify-center 7p-2 7rounded-full"
           >
             <TransportIcon id="1" />
           </div>

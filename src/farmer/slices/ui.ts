@@ -8,8 +8,10 @@ const uiSlice = createSlice({
   initialState: {
     farmDetailsId: undefined,
     warehouseDetailsId: undefined,
+    shopDetailsId: undefined,
     isTransportModal: false,
     isShipmentModal: false,
+    hasPaths: true,
     cellSize: 25,
   } satisfies State['ui'],
   reducers: {
@@ -18,6 +20,12 @@ const uiSlice = createSlice({
     },
     toggleShipmentModal(state: State['ui']) {
       state.isShipmentModal = !state.isShipmentModal
+    },
+    toggleShopModal(
+      state: State['ui'],
+      action: PayloadAction<string | undefined>
+    ) {
+      state.shopDetailsId = action.payload
     },
     toggleFarmDetailsModal(
       state: State['ui'],
@@ -37,6 +45,7 @@ const uiSlice = createSlice({
 export const {
   toggleFarmDetailsModal,
   toggleWarehouseDetailsModal,
+  toggleShopModal,
   toggleTransportsModal,
   toggleShipmentModal,
 } = uiSlice.actions

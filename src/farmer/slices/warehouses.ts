@@ -10,30 +10,42 @@ const slice = createSlice({
   initialState: [
     {
       id: '1',
-      name: 'Shop Warehouse',
+      name: 'City Warehouse',
       capacity: 100,
-      position: [21, 21],
+      position: [34, 26],
       products: {},
     },
-    {
-      id: '2',
-      name: 'Warehouse 1',
-      capacity: 100,
-      position: [11, 2],
-      products: {
-        '1': 5,
-        '2': 5,
-      },
-    },
     // {
-    //   id: '3',
-    //   name: 'Warehouse 2',
+    //   id: '2',
+    //   name: 'Warehouse 1',
     //   capacity: 100,
-    //   position: [21, 2],
-    //   products: {},
+    //   position: [11, 2],
+    //   products: {
+    //     '1': 5,
+    //     '2': 5,
+    //   },
     // },
   ] as State['warehouses'],
   reducers: {
+    createWarehouse: (
+      state: State['warehouses'],
+      action: PayloadAction<{
+        position: Warehouse['position']
+      }>
+    ) => {
+      const { position } = action.payload
+
+      return [
+        ...state,
+        {
+          id: '3',
+          name: 'Warehouse',
+          capacity: 100,
+          position,
+          products: {},
+        },
+      ]
+    },
     putToWarehouse: (
       state: State['warehouses'],
       action: PayloadAction<{
@@ -104,5 +116,6 @@ const slice = createSlice({
   },
 })
 
-export const { putToWarehouse, pickUpFromWarehouse } = slice.actions
+export const { putToWarehouse, pickUpFromWarehouse, createWarehouse } =
+  slice.actions
 export default slice.reducer

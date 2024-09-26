@@ -64,7 +64,7 @@ export default memo(function Cell({
       role="button"
       tabIndex={0}
       className={cn(
-        'h-1/3 w-1/3 flex items-center justify-center relative p-4 focus-visible:outline-none',
+        'h-1/3 w-1/3 flex items-center justify-center relative p-3 focus-visible:outline-none',
         {
           'bg-[#92766c]': true,
           'border-[#b4937e] border': true,

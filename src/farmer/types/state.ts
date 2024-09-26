@@ -1,4 +1,4 @@
-import { Farm, Warehouse } from './buildings'
+import { Farm, SimpleBuilding, Warehouse } from './buildings'
 import { Shipment, Transport } from './transport'
 
 export type GridPoint = string
@@ -17,13 +17,19 @@ export type State = {
   ui: {
     farmDetailsId?: string
     warehouseDetailsId?: string
+    shopDetailsId?: string
     isTransportModal: boolean
     isShipmentModal: boolean
+    hasPaths: boolean
     cellSize: number
   }
-  roads: [number, number][]
+  editMode: {
+    createItem: 'road' | 'farm' | 'warehouse' | null
+  }
+  roads: number[][]
   farms: Farm[]
   warehouses: Warehouse[]
   transports: Pick<Transport, 'id' | 'type'>[]
   shipments: Shipment[]
+  simpleBuildings: SimpleBuilding[]
 }

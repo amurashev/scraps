@@ -8,6 +8,8 @@ import warehousesSlice from './slices/warehouses'
 import transportsSlice from './slices/transports'
 import shipmentsSlice from './slices/shipments'
 import roadsSlice from './slices/roads'
+import editModeSlice from './slices/editMode'
+import simpleBuildingsSlice from './slices/simpleBuildings'
 
 import type { State } from './types/state'
 
@@ -22,6 +24,8 @@ export const store = () =>
       transports: transportsSlice,
       shipments: shipmentsSlice,
       roads: roadsSlice,
+      editMode: editModeSlice,
+      simpleBuildings: simpleBuildingsSlice,
     },
   })
 

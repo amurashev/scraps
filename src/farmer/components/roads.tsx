@@ -1,13 +1,14 @@
 import { useMemo, memo } from 'react'
 
 import { cn } from '@/lib/utils'
+import { Point } from '../types/grid'
 
 function Wrapper({
   position,
   cellSize,
   children,
 }: {
-  position: [number, number]
+  position: number[]
   cellSize: number
   children: React.ReactNode
 }) {
@@ -28,11 +29,13 @@ function Wrapper({
 export default memo(function Roads({
   cellSize,
   roads,
-  possibleRoads,
+  mode = 'regular',
+  onRoadClick,
 }: {
-  roads: [number, number][]
+  roads: number[][]
   cellSize: number
-  possibleRoads: Record<string, number[][]>
+  mode: 'regular' | 'edit'
+  onRoadClick: (point: Point) => void
 }) {
   const roadsToObject = useMemo(() => {
     const obj: Record<string, boolean> = {}
@@ -57,14 +60,23 @@ export default memo(function Roads({
         const isVertical = !hasLeft && !hasRight
         const isHorizontal = !hasTop && !hasBottom
 
+        const borderLeft = !hasLeft && (hasTop || hasBottom)
+        const borderTop = !hasTop && (hasLeft || hasRight)
+        const borderRight = !hasRight && (hasTop || hasBottom)
+        const borderBottom = !hasBottom && (hasLeft || hasRight)
+
         return (
           <Wrapper key={flatPoint} position={item} cellSize={cellSize}>
             <div
+              role="button"
+              aria-label="Road"
+              tabIndex={0}
               className={cn('bg-slate-500 border-gray-100', {
-                'border-l': !hasLeft,
-                'border-r': !hasRight && !hasLeft,
-                'border-t': !hasTop && !hasBottom,
-                'border-b': !hasBottom,
+                'border-l': borderLeft,
+                'border-r': borderRight,
+                'border-t': borderTop,
+                'border-b': borderBottom,
+                'hover:bg-red-500': mode === 'edit',
                 'flex items-center justify-center py-[1px] px-[1px]': true,
               })}
               style={{
@@ -72,72 +84,21 @@ export default memo(function Roads({
                 height: `${1 * cellSize}px`,
               }}
               title={`${x}:${y}`}
+              onClick={() => onRoadClick(item)}
             >
               <span
                 className={cn({
                   'w-[1px] h-full border-l border-background border-dashed':
-                    isVertical,
+                    isVertical && !isHorizontal,
                   'w-full h-[1px] border-t border-background border-dashed':
-                    isHorizontal,
+                    isHorizontal && !isVertical,
+                  'w-[1px] h-[1px] border-t border-background border-dashed':
+                    (!isHorizontal && !isVertical) ||
+                    (isHorizontal && isVertical),
                 })}
               />
             </div>
           </Wrapper>
-        )
-      })}
-
-      {Object.keys(possibleRoads).map((path) => {
-        const points = possibleRoads[path]
-
-        return (
-          <div key={path}>
-            {points.map((point, i) => {
-              const nextPoint = points[i + 1]
-              const [x1, y1] = point
-
-              const cellCenter = cellSize / 2 - 2
-
-              // if (!nextPoint) {
-              //   return null
-              // }
-
-              const [x2, y2] = nextPoint || point
-
-              if (x1 === x2) {
-                // Vertical line
-                return (
-                  <div
-                    key={`${path}:${x1}:${y1}`}
-                    title={`${path}:${x1}:${y1}`}
-                    className="absolute w-[4px] h-[4px] bg-red-600 rounded-full"
-                    style={{
-                      left: `${x1 * cellSize + cellCenter}px`,
-                      top: `${y1 * cellSize + cellCenter}px`,
-                      // height: `${1 * cellSize}px`,
-                    }}
-                  />
-                )
-              }
-
-              if (y1 === y2) {
-                // Horizontal line
-                return (
-                  <div
-                    key={`${path}:${x1}:${y1}`}
-                    title={`${path}:${x1}:${y1}`}
-                    className="absolute h-[4px] w-[4px] bg-red-600 rounded-full"
-                    style={{
-                      left: `${x1 * cellSize + cellCenter}px`,
-                      top: `${y1 * cellSize + cellCenter}px`,
-                      // width: `${1 * cellSize}px`,
-                    }}
-                  />
-                )
-              }
-
-              return null
-            })}
-          </div>
         )
       })}
     </div>

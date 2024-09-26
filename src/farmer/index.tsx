@@ -4,8 +4,8 @@ import { useEffect, useMemo } from 'react'
 
 import StoreProvider from './StoreProvider'
 
-import Grid from './components/grid'
 import Panel from './components/panel'
+import EditPanel from './components/editPanel'
 import { Toaster } from './components/ui/toaster'
 
 import DialogsController from './controllers/dialogs'
@@ -72,13 +72,14 @@ function App() {
       })
 
       obj[pair] = path
+      obj[`${id2}-${id1}`] = [...path].reverse()
     })
 
     // console.warn('possibleRoads', warehouses, points, pairs)
     return obj
   }, [roads, warehouses]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // console.warn('render', shipments[0])
+  // console.warn('render', shipments[0], possibleRoads)
 
   useEffect(() => {
     const dayFarmCheck = (farm: Farm) => {
@@ -272,9 +273,6 @@ function App() {
 
   return (
     <main className="p-0 relative overflow-auto h-full">
-      <div className="fixed top-[0] left-0 right-0">
-        <Panel />
-      </div>
       <div
         className="relative bg-[#bfda95] border border-[#b1ce85]"
         style={{
@@ -282,8 +280,15 @@ function App() {
           height: `${GRID_LENGTH * cellSize + 1}px`,
         }}
       >
-        <Grid />
         <BuildingsController possibleRoads={possibleRoads} />
+      </div>
+
+      <div className="fixed top-[0] left-0 right-0">
+        <Panel />
+      </div>
+
+      <div className="fixed top-[50%] right-[10px]">
+        <EditPanel />
       </div>
 
       <TimeController />

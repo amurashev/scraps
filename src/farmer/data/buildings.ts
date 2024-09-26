@@ -5,7 +5,7 @@ const buildings: Record<
   }
 > = {
   farm: {
-    size: 9,
+    size: 6,
   },
   warehouse: {
     size: 3,

@@ -1,11 +1,9 @@
 import { memo } from 'react'
+
 import { GRID_LENGTH } from '../config/main'
-import { useAppSelector } from '../hooks/redux'
 
-export default memo(function Grid() {
+export default memo(function Grid({ cellSize }: { cellSize: number }) {
   const fieldArray = Array.from({ length: GRID_LENGTH }, (_, i) => i)
-
-  const { cellSize } = useAppSelector((state) => state.ui)
 
   return (
     <div className="absolute top-0 left-0 right-0 bottom-0">

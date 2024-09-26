@@ -1,7 +1,12 @@
 type Building = {
   id: string
   name: string
-  position: [number, number]
+  position: number[]
+}
+
+export type SimpleBuilding = Building & {
+  type: 'hall' | 'house' | 'shop'
+  subType?: number
 }
 
 export type Warehouse = Building & {

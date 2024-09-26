@@ -12,13 +12,30 @@ import { TIME_BOOST } from '../config/main'
 const slice = createSlice({
   name: 'farms',
   initialState: [
-    {
-      id: '1',
-      name: 'Farm 1',
-      position: [2, 2],
-    },
+    // {
+    //   id: '1',
+    //   name: 'Farm 1',
+    //   position: [2, 2],
+    // },
   ] as State['farms'],
   reducers: {
+    createFarm: (
+      state: State['farms'],
+      action: PayloadAction<{
+        position: Farm['position']
+      }>
+    ) => {
+      const { position } = action.payload
+
+      return [
+        ...state,
+        {
+          id: '3',
+          name: 'Farm',
+          position,
+        },
+      ]
+    },
     startProducing: (
       state: State['farms'],
       action: PayloadAction<{
@@ -77,5 +94,5 @@ const slice = createSlice({
   },
 })
 
-export const { startProducing, endProducing } = slice.actions
+export const { startProducing, endProducing, createFarm } = slice.actions
 export default slice.reducer

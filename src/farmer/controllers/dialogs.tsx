@@ -6,6 +6,7 @@ import BuildingDetailsDialog from '../components/dialogs/farm-details-dialog'
 import WarehouseDetailsDialog from '../components/dialogs/warehouse-details-dialog'
 import TransportsDialog from '../components/dialogs/transports-dialog'
 import ShipmentsDialog from '../components/dialogs/shipment'
+import ShopDialog from '../components/dialogs/shop-details-dialog'
 
 import { useAppSelector, useAppDispatch } from '../hooks/redux'
 
@@ -15,6 +16,7 @@ import {
   toggleWarehouseDetailsModal,
   toggleTransportsModal,
   toggleShipmentModal,
+  toggleShopModal,
 } from '../slices/ui'
 import { addShipment, deleteShipment } from '../slices/shipments'
 
@@ -23,6 +25,7 @@ export default function DialogsController() {
   const {
     farmDetailsId,
     warehouseDetailsId,
+    shopDetailsId,
     isTransportModal,
     isShipmentModal,
   } = useAppSelector((state) => state.ui)
@@ -51,6 +54,10 @@ export default function DialogsController() {
           () => dispatch(toggleTransportsModal()),
           [dispatch]
         )}
+      />
+      <ShopDialog
+        isOpen={Boolean(shopDetailsId)}
+        onClose={() => dispatch(toggleShopModal(undefined))}
       />
       <ShipmentsDialog
         isOpen={isShipmentModal}
