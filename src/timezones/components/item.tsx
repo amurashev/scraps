@@ -95,8 +95,14 @@ export default function Item({
           let isHalfCase: false | 'left' | 'right' = false
           let startLabel = false
           let endLabel = false
+
+          const samePositionDiff = key - offsetDelta
+          const shiftedSamePositionDiff =
+            samePositionDiff < 0
+              ? samePositionDiff + 24
+              : Math.abs(samePositionDiff) % 24
           let labelToShow: string | number = getTimeLabel(
-            isSamePosition ? key - offsetDelta : key
+            isSamePosition ? shiftedSamePositionDiff : key
           )
 
           const fixedShiftStart =
