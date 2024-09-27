@@ -15,7 +15,8 @@ import {
   l18nRoute,
   lifeRoute,
   questionnaireRoute,
-  farmerRoute,
+  // farmerRoute,
+  timezonesRoute,
 } from '@/constants/routes'
 import BaseLayout from '@/components/layout/base'
 
@@ -64,10 +65,15 @@ const apps = [
       'An example of page with questionnaire. Myers-Briggs Type Indicator is used as example',
     href: questionnaireRoute.getUrl(),
   },
+  // {
+  //   title: 'Farmer game',
+  //   description: 'Lets try some frontend game dev',
+  //   href: farmerRoute.getUrl(),
+  // },
   {
-    title: 'Farmer game',
-    description: 'Lets try some frontend game dev',
-    href: farmerRoute.getUrl(),
+    title: 'Time Zone difference',
+    description: '',
+    href: timezonesRoute.getUrl(),
   },
   // {
   //   title: 'Blog',

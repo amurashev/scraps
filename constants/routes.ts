@@ -32,6 +32,7 @@ export const restaurantMenuRoute = route('/apps/restaurant/menu')
 export const restaurantOrdersRoute = route('/apps/restaurant/orders')
 export const restaurantDashboardRoute = route('/apps/restaurant/dashboard')
 export const farmerRoute = route('/apps/farmer')
+export const timezonesRoute = route('/apps/timezones')
 
 export const componentsRoute = route<ComponentPageRoute>('/components')
 export const componentPageRoute =
