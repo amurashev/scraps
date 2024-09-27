@@ -15,12 +15,19 @@ import { cn } from '@/lib/utils'
 import timezones from '../data.json'
 import { getUTCLabel } from '../utils'
 
+const getTimeLabel = (value: number) => {
+  const hours = Math.floor(value)
+  const min = value - hours
+  return `${hours < 10 ? '0' : ''}${hours}:${(min * 60) / 10}0`
+}
+
 export default function Item({
   timezoneKey,
   start,
   end,
   initialTimezoneKey,
   isMain,
+  isSamePosition,
   onChangeTimezone,
   onDeleteClick,
 }: {
@@ -29,6 +36,7 @@ export default function Item({
   timezoneKey: number
   initialTimezoneKey: number
   isMain: boolean
+  isSamePosition: boolean
   onChangeTimezone: (timezoneIndex: number) => void
   onDeleteClick: () => void
 }) {
@@ -78,7 +86,7 @@ export default function Item({
           const offsetDelta = timezoneInitialValue.offset - timezoneValue.offset
           const range = shiftEnd - shiftStart
 
-          if (!isMain) {
+          if (!isMain && !isSamePosition) {
             shiftStart = start - offsetDelta
             shiftEnd = end - offsetDelta
           }
@@ -87,7 +95,9 @@ export default function Item({
           let isHalfCase: false | 'left' | 'right' = false
           let startLabel = false
           let endLabel = false
-          let labelToShow: string | number = key
+          let labelToShow: string | number = getTimeLabel(
+            isSamePosition ? key - offsetDelta : key
+          )
 
           const fixedShiftStart =
             shiftStart < 0 ? shiftStart + 24 : Math.abs(shiftStart) % 24
@@ -101,18 +111,16 @@ export default function Item({
               key === Math.floor(fixedShiftStart) &&
               fixedShiftStart !== Math.ceil(fixedShiftStart)
             ) {
-              const diff = fixedShiftStart - Math.floor(fixedShiftStart)
               isHalfCase = 'left'
-              labelToShow = `${key}:${diff * 60}`
+              labelToShow = getTimeLabel(fixedShiftStart)
             }
 
             if (
               key === Math.floor(fixedShiftEnd) &&
               fixedShiftEnd !== Math.ceil(fixedShiftEnd)
             ) {
-              const diff = fixedShiftEnd - Math.floor(fixedShiftEnd)
               isHalfCase = 'right'
-              labelToShow = `${key}:${diff * 60}`
+              labelToShow = getTimeLabel(fixedShiftEnd)
             }
             startLabel = key === Math.floor(fixedShiftStart)
             endLabel = key === Math.floor(fixedShiftEnd)
@@ -155,7 +163,7 @@ export default function Item({
               {(startLabel || endLabel) && range !== 0 && (
                 <div
                   className={cn('absolute bottom-[-18px]', {
-                    'left-[-6px]': !isHalfCase,
+                    'left-[-14px]': !isHalfCase,
                     'left-[4px]': isHalfCase,
                   })}
                 >

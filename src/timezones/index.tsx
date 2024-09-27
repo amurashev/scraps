@@ -15,6 +15,7 @@ type StorageData = {
   start: number
   end: number
   items: number[]
+  isSamePosition: boolean
   version: string
 }
 
@@ -23,6 +24,7 @@ export default function TimezonesPage() {
   const [start, setStart] = useState(9)
   const [end, setEnd] = useState(17)
   const [items, setItems] = useState<number[]>([42])
+  const [isSamePosition, setIsSamePosition] = useState(false)
 
   const handleTimeChange = (index: 'start' | 'end', value: string) => {
     const fixedValue = Number(value)
@@ -70,10 +72,11 @@ export default function TimezonesPage() {
         start,
         end,
         items,
+        isSamePosition,
         version: appVersion,
       })
     }
-  }, [start, end, items, isReady])
+  }, [start, end, items, isSamePosition, isReady])
 
   useEffect(() => {
     const storageValues = getFromStorage<StorageData>(STORAGE_KEY)
@@ -82,6 +85,7 @@ export default function TimezonesPage() {
       setStart(storageValues.start)
       setEnd(storageValues.end)
       setItems(storageValues.items)
+      setIsSamePosition(storageValues.isSamePosition || false)
     }
     setIsReady(true)
   }, [])
@@ -96,7 +100,9 @@ export default function TimezonesPage() {
         <Form
           start={start.toString()}
           end={end.toString()}
+          isSamePosition={isSamePosition}
           onChangeTime={handleTimeChange}
+          onChangePositionParam={(value) => setIsSamePosition(value)}
         />
 
         <div>
@@ -105,6 +111,7 @@ export default function TimezonesPage() {
             start={start}
             end={end}
             initialTimezoneKey={initialTimezoneKey}
+            isSamePosition={isSamePosition}
             onDeleteClick={(itemIndex) => handleDeleteItem(itemIndex)}
             onChangeTimezone={(timezoneIndex, itemIndex) =>
               handleChangeTimezone(timezoneIndex, itemIndex)

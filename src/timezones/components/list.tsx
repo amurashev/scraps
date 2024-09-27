@@ -7,6 +7,7 @@ export default function List({
   start,
   end,
   initialTimezoneKey,
+  isSamePosition,
   onChangeTimezone,
   onDeleteClick,
 }: {
@@ -14,6 +15,7 @@ export default function List({
   start: number
   end: number
   initialTimezoneKey: number
+  isSamePosition: boolean
   onChangeTimezone: (timezoneIndex: number, itemIndex: number) => void
   onDeleteClick: (itemIndex: number) => void
 }) {
@@ -29,6 +31,7 @@ export default function List({
               start={start}
               end={end}
               isMain={isMain}
+              isSamePosition={isSamePosition}
               initialTimezoneKey={initialTimezoneKey}
               onDeleteClick={() => onDeleteClick(itemIndex)}
               onChangeTimezone={(timezoneIndex) =>
