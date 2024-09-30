@@ -33,7 +33,7 @@ export default memo(function WarehouseCell({
             role="button"
             tabIndex={0}
             className={cn(
-              'w-full h-full flex items-center justify-center relative p-3 focus-visible:outline-none cursor-pointer',
+              'w-full h-full flex items-center justify-center relative focus-visible:outline-none cursor-pointer',
               {
                 'border border-gray-400/30 1shadow-sm 1shadow-[#b4937e] rounded-sm':
                   true,
@@ -45,7 +45,7 @@ export default memo(function WarehouseCell({
               onClick()
             }}
           >
-            <WarehouseIcon />
+            <WarehouseIcon size="65%" />
             <div className="flex items-center justify-center absolute bottom-1 right-0 left-0">
               <div className="flex items-center justify-center text-[9px] shadow-sm shadow-gray-200 font-bold bg-background min-w-4 px-1 h-3 rounded-sm">
                 {capacity}/{item.capacity}

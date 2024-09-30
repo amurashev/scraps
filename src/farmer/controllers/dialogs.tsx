@@ -29,11 +29,13 @@ export default function DialogsController() {
     isTransportModal,
     isShipmentModal,
   } = useAppSelector((state) => state.ui)
-  const day = useAppSelector((state) => state.day)
+  const { value } = useAppSelector((state) => state.time)
   const farms = useAppSelector((state) => state.farms)
   const warehouses = useAppSelector((state) => state.warehouses)
   const transports = useAppSelector((state) => state.transports)
   const shipments = useAppSelector((state) => state.shipments)
+
+  const day = value
 
   const selectedWarehouse = warehouses.find(
     (item) => item.id === warehouseDetailsId

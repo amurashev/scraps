@@ -1,23 +1,24 @@
+import { memo } from 'react'
+
 import { cn } from '@/lib/utils'
-
-import { useAppDispatch } from '../../../hooks/redux'
-
-import { toggleFarmDetailsModal } from '../../../slices/ui'
 
 import Cell from './cell'
 import { Farm } from '../../../types/buildings'
 
-export default function FarmCell({ day, farm }: { day: number; farm: Farm }) {
-  const dispatch = useAppDispatch()
-
+export default memo(function FarmCell({
+  day,
+  farm,
+  onClick,
+}: {
+  day: number
+  farm: Farm
+  onClick: () => void
+}) {
   return (
     <div className="w-full h-full flex flex-col divide-y-0 divide-[#b4937e] 1shadow-sm 1shadow-[#b4937e] border overflow-hidden border-[#b4937e] rounded-sm">
       <div
         className={cn(
-          'h-full relative border-0 border-gray-300 flex flex-wrap overflow-hidden',
-          {
-            // 'divide-y-4 divide-[#b4937e]': isActive,
-          }
+          'h-full relative border-0 border-gray-300 flex flex-wrap overflow-hidden'
         )}
       >
         {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((item) => {
@@ -36,13 +37,11 @@ export default function FarmCell({ day, farm }: { day: number; farm: Farm }) {
               producing={farm.producing}
               isBeingUsed={isProducingAvailableForCell}
               isCenter={isCenter}
-              onBaseClick={() => {
-                dispatch(toggleFarmDetailsModal(farm.id))
-              }}
+              onBaseClick={onClick}
             />
           )
         })}
       </div>
     </div>
   )
-}
+})

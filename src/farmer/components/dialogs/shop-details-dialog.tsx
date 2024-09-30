@@ -31,7 +31,6 @@ export default memo(function ShopDetailsDialog({
           e.stopPropagation()
           onClose()
         }}
-        // data-test="jobs_applyDialog"
       >
         <div className="flex divide-x divide-border sm:min-h-[200px]">
           <div className="pr-4 flex flex-col items-center">

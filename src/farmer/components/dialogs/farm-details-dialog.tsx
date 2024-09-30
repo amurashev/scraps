@@ -135,22 +135,6 @@ function AddProducingForm({
             ))}
           </div>
         </div>
-
-        {/* <Select
-          value={power.toString()}
-          onValueChange={(value) => onPowerChange(value)}
-        >
-          <SelectTrigger className="col-span-2">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-              <SelectItem key={item} value={item.toString()}>
-                {item}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select> */}
       </div>
 
       <div className="grid grid-cols-3 gap-2 items-center">

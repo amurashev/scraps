@@ -1,30 +1,8 @@
 import { useMemo, memo } from 'react'
 
 import { cn } from '@/lib/utils'
-import { Point } from '../types/grid'
-
-function Wrapper({
-  position,
-  cellSize,
-  children,
-}: {
-  position: number[]
-  cellSize: number
-  children: React.ReactNode
-}) {
-  const [x = 0, y = 0] = position || []
-  return (
-    <div
-      className="absolute"
-      style={{
-        left: `${x * cellSize}px`,
-        top: `${y * cellSize}px`,
-      }}
-    >
-      {children}
-    </div>
-  )
-}
+import { Point } from '../../types/grid'
+import Wrapper from './wrapper'
 
 export default memo(function Roads({
   cellSize,
@@ -45,8 +23,6 @@ export default memo(function Roads({
     return obj
   }, [roads])
 
-  // console.warn('Roads', possibleRoads)
-
   return (
     <div>
       {roads.map((item) => {
@@ -66,12 +42,12 @@ export default memo(function Roads({
         const borderBottom = !hasBottom && (hasLeft || hasRight)
 
         return (
-          <Wrapper key={flatPoint} position={item} cellSize={cellSize}>
+          <Wrapper key={flatPoint} position={item} cellSize={cellSize} size={1}>
             <div
               role="button"
               aria-label="Road"
               tabIndex={0}
-              className={cn('bg-slate-500 border-gray-100', {
+              className={cn('bg-slate-500 w-full h-full border-gray-100', {
                 'border-l': borderLeft,
                 'border-r': borderRight,
                 'border-t': borderTop,
@@ -79,10 +55,6 @@ export default memo(function Roads({
                 'hover:bg-red-500': mode === 'edit',
                 'flex items-center justify-center py-[1px] px-[1px]': true,
               })}
-              style={{
-                width: `${1 * cellSize}px`,
-                height: `${1 * cellSize}px`,
-              }}
               title={`${x}:${y}`}
               onClick={() => onRoadClick(item)}
             >

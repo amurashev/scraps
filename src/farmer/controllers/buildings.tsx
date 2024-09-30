@@ -2,45 +2,24 @@ import { useCallback } from 'react'
 
 import { useAppSelector, useAppDispatch } from '../hooks/redux'
 
-import Farm from '../components/buildings/farm'
-import Warehouse from '../components/buildings/warehouse'
 import Grid from '../components/grid'
-import Roads from '../components/roads'
+import Roads from '../components/grid/roads'
 import Paths from '../components/paths'
 import EditGrid from '../components/editGrid'
-import { TransportIcon } from '../components/cards/transport'
+import ShipmentOnGrid from '../components/grid/shipment'
+import Buildings from '../components/grid/buildings'
 
-import { toggleWarehouseDetailsModal, toggleShopModal } from '../slices/ui'
+import {
+  toggleWarehouseDetailsModal,
+  toggleFarmDetailsModal,
+  toggleShopModal,
+} from '../slices/ui'
 import { createWarehouse } from '../slices/warehouses'
 import { createFarm } from '../slices/farms'
 import { toggleRoad } from '../slices/roads'
+import { GRID_LENGTH } from '../config/main'
 
-import buildings from '../data/buildings'
 import { PossibleRoads } from '../types/grid'
-import SimpleBuildings from '../components/simpleBuildings'
-
-function Wrapper({
-  position,
-  cellSize,
-  children,
-}: {
-  position: number[]
-  cellSize: number
-  children: React.ReactNode
-}) {
-  const [x = 0, y = 0] = position || []
-  return (
-    <div
-      className="absolute"
-      style={{
-        left: `${x * cellSize}px`,
-        top: `${y * cellSize}px`,
-      }}
-    >
-      {children}
-    </div>
-  )
-}
 
 export default function BuildingsController({
   possibleRoads,
@@ -49,24 +28,19 @@ export default function BuildingsController({
 }) {
   const dispatch = useAppDispatch()
   const farms = useAppSelector((state) => state.farms)
-  const day = useAppSelector((state) => state.day)
+  const { value } = useAppSelector((state) => state.time)
   const roads = useAppSelector((state) => state.roads)
   const shipments = useAppSelector((state) => state.shipments)
   const warehouses = useAppSelector((state) => state.warehouses)
   const simpleBuildings = useAppSelector((state) => state.simpleBuildings)
-  const { cellSize, hasPaths } = useAppSelector((state) => state.ui)
+  const { cellSize, pointOfView } = useAppSelector((state) => state.grid)
+  const { hasPaths } = useAppSelector((state) => state.ui)
   const { createItem } = useAppSelector((state) => state.editMode)
 
-  const onItemClick = useCallback(
-    (itemId: string) => {
-      dispatch(toggleWarehouseDetailsModal(itemId))
-    },
-    [dispatch]
-  )
+  const day = value
 
   const onCreateItem = useCallback(
     (point: number[]) => {
-      console.warn('onCreateItem', createItem, point)
       if (createItem === 'road') {
         dispatch(toggleRoad(point))
       }
@@ -90,84 +64,89 @@ export default function BuildingsController({
     [createItem, dispatch]
   )
 
-  // console.warn('Buildings', JSON.stringify(roads))
-
   return (
-    <div className="absolute top-0 left-0 right-0 bottom-0">
-      <Grid cellSize={cellSize} />
+    <div
+      className="bg-[#bfda95] border border-[#b1ce85] p-20 overflow-hidden"
+      style={{
+        width: '100%',
+        height: '100%',
+      }}
+    >
+      <div
+        className="relative"
+        id="grid"
+        style={{
+          width: `${GRID_LENGTH * cellSize + 1}px`,
+          height: `${GRID_LENGTH * cellSize + 1}px`,
+        }}
+      >
+        <div
+          className="absolute top-0 left-0 right-0 bottom-0 w-full h-full"
+          style={{
+            top: `${pointOfView[1] * cellSize * -1}px`,
+            left: `${pointOfView[0] * cellSize * -1}px`,
+          }}
+        >
+          <Grid cellSize={cellSize} />
 
-      <SimpleBuildings
-        cellSize={cellSize}
-        buildings={simpleBuildings}
-        onShopClick={useCallback(() => {
-          dispatch(toggleShopModal('1')) // TODO
-        }, [dispatch])}
-      />
+          {createItem && (
+            <EditGrid
+              item={createItem}
+              cellSize={cellSize}
+              pointOfView={pointOfView}
+              onClick={onCreateItem}
+            />
+          )}
 
-      {createItem && (
-        <EditGrid
-          item={createItem}
-          cellSize={cellSize}
-          onClick={onCreateItem}
-        />
-      )}
+          <Buildings
+            farms={farms}
+            warehouses={warehouses}
+            simpleBuildings={simpleBuildings}
+            cellSize={cellSize}
+            day={day}
+            onWarehouseClick={useCallback(
+              (itemId) => {
+                dispatch(toggleWarehouseDetailsModal(itemId))
+              },
+              [dispatch]
+            )}
+            onFarmClick={useCallback(
+              (itemId) => {
+                dispatch(toggleFarmDetailsModal(itemId))
+              },
+              [dispatch]
+            )}
+            onShopClick={useCallback(
+              (itemId) => {
+                dispatch(toggleShopModal(itemId))
+              },
+              [dispatch]
+            )}
+          />
 
-      {farms.map((item) => (
-        <Wrapper key={item.id} position={item.position} cellSize={cellSize}>
-          <div
-            style={{
-              width: `${buildings.farm.size * cellSize}px`,
-              height: `${buildings.farm.size * cellSize}px`,
-            }}
-          >
-            <Farm day={day} farm={item} />
-          </div>
-        </Wrapper>
-      ))}
-      {warehouses.map((item) => (
-        <Wrapper key={item.id} position={item.position} cellSize={cellSize}>
-          <div
-            style={{
-              width: `${buildings.warehouse.size * cellSize}px`,
-              height: `${buildings.warehouse.size * cellSize}px`,
-            }}
-          >
-            <Warehouse item={item} onClick={() => onItemClick(item.id)} />
-          </div>
-        </Wrapper>
-      ))}
+          <Roads
+            roads={roads}
+            cellSize={cellSize}
+            mode={createItem === 'road' ? 'edit' : 'regular'}
+            onRoadClick={useCallback(
+              (point) => {
+                if (createItem === 'road') {
+                  dispatch(toggleRoad(point))
+                }
+              },
+              [createItem, dispatch]
+            )}
+          />
 
-      <Roads
-        roads={roads}
-        cellSize={cellSize}
-        mode={createItem === 'road' ? 'edit' : 'regular'}
-        onRoadClick={useCallback(
-          (point) => {
-            if (createItem === 'road') {
-              dispatch(toggleRoad(point))
-            }
-          },
-          [createItem, dispatch]
-        )}
-      />
+          {hasPaths && (
+            <Paths cellSize={cellSize} possibleRoads={possibleRoads} />
+          )}
 
-      {hasPaths && <Paths cellSize={cellSize} possibleRoads={possibleRoads} />}
-
-      {shipments.map((item) => (
-        <Wrapper key={item.id} position={item.position} cellSize={cellSize}>
-          <div
-            style={{
-              width: `${1 * cellSize - 2}px`,
-              height: `${1 * cellSize - 2}px`,
-              left: `${1 * cellSize}px`,
-              // top: `${1 * cellSize}px`,
-            }}
-            className="bg-background8 flex items-center justify-center 7p-2 7rounded-full"
-          >
-            <TransportIcon id="1" />
-          </div>
-        </Wrapper>
-      ))}
+          {shipments.map((item) => (
+            <ShipmentOnGrid key={item.id} item={item} cellSize={cellSize} />
+          ))}
+        </div>
+      </div>
     </div>
   )
 }

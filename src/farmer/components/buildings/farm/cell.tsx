@@ -64,19 +64,12 @@ export default memo(function Cell({
       role="button"
       tabIndex={0}
       className={cn(
-        'h-1/3 w-1/3 flex items-center justify-center relative p-3 focus-visible:outline-none',
+        'h-1/3 w-1/3 flex items-center justify-center relative focus-visible:outline-none',
         {
-          'bg-[#92766c]': true,
-          'border-[#b4937e] border': true,
-          // 'bg-[#738a75]': isActive && isGrowthEnd,
-          // 'bg-[#b4b092]': !isActive,
+          'bg-[#92766c] border-[#b4937e] border': true,
           'cursor-pointer hover:bg-[#92766c]/80': isCenter,
         }
       )}
-      // style={{
-      //   width: `${cellSize}px`,
-      //   height: `${cellSize}px`,
-      // }}
       onClick={() => {
         if (isCenter) {
           onBaseClick()
@@ -86,8 +79,8 @@ export default memo(function Cell({
       {isCenter ? (
         <TooltipProvider delayDuration={300}>
           <Tooltip>
-            <TooltipTrigger>
-              <FarmIcon />
+            <TooltipTrigger className="flex items-center justify-center">
+              <FarmIcon size="65%" />
             </TooltipTrigger>
             <TooltipContent>
               <h3 className="font-bold text-base">{farmName}</h3>
@@ -115,7 +108,9 @@ export default memo(function Cell({
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
           {producing && isBeingUsed ? (
-            <ProductIcon id={producing.productId} size={`${iconSize}%`} />
+            <div className="w-[75%] h-[75%] flex items-center justify-center">
+              <ProductIcon id={producing.productId} size={`${iconSize}%`} />
+            </div>
           ) : null}
         </>
       )}

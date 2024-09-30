@@ -12,8 +12,6 @@ import DialogsController from './controllers/dialogs'
 import TimeController from './controllers/time'
 import BuildingsController from './controllers/buildings'
 
-import { GRID_LENGTH } from './config/main'
-
 import products from './data/products'
 
 import { useAppSelector, useAppDispatch, useAppStore } from './hooks/redux'
@@ -40,12 +38,13 @@ function App() {
   const dispatch = useAppDispatch()
   const appStore = useAppStore()
 
-  const { cellSize } = useAppSelector((state) => state.ui)
-  const day = useAppSelector((state) => state.day)
+  const time = useAppSelector((state) => state.time)
   const farms = useAppSelector((state) => state.farms)
   const warehouses = useAppSelector((state) => state.warehouses)
   const shipments = useAppSelector((state) => state.shipments)
   const roads = useAppSelector((state) => state.roads)
+
+  const day = time.value
 
   const allSegments = useMemo(() => getAllSegments(roads), [roads])
 
@@ -74,8 +73,6 @@ function App() {
       obj[pair] = path
       obj[`${id2}-${id1}`] = [...path].reverse()
     })
-
-    // console.warn('possibleRoads', warehouses, points, pairs)
     return obj
   }, [roads, warehouses]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -141,7 +138,6 @@ function App() {
           (item) => item.id === from
         ) as Warehouse
 
-        // console.warn('new', currentWarehouse)
         dispatch(
           updateShipmentStatus({
             id,
@@ -267,23 +263,11 @@ function App() {
     shipments.forEach(dayShipmentCheck)
   }, [day, dispatch, toast, appStore]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => {
-    document.body.style.overscrollBehaviorX = 'none'
-  }, [])
-
   return (
-    <main className="p-0 relative overflow-auto h-full">
-      <div
-        className="relative bg-[#bfda95] border border-[#b1ce85]"
-        style={{
-          width: `${GRID_LENGTH * cellSize + 1}px`,
-          height: `${GRID_LENGTH * cellSize + 1}px`,
-        }}
-      >
-        <BuildingsController possibleRoads={possibleRoads} />
-      </div>
+    <main className="p-0 relative overflow-hidden min-h-[calc(100vh-60px)] flex">
+      <BuildingsController possibleRoads={possibleRoads} />
 
-      <div className="fixed top-[0] left-0 right-0">
+      <div className="fixed top-[60px] left-0 right-0">
         <Panel />
       </div>
 

@@ -9,7 +9,7 @@ export const useMousePosition = () => {
   useEffect(() => {
     const setFromEvent = (e: any) => {
       // console.warn(e)
-      setPosition({ x: e.clientX, y: e.clientY })
+      setPosition({ x: e.pageX, y: e.pageY })
     }
     window.addEventListener('mousemove', throttle(setFromEvent, 150))
 
@@ -23,18 +23,24 @@ export const useMousePosition = () => {
 
 export default memo(function EditGrid({
   cellSize,
+  pointOfView,
   item,
   onClick,
 }: {
   cellSize: number
+
+  pointOfView: number[]
   item: 'road' | 'farm' | 'warehouse'
   onClick: (point: number[]) => void
 }) {
+  const { top, left } = document
+    .getElementById('grid')
+    ?.getBoundingClientRect() || { top: 0, left: 0 }
   const position = useMousePosition()
 
   const point = [
-    Math.floor(position.x / cellSize),
-    Math.floor((position.y - 60) / cellSize),
+    Math.floor((position.x - left) / cellSize) + pointOfView[0],
+    Math.floor((position.y - top) / cellSize) + pointOfView[1],
   ]
 
   let objectSize = 1 * cellSize
@@ -47,21 +53,22 @@ export default memo(function EditGrid({
     objectSize = buildings.farm.size * cellSize
   }
 
-  // console.warn('EditGrid', point, position)
+  // console.warn('EditGrid', {
+  //   top,
+  //   left,
+  //   // p1: position.x,
+  //   x: position.x,
+  //   y: position.y,
+  //   point: point.join(';'),
+  // })
 
   return (
     <div
       role="button"
       aria-label="Grid"
       tabIndex={0}
-      className="absolute top-0 left-0 right-0 bottom-0"
+      className="absolute top-0 left-0 right-0 bottom-0 w-full h-full"
       onClick={() => {
-        // const { pageX, pageY } = e
-        // const x = Math.floor(pageX / cellSize)
-        // const y = Math.floor((pageY - 60) / cellSize)
-
-        // console.warn('onClick', e)
-
         onClick(point)
       }}
     >

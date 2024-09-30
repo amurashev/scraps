@@ -1,5 +1,5 @@
 const buildings: Record<
-  'farm' | 'warehouse',
+  'farm' | 'warehouse' | 'shop' | 'hall' | 'house',
   {
     size: number
   }
@@ -8,6 +8,15 @@ const buildings: Record<
     size: 6,
   },
   warehouse: {
+    size: 3,
+  },
+  shop: {
+    size: 3,
+  },
+  hall: {
+    size: 3,
+  },
+  house: {
     size: 3,
   },
 }

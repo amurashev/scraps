@@ -36,8 +36,7 @@ export function ProductCardCount({ count = 0 }: { count: number }) {
 type Props = {
   children?: React.ReactNode
   className?: string
-  // hasRing?: boolean
-  size?: 'md' | 'sm'
+  size?: 'md' | 'sm' | 'xsm'
   onClick?: () => void
 }
 
@@ -54,8 +53,7 @@ export const ProductCardBase = forwardRef<HTMLButtonElement, Props>(
           {
             'w-[64px] h-[64px] p-3': size === 'md',
             'w-[32px] h-[32px] p-1': size === 'sm',
-            // 'border-primary': hasRing,
-            // 'border-border': !hasRing,
+            'w-[18px] h-[18px] p-[1px]': size === 'xsm',
             'cursor-pointer': isClickable,
             'cursor-auto': !isClickable,
           },

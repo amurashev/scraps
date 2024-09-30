@@ -2,22 +2,25 @@
 
 import { useEffect } from 'react'
 
-import { useAppDispatch } from '../hooks/redux'
+import { useAppDispatch, useAppSelector } from '../hooks/redux'
 
-import { increaseDay } from '../slices/day'
+import { increaseDay } from '../slices/time'
 
 export default function TimeController() {
   const dispatch = useAppDispatch()
+  const { isPaused } = useAppSelector((state) => state.time)
 
   useEffect(() => {
     const interval = setInterval(() => {
-      dispatch(increaseDay())
+      if (!isPaused) {
+        dispatch(increaseDay())
+      }
     }, 1000)
 
     return () => {
       clearInterval(interval)
     }
-  }, [dispatch])
+  }, [dispatch, isPaused])
 
   return null
 }

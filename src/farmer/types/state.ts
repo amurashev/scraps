@@ -11,9 +11,16 @@ export type CellState = {
 export type GridState = Record<GridPoint, CellState | null>
 
 export type State = {
-  day: number
+  time: {
+    value: number
+    isPaused: boolean
+  }
   money: number
   seeds: Record<string, number>
+  grid: {
+    pointOfView: number[]
+    cellSize: number
+  }
   ui: {
     farmDetailsId?: string
     warehouseDetailsId?: string
@@ -21,7 +28,6 @@ export type State = {
     isTransportModal: boolean
     isShipmentModal: boolean
     hasPaths: boolean
-    cellSize: number
   }
   editMode: {
     createItem: 'road' | 'farm' | 'warehouse' | null

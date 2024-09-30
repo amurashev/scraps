@@ -20,10 +20,6 @@ export default memo(function Paths({
 
               const cellCenter = cellSize / 2 - 2
 
-              // if (!nextPoint) {
-              //   return null
-              // }
-
               const [x2, y2] = nextPoint || point
 
               if (x1 === x2) {
@@ -36,7 +32,6 @@ export default memo(function Paths({
                     style={{
                       left: `${x1 * cellSize + cellCenter}px`,
                       top: `${y1 * cellSize + cellCenter}px`,
-                      // height: `${1 * cellSize}px`,
                     }}
                   />
                 )
@@ -52,7 +47,6 @@ export default memo(function Paths({
                     style={{
                       left: `${x1 * cellSize + cellCenter}px`,
                       top: `${y1 * cellSize + cellCenter}px`,
-                      // width: `${1 * cellSize}px`,
                     }}
                   />
                 )

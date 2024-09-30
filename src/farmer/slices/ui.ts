@@ -12,7 +12,6 @@ const uiSlice = createSlice({
     isTransportModal: false,
     isShipmentModal: false,
     hasPaths: true,
-    cellSize: 25,
   } satisfies State['ui'],
   reducers: {
     toggleTransportsModal(state: State['ui']) {
