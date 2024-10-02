@@ -263,7 +263,7 @@ function App() {
   }, [day, dispatch, toast, appStore]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <main className="p-0 relative overflow-hidden max-h-[calc(100vh-60px)] flex">
+    <main className="p-0 relative overflow-hidden max-h-[100vh] flex">
       <BuildingsController possibleRoads={possibleRoads} />
 
       <PanelController />

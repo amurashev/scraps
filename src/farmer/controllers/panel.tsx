@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import {
   IoCaretBackOutline,
   IoCaretForwardOutline,
@@ -100,6 +102,46 @@ export default function Panel() {
   const { value, isPaused } = useAppSelector((state) => state.time)
   const { createItem } = useAppSelector((state) => state.editMode)
 
+  useEffect(() => {
+    const keyboardEvents = function (e: KeyboardEvent) {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault()
+        dispatch(changePointOfView({ side: 'bottom' }))
+      }
+
+      if (e.key === 'ArrowUp') {
+        e.preventDefault()
+        dispatch(changePointOfView({ side: 'top' }))
+      }
+
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault()
+        dispatch(changePointOfView({ side: 'left' }))
+      }
+
+      if (e.key === 'ArrowRight') {
+        e.preventDefault()
+        dispatch(changePointOfView({ side: 'right' }))
+      }
+
+      if (e.key === '-') {
+        e.preventDefault()
+        dispatch(increaseCellSize())
+      }
+
+      if (e.key === '=') {
+        e.preventDefault()
+        dispatch(reduceCellSize())
+      }
+    }
+
+    document.addEventListener('keydown', keyboardEvents)
+
+    return () => {
+      document.removeEventListener('keydown', keyboardEvents)
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <div>
       <div className="fixed bottom-2 left-2">
@@ -128,44 +170,45 @@ export default function Panel() {
       </div>
 
       <div className="fixed bottom-2 left-[50%] translate-x-[-50%]">
-        <Wrapper className="flex items-center gap-2 px-2">
-          {/* <div className="flex flex-col justify-center items-center relative p-3 space-y-2"> */}
-          <MenuButton
-            title="Roads"
-            isActive={createItem === 'road'}
-            onClick={() => dispatch(toggleEditModeForItem('road'))}
-          >
-            <RoadIcon size={24} fill="#333333" />
-          </MenuButton>
+        <div className="flex space-x-2">
+          <Wrapper className="flex items-stretch gap-2 px-2">
+            <MenuButton
+              title="Roads"
+              isActive={createItem === 'road'}
+              onClick={() => dispatch(toggleEditModeForItem('road'))}
+            >
+              <RoadIcon size={24} fill="#333333" />
+            </MenuButton>
 
-          <MenuButton
-            title="Warehouse"
-            isActive={createItem === 'warehouse'}
-            onClick={() => dispatch(toggleEditModeForItem('warehouse'))}
-          >
-            <WarehouseIcon size={24} />
-          </MenuButton>
+            <MenuButton
+              title="Warehouse"
+              isActive={createItem === 'warehouse'}
+              onClick={() => dispatch(toggleEditModeForItem('warehouse'))}
+            >
+              <WarehouseIcon size={24} />
+            </MenuButton>
 
-          <MenuButton
-            title="Farm"
-            isActive={createItem === 'farm'}
-            onClick={() => dispatch(toggleEditModeForItem('farm'))}
-          >
-            <FarmIcon size={24} />
-          </MenuButton>
-
-          <MenuButton
-            title="Shipment"
-            isActive={false}
-            onClick={() => dispatch(toggleShipmentModal())}
-          >
-            <ShipmentsIcon size={38} />
-          </MenuButton>
-          {/* </div> */}
-        </Wrapper>
+            <MenuButton
+              title="Farm"
+              isActive={createItem === 'farm'}
+              onClick={() => dispatch(toggleEditModeForItem('farm'))}
+            >
+              <FarmIcon size={24} />
+            </MenuButton>
+          </Wrapper>
+          <Wrapper className="px-2">
+            <MenuButton
+              title="Shipment"
+              isActive={false}
+              onClick={() => dispatch(toggleShipmentModal())}
+            >
+              <ShipmentsIcon size={38} />
+            </MenuButton>
+          </Wrapper>
+        </div>
       </div>
 
-      <div className="fixed top-[68px] left-2">
+      <div className="fixed top-2 left-2">
         <div className="relative w-[96px] h-[96px]">
           <PositionButton
             label="Left"
