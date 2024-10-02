@@ -4,13 +4,12 @@ import { useEffect, useMemo } from 'react'
 
 import StoreProvider from './StoreProvider'
 
-import Panel from './components/panel'
-import EditPanel from './components/editPanel'
 import { Toaster } from './components/ui/toaster'
 
 import DialogsController from './controllers/dialogs'
 import TimeController from './controllers/time'
 import BuildingsController from './controllers/buildings'
+import PanelController from './controllers/panel'
 
 import products from './data/products'
 
@@ -264,16 +263,10 @@ function App() {
   }, [day, dispatch, toast, appStore]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <main className="p-0 relative overflow-hidden min-h-[calc(100vh-60px)] flex">
+    <main className="p-0 relative overflow-hidden max-h-[calc(100vh-60px)] flex">
       <BuildingsController possibleRoads={possibleRoads} />
 
-      <div className="fixed top-[60px] left-0 right-0">
-        <Panel />
-      </div>
-
-      <div className="fixed top-[50%] right-[10px]">
-        <EditPanel />
-      </div>
+      <PanelController />
 
       <TimeController />
       <DialogsController />

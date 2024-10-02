@@ -19,7 +19,7 @@ export default memo(function ShopCell({ onClick }: { onClick: () => void }) {
       )}
       onClick={onClick}
     >
-      <ShopIcon size="65%" />
+      <ShopIcon size="75%" />
     </div>
   )
 })
