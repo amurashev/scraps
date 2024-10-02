@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, Children, ReactNode } from 'react'
+import { createContext, useContext, ReactNode } from 'react'
 
 type ActualUser = {
   id: string
@@ -15,13 +15,11 @@ function UserDataProvider({
   user,
   children,
 }: {
-  user: ActualUser  | null
+  user: ActualUser | null
   children: ReactNode
 }) {
   return (
-    <UserDataContext.Provider value={user}>
-      {children}
-    </UserDataContext.Provider>
+    <UserDataContext.Provider value={user}>{children}</UserDataContext.Provider>
   )
 }
 

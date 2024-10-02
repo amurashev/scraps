@@ -33,7 +33,7 @@ function Header(props: Props = {}) {
   const { user } = props
   const [isDark, setIsDark] = useState(false)
   const pathname = usePathname() || '/'
-  const isHomePage = pathname === '/' || pathname === '/en' // TODO:
+  const isHomePage = pathname === '/'
 
   return (
     <header className="flex 1sticky px-6 h-[60px] top-0 z-50 w-full bg-background/95 backdrop-blur border-0 border-b-[1px] border-solid border-border print:hidden">
