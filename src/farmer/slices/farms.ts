@@ -6,35 +6,29 @@ import { getRandomInteger } from '../utils/random'
 import products from '../data/products'
 
 import { State } from '../types/state'
-import { Farm } from '../types/buildings'
+import { Farm, FarmProducing } from '../types/buildings'
 import { TIME_BOOST } from '../config/main'
+
+const defaultData: Farm = {
+  producing: undefined,
+}
 
 const slice = createSlice({
   name: 'farms',
-  initialState: [
-    // {
-    //   id: '1',
-    //   name: 'Farm 1',
-    //   position: [2, 2],
-    // },
-  ] as State['farms'],
+  initialState: {} as State['farms'],
   reducers: {
     createFarm: (
       state: State['farms'],
       action: PayloadAction<{
-        position: Farm['position']
+        id: string
       }>
     ) => {
-      const { position } = action.payload
+      const { id } = action.payload
 
-      return [
+      return {
         ...state,
-        {
-          id: '3',
-          name: 'Farm',
-          position,
-        },
-      ]
+        [id]: defaultData,
+      }
     },
     startProducing: (
       state: State['farms'],
@@ -55,24 +49,21 @@ const slice = createSlice({
         getRandomInteger(growthTime[0], growthTime[1]) * TIME_BOOST
       )
 
-      return state.map((item) => {
-        if (item.id === farmId) {
-          return {
-            ...item,
+      return {
+        ...state,
+        [farmId]: {
+          ...state[farmId],
+          producing: {
+            status: 'active',
+            productId,
             warehouseId,
-            producing: {
-              status: 'active',
-              productId,
-              startDay: day,
-              endDay: day + timeFinal,
-              power,
-              cycles,
-            },
-          } satisfies Farm
-        }
-
-        return item
-      }) satisfies Farm[]
+            startDay: day,
+            endDay: day + timeFinal,
+            power,
+            cycles,
+          },
+        } satisfies Farm,
+      }
     },
     endProducing: (
       state: State['farms'],
@@ -80,19 +71,34 @@ const slice = createSlice({
     ) => {
       const { farmId } = action.payload
 
-      return state.map((item) => {
-        if (item.id === farmId) {
-          return {
-            ...item,
-            producing: undefined,
-          } satisfies Farm
-        }
+      return {
+        ...state,
+        [farmId]: {
+          ...state[farmId],
+          producing: undefined,
+        } satisfies Farm,
+      }
+    },
+    changeFarmStatus: (
+      state: State['farms'],
+      action: PayloadAction<{ farmId: string; status: FarmProducing['status'] }>
+    ) => {
+      const { farmId, status } = action.payload
 
-        return item
-      })
+      return {
+        ...state,
+        [farmId]: {
+          ...state[farmId],
+          producing: {
+            ...state[farmId].producing,
+            status,
+          } as Farm['producing'],
+        } satisfies Farm,
+      }
     },
   },
 })
 
-export const { startProducing, endProducing, createFarm } = slice.actions
+export const { startProducing, endProducing, changeFarmStatus, createFarm } =
+  slice.actions
 export default slice.reducer

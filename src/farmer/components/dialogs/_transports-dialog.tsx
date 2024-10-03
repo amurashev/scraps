@@ -24,8 +24,6 @@ export default memo(function TransportsDialog({
   transports: Pick<Transport, 'id' | 'type'>[]
   onClose: () => void
 }) {
-  // console.warn('TransportsDialog')
-
   return (
     <Dialog open={isOpen}>
       <DialogContent
@@ -35,7 +33,6 @@ export default memo(function TransportsDialog({
           e.stopPropagation()
           onClose()
         }}
-        // data-test="jobs_applyDialog"
       >
         <div className="flex divide-x divide-border sm:min-h-[200px]">
           <div className="pr-4 flex flex-col items-center">

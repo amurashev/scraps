@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-import { State } from '../types/state'
-import { Shipment, Cargo } from '../types/transport'
-import { Point } from '../types/grid'
+import type { State } from '../types/state'
+import type { Shipment, Cargo } from '../types/transport'
+import type { Point } from '../types/grid'
 
 const slice = createSlice({
   name: 'shipments',

@@ -6,31 +6,31 @@ import TransportCard from '../../cards/transport'
 import ProductCard, { ProductCardBase } from '../../cards/product'
 import transportsData from '@/src/farmer/data/transports'
 
+import { getBuildingName } from '@/src/farmer/utils/buildings'
+
 import type { Shipment } from '../../../types/transport'
-import type { WarehousesObject, TransportsObject } from './types'
+import type { TransportsObject } from './types'
 
 function ShipmentItem({
   item,
-  warehousesObject,
   transportsObject,
   onDeleteClick,
 }: {
   item: Shipment
-  warehousesObject: WarehousesObject
   transportsObject: TransportsObject
   onDeleteClick: () => void
 }) {
   const transportType = transportsObject[item.transportId].type
   const transportData = transportsData[transportType]
 
-  const warehouseFromName = warehousesObject[item.from].name
-  const warehouseToName = warehousesObject[item.to].name
+  const warehouseFromName = getBuildingName(item.from)
+  const warehouseToName = getBuildingName(item.to)
 
   return (
     <div className="py-4">
       <div className="relative flex items-center gap-4 w-full">
         <TransportCard type={transportType} />
-        <strong className="font-bold">{item.transportId}</strong>
+        <strong className="font-bold">Transport type {item.transportId}</strong>
         <div className="flex flex-col flex-grow">
           <div className="text-sm">{warehouseFromName}</div>
           <div className="text-sm">{warehouseToName}</div>

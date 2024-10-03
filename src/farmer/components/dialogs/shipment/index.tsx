@@ -24,12 +24,9 @@ import SelectCargo from './select-cargo'
 import ShipmentItem from './item'
 
 import type { Warehouse } from '../../../types/buildings'
-import type { Cargo, Shipment, Transport } from '../../../types/transport'
-import {
-  type WarehousesObject,
-  type TransportsObject,
-  CargoSlots,
-} from './types'
+import type { Cargo, Shipment } from '../../../types/transport'
+import { type TransportsObject, CargoSlots } from './types'
+import { getBuildingName } from '@/src/farmer/utils/buildings'
 
 function FormRow({
   label,
@@ -53,7 +50,7 @@ function FormRowWithSelect({
   onChange,
 }: {
   label: string
-  value: string
+  value?: string
   children: React.ReactNode
   onChange: (value: string) => void
 }) {
@@ -81,7 +78,6 @@ const cargoFromSlotsToArray = (cargoSlots: CargoSlots): Cargo[] => {
 export default memo(function ShipmentsDialog({
   isOpen,
   shipments,
-  transports,
   warehouses,
   onClose,
   onAddShipment,
@@ -89,8 +85,7 @@ export default memo(function ShipmentsDialog({
 }: {
   isOpen: boolean
   shipments: Shipment[]
-  transports: Pick<Transport, 'id' | 'type'>[]
-  warehouses: Warehouse[]
+  warehouses: Record<string, Warehouse>
   onClose: () => void
   onAddShipment: (data: {
     from: string
@@ -102,25 +97,24 @@ export default memo(function ShipmentsDialog({
 }) {
   const [isAddForm, setIsAddForm] = useState(true)
 
-  const [selectedWarehouseFromId, setSelectedWarehouseFromId] = useState('2')
-  const [selectedWarehouseToId, setSelectedWarehouseToId] = useState('1')
+  const [selectedWarehouseFromId, setSelectedWarehouseFromId] = useState('')
+  const [selectedWarehouseToId, setSelectedWarehouseToId] = useState('')
   const [selectedTransportId, setSelectedTransportId] = useState('')
   const [cargoSlots, setCargoSlots] = useState<CargoSlots>({})
+
+  const transports = Object.keys(transportsData).map((id) => transportsData[id]) // TODO
 
   const selectedTransport = transports.find(
     (item) => item.id === selectedTransportId
   )
-  const selectedTransportData = selectedTransport
-    ? transportsData[selectedTransport.type]
-    : undefined
 
-  const warehousesObject = useMemo(() => {
-    const obj: WarehousesObject = {}
-    warehouses.forEach((item) => {
-      obj[item.id] = item
-    })
-    return obj
-  }, [warehouses])
+  // const warehousesObject = useMemo(() => {
+  //   const obj: WarehousesObject = {}
+  //   warehouses.forEach((item) => {
+  //     obj[item.id] = item
+  //   })
+  //   return obj
+  // }, [warehouses])
 
   const transportsObject = useMemo(() => {
     const obj: TransportsObject = {}
@@ -173,9 +167,9 @@ export default memo(function ShipmentsDialog({
                   value={selectedWarehouseFromId}
                   onChange={(value) => setSelectedWarehouseFromId(value)}
                 >
-                  {warehouses.map((item) => (
-                    <SelectItem key={item.id} value={item.id}>
-                      {item.name}
+                  {Object.keys(warehouses).map((id) => (
+                    <SelectItem key={id} value={id}>
+                      {getBuildingName(id)}
                     </SelectItem>
                   ))}
                 </FormRowWithSelect>
@@ -185,9 +179,9 @@ export default memo(function ShipmentsDialog({
                   value={selectedWarehouseToId}
                   onChange={(value) => setSelectedWarehouseToId(value)}
                 >
-                  {warehouses.map((item) => (
-                    <SelectItem key={item.id} value={item.id}>
-                      {item.name}
+                  {Object.keys(warehouses).map((id) => (
+                    <SelectItem key={id} value={id}>
+                      {getBuildingName(id)}
                     </SelectItem>
                   ))}
                 </FormRowWithSelect>
@@ -199,15 +193,15 @@ export default memo(function ShipmentsDialog({
                 >
                   {transports.map((item) => (
                     <SelectItem key={item.id} value={item.id}>
-                      {item.id}
+                      Transport type {item.id} (Capacity {item.capacity})
                     </SelectItem>
                   ))}
                 </FormRowWithSelect>
 
-                {selectedTransportData && (
+                {selectedTransport && (
                   <FormRow label="Cargo">
                     <SelectCargo
-                      capacity={selectedTransportData.capacity}
+                      capacity={selectedTransport.capacity}
                       cargoSlots={cargoSlots}
                       onSelectItem={(slotIndex, productId) => {
                         setCargoSlots({
@@ -233,7 +227,6 @@ export default memo(function ShipmentsDialog({
                         <ShipmentItem
                           key={item.id}
                           item={item}
-                          warehousesObject={warehousesObject}
                           transportsObject={transportsObject}
                           onDeleteClick={() => onDeleteShipment(item.id)}
                         />

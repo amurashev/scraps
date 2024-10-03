@@ -4,18 +4,18 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { State } from '../types/state'
 import { GRID_LENGTH } from '../config/main'
 
-const uiSlice = createSlice({
-  name: 'ui',
+const slice = createSlice({
+  name: 'grid',
   initialState: {
     pointOfView: [14, 20],
     cellSize: 25,
   } satisfies State['grid'],
   reducers: {
     increaseCellSize(state: State['grid']) {
-      state.cellSize = Math.floor(state.cellSize + state.cellSize * 0.25)
+      state.cellSize = Math.floor(state.cellSize + state.cellSize * 0.1)
     },
     reduceCellSize(state: State['grid']) {
-      state.cellSize = Math.floor(state.cellSize - state.cellSize * 0.25)
+      state.cellSize = Math.floor(state.cellSize - state.cellSize * 0.1)
     },
     changePointOfView(
       state: State['grid'],
@@ -57,5 +57,5 @@ const uiSlice = createSlice({
 })
 
 export const { changePointOfView, increaseCellSize, reduceCellSize } =
-  uiSlice.actions
-export default uiSlice.reducer
+  slice.actions
+export default slice.reducer

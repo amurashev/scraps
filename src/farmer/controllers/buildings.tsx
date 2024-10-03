@@ -17,51 +17,77 @@ import {
 import { createWarehouse } from '../slices/warehouses'
 import { createFarm } from '../slices/farms'
 import { toggleRoad } from '../slices/roads'
-import { GRID_LENGTH } from '../config/main'
+import { createBuilding } from '../slices/buildings'
+import { toggleEditModeForItem } from '../slices/editMode'
 
-import { PossibleRoads } from '../types/grid'
+import { GRID_LENGTH } from '../config/main'
+import { createBuildingId, getNumberFromId } from '../utils/buildings'
+
+import type { PossibleRoads } from '../types/grid'
+import type { BuildingsByType } from '../types/buildings'
 
 export default function BuildingsController({
   possibleRoads,
+  buildingsByType,
 }: {
+  buildingsByType: BuildingsByType
   possibleRoads: PossibleRoads
 }) {
   const dispatch = useAppDispatch()
   const farms = useAppSelector((state) => state.farms)
-  const { value } = useAppSelector((state) => state.time)
+  const { value: hour } = useAppSelector((state) => state.time)
   const roads = useAppSelector((state) => state.roads)
   const shipments = useAppSelector((state) => state.shipments)
   const warehouses = useAppSelector((state) => state.warehouses)
-  const simpleBuildings = useAppSelector((state) => state.simpleBuildings)
+  const buildings = useAppSelector((state) => state.buildings)
   const { cellSize, pointOfView } = useAppSelector((state) => state.grid)
   const { hasPaths } = useAppSelector((state) => state.ui)
   const { createItem } = useAppSelector((state) => state.editMode)
 
-  const day = value
+  const day = Math.floor(hour / 24)
 
   const onCreateItem = useCallback(
     (point: number[]) => {
-      if (createItem === 'road') {
-        dispatch(toggleRoad(point))
-      }
+      if (createItem === 'road') dispatch(toggleRoad(point))
 
       if (createItem === 'warehouse') {
+        const maxId = Math.max(
+          ...buildingsByType.warehouse.map((item) => getNumberFromId(item.id)),
+          0
+        )
+        const id = createBuildingId('warehouse', maxId + 1)
         dispatch(
-          createWarehouse({
+          createBuilding({
+            id,
+            type: 'warehouse',
             position: point,
           })
         )
+
+        dispatch(createWarehouse({ id }))
+        dispatch(toggleEditModeForItem(null))
       }
 
       if (createItem === 'farm') {
+        const maxId = Math.max(
+          ...buildingsByType.farm.map((item) => getNumberFromId(item.id)),
+          0
+        )
+        const id = createBuildingId('farm', maxId + 1)
         dispatch(
-          createFarm({
+          createBuilding({
+            id,
+            type: 'farm',
             position: point,
           })
         )
+
+        dispatch(createFarm({ id }))
+        dispatch(toggleEditModeForItem(null))
       }
     },
-    [createItem, dispatch]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [createItem]
   )
 
   return (
@@ -101,7 +127,7 @@ export default function BuildingsController({
           <Buildings
             farms={farms}
             warehouses={warehouses}
-            simpleBuildings={simpleBuildings}
+            buildings={buildings}
             cellSize={cellSize}
             day={day}
             onWarehouseClick={useCallback(

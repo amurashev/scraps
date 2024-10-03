@@ -12,7 +12,7 @@ import {
 
 import { useAppSelector, useAppDispatch } from '../hooks/redux'
 
-import Coin from '../icons/coin'
+import Coin from '../icons/ui/coin'
 import ShipmentsIcon from '../icons/shipments'
 import RoadIcon from '../icons/buildings/road'
 import FarmIcon from '../icons/buildings/farm'
@@ -99,8 +99,10 @@ function PositionButton({
 export default function Panel() {
   const dispatch = useAppDispatch()
   const money = useAppSelector((state) => state.money)
-  const { value, isPaused } = useAppSelector((state) => state.time)
+  const { value: hour, isPaused } = useAppSelector((state) => state.time)
   const { createItem } = useAppSelector((state) => state.editMode)
+
+  const day = Math.floor(hour / 24)
 
   useEffect(() => {
     const keyboardEvents = function (e: KeyboardEvent) {
@@ -126,12 +128,12 @@ export default function Panel() {
 
       if (e.key === '-') {
         e.preventDefault()
-        dispatch(increaseCellSize())
+        dispatch(reduceCellSize())
       }
 
       if (e.key === '=') {
         e.preventDefault()
-        dispatch(reduceCellSize())
+        dispatch(increaseCellSize())
       }
     }
 
@@ -153,7 +155,9 @@ export default function Panel() {
 
       <div className="fixed bottom-2 right-2">
         <Wrapper className="flex items-center gap-2 text-background">
-          <div className="text-sm font-bold">Day: {value}</div>
+          <div className="text-sm font-bold">
+            Hour: {hour % 24}:00, Day: {day}
+          </div>
           <button
             type="button"
             aria-label="Pause"

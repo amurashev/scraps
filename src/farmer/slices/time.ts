@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { State } from '../types/state'
+import type { State } from '../types/state'
 
 const slice = createSlice({
   name: 'time',
@@ -9,10 +9,10 @@ const slice = createSlice({
     isPaused: false,
   } as State['time'],
   reducers: {
-    increaseDay: (state: State['time']) => {
+    increaseTime: (state: State['time']) => {
       return {
         ...state,
-        value: state.value + 1,
+        value: state.value + 24,
       }
     },
     togglePause: (state: State['time']) => {
@@ -21,5 +21,5 @@ const slice = createSlice({
   },
 })
 
-export const { increaseDay, togglePause } = slice.actions
+export const { increaseTime, togglePause } = slice.actions
 export default slice.reducer

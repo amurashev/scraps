@@ -43,10 +43,11 @@ export default memo(function Roads({
 
         return (
           <Wrapper key={flatPoint} position={item} cellSize={cellSize} size={1}>
+            {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
             <div
-              role="button"
+              // role="button"
+              // tabIndex={0}
               aria-label="Road"
-              tabIndex={0}
               className={cn('bg-slate-500 w-full h-full border-gray-100', {
                 'border-l': borderLeft,
                 'border-r': borderRight,

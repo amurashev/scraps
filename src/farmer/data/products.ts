@@ -4,7 +4,7 @@ const products: Record<string, Product> = {
   '1': {
     id: '1',
     name: 'Carrot',
-    growthTime: [100, 150],
+    growthTime: [10, 15],
     price: 10,
     produceCost: 100,
   },

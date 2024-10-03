@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-import { State } from '../types/state'
+import type { State } from '../types/state'
 
 const uiSlice = createSlice({
   name: 'ui',
@@ -9,14 +9,10 @@ const uiSlice = createSlice({
     farmDetailsId: undefined,
     warehouseDetailsId: undefined,
     shopDetailsId: undefined,
-    isTransportModal: false,
     isShipmentModal: false,
     hasPaths: true,
   } satisfies State['ui'],
   reducers: {
-    toggleTransportsModal(state: State['ui']) {
-      state.isTransportModal = !state.isTransportModal
-    },
     toggleShipmentModal(state: State['ui']) {
       state.isShipmentModal = !state.isShipmentModal
     },
@@ -45,7 +41,6 @@ export const {
   toggleFarmDetailsModal,
   toggleWarehouseDetailsModal,
   toggleShopModal,
-  toggleTransportsModal,
   toggleShipmentModal,
 } = uiSlice.actions
 export default uiSlice.reducer

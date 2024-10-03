@@ -1,4 +1,8 @@
-export default function Coin({ size = '100%' }: { size?: number | string }) {
+export default function IconCoin({
+  size = '100%',
+}: {
+  size?: number | string
+}) {
   return (
     <svg
       height={size}

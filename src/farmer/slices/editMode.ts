@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-import { State } from '../types/state'
+import type { State } from '../types/state'
 
 const slice = createSlice({
   name: 'editMode',

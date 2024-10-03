@@ -1,21 +1,28 @@
-type Building = {
-  id: string
-  name: string
-  position: number[]
-}
+export type BuildingType =
+  | 'hall'
+  | 'house'
+  | 'shop'
+  | 'warehouse'
+  | 'farm'
+  | 'road'
 
-export type SimpleBuilding = Building & {
-  type: 'hall' | 'house' | 'shop'
+export type Building = {
+  id: string
+  type: BuildingType
+  position: number[]
   subType?: number
 }
 
-export type Warehouse = Building & {
+export type BuildingsByType = Record<BuildingType, Building[]>
+
+export type Warehouse = {
   capacity: number
   products: Record<string, number>
 }
 
 export type FarmProducing = {
   productId: string
+  warehouseId?: Building['id']
   startDay: number
   endDay: number
   power: number
@@ -23,7 +30,6 @@ export type FarmProducing = {
   status: 'active' | 'noWarehouse' | 'warehouseIsFull'
 }
 
-export type Farm = Building & {
+export type Farm = {
   producing?: FarmProducing
-  warehouseId?: Warehouse['id']
 }

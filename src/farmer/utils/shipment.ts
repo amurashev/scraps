@@ -1,5 +1,5 @@
-import { Warehouse } from '../types/buildings'
-import { Cargo } from '../types/transport'
+import type { Warehouse } from '../types/buildings'
+import type { Cargo } from '../types/transport'
 
 type CargoObject = Record<string, number>
 

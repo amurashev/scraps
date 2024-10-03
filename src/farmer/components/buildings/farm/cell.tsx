@@ -1,4 +1,5 @@
 import { memo } from 'react'
+import { IoWarning } from 'react-icons/io5'
 
 import {
   Tooltip,
@@ -59,6 +60,10 @@ export default memo(function Cell({
     iconSize = MIN_ICON_SIZE + ((100 - MIN_ICON_SIZE) * progress) / 100
   }
 
+  const hasWarning = producing
+    ? ['warehouseIsFull'].includes(producing.status)
+    : false
+
   return (
     <div
       role="button"
@@ -79,8 +84,13 @@ export default memo(function Cell({
       {isCenter ? (
         <TooltipProvider delayDuration={300}>
           <Tooltip>
-            <TooltipTrigger className="flex items-center justify-center">
+            <TooltipTrigger className="flex items-center justify-center relative">
               <FarmIcon size="65%" />
+              {hasWarning && (
+                <div className="absolute right-0 top-0">
+                  <IoWarning size={22} color="#ffca28" />
+                </div>
+              )}
             </TooltipTrigger>
             <TooltipContent>
               <h3 className="font-bold text-base">{farmName}</h3>

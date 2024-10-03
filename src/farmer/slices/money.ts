@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { State } from '../types/state'
+import type { State } from '../types/state'
 
-const daySlice = createSlice({
+const slice = createSlice({
   name: 'money',
-  initialState: 999999 satisfies State['money'],
+  initialState: 100000 satisfies State['money'],
   reducers: {
     increaseMoney: (state: State['money'], action: PayloadAction<number>) =>
       state + action.payload,
@@ -13,5 +13,5 @@ const daySlice = createSlice({
   },
 })
 
-export const { increaseMoney, reduceMoney } = daySlice.actions
-export default daySlice.reducer
+export const { increaseMoney, reduceMoney } = slice.actions
+export default slice.reducer

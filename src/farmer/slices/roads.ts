@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { State } from '../types/state'
+import type { State } from '../types/state'
 
 const cityRoads = [
   [29, 36],

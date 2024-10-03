@@ -2,9 +2,8 @@
 
 import { useCallback } from 'react'
 
-import BuildingDetailsDialog from '../components/dialogs/farm-details-dialog'
+import FarmDetailsDialog from '../components/dialogs/farm'
 import WarehouseDetailsDialog from '../components/dialogs/warehouse-details-dialog'
-import TransportsDialog from '../components/dialogs/transports-dialog'
 import ShipmentsDialog from '../components/dialogs/shipment'
 import ShopDialog from '../components/dialogs/shop-details-dialog'
 
@@ -14,48 +13,41 @@ import { startProducing, endProducing } from '../slices/farms'
 import {
   toggleFarmDetailsModal,
   toggleWarehouseDetailsModal,
-  toggleTransportsModal,
   toggleShipmentModal,
   toggleShopModal,
 } from '../slices/ui'
 import { addShipment, deleteShipment } from '../slices/shipments'
+import { BuildingsByType } from '../types/buildings'
 
-export default function DialogsController() {
+export default function DialogsController({
+  buildingsByType,
+}: {
+  buildingsByType: BuildingsByType
+}) {
   const dispatch = useAppDispatch()
-  const {
-    farmDetailsId,
-    warehouseDetailsId,
-    shopDetailsId,
-    isTransportModal,
-    isShipmentModal,
-  } = useAppSelector((state) => state.ui)
-  const { value } = useAppSelector((state) => state.time)
+  const { farmDetailsId, warehouseDetailsId, shopDetailsId, isShipmentModal } =
+    useAppSelector((state) => state.ui)
+  const { value: hour } = useAppSelector((state) => state.time)
   const farms = useAppSelector((state) => state.farms)
   const warehouses = useAppSelector((state) => state.warehouses)
-  const transports = useAppSelector((state) => state.transports)
   const shipments = useAppSelector((state) => state.shipments)
 
-  const day = value
+  const day = Math.floor(hour / 24)
 
-  const selectedWarehouse = warehouses.find(
-    (item) => item.id === warehouseDetailsId
-  )
-  const selectedFarm = farms.find((item) => item.id === farmDetailsId)
+  const selectedWarehouse = warehouseDetailsId
+    ? warehouses[warehouseDetailsId]
+    : undefined
+  const selectedFarm = farmDetailsId ? farms[farmDetailsId] : undefined
+
+  const possibleWarehouses = buildingsByType.warehouse // TODO: Check by farm
 
   return (
     <>
       <WarehouseDetailsDialog
+        id={warehouseDetailsId as string}
         isOpen={Boolean(warehouseDetailsId)}
         item={selectedWarehouse}
         onClose={() => dispatch(toggleWarehouseDetailsModal(undefined))}
-      />
-      <TransportsDialog
-        isOpen={isTransportModal}
-        transports={transports}
-        onClose={useCallback(
-          () => dispatch(toggleTransportsModal()),
-          [dispatch]
-        )}
       />
       <ShopDialog
         isOpen={Boolean(shopDetailsId)}
@@ -65,7 +57,6 @@ export default function DialogsController() {
         isOpen={isShipmentModal}
         shipments={shipments}
         warehouses={warehouses}
-        transports={transports}
         onClose={useCallback(() => dispatch(toggleShipmentModal()), [dispatch])}
         onAddShipment={useCallback(
           (data) => {
@@ -84,10 +75,11 @@ export default function DialogsController() {
           [dispatch]
         )}
       />
-      <BuildingDetailsDialog
+      <FarmDetailsDialog
+        id={farmDetailsId as string}
         isOpen={Boolean(farmDetailsId)}
         item={selectedFarm}
-        warehouses={warehouses}
+        warehouses={possibleWarehouses}
         day={day}
         onClose={useCallback(
           () => dispatch(toggleFarmDetailsModal(undefined)),

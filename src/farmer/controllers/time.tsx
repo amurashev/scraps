@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
 
-import { increaseDay } from '../slices/time'
+import { increaseTime } from '../slices/time'
 
 export default function TimeController() {
   const dispatch = useAppDispatch()
@@ -13,7 +13,7 @@ export default function TimeController() {
   useEffect(() => {
     const interval = setInterval(() => {
       if (!isPaused) {
-        dispatch(increaseDay())
+        dispatch(increaseTime())
       }
     }, 1000)
 

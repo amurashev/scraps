@@ -2,7 +2,7 @@ import { Point } from '../types/grid'
 
 const doLogs = (...params: any) => false && console.warn(...params)
 
-type SegmentsData = {
+export type SegmentsData = {
   x: Record<string, number[][]>
   y: Record<string, number[][]>
   all: number[][][]

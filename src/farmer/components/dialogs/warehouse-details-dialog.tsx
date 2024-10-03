@@ -11,28 +11,36 @@ import WarehouseIcon from '../../icons/buildings/warehouse'
 import ProductCard, { ProductCardCount } from '../cards/product'
 
 import type { Warehouse } from '../../types/buildings'
+import { getBuildingName } from '../../utils/buildings'
 
 export default memo(function WarehouseDetailsDialog({
+  id,
   isOpen,
   item,
   onClose,
 }: {
+  id: string
   isOpen: boolean
   item?: Warehouse
   onClose: () => void
 }) {
-  const { name, products = {}, capacity } = item || {}
+  const { products = {}, capacity } = item || {}
+  const name = id ? getBuildingName(id) : ''
 
   const possibleItemsId = useMemo(
     () =>
       Object.keys(products)
-        .filter((id) => products[id])
-        .map((id) => id),
+        .filter((productId) => products[productId])
+        .map((productId) => productId),
     [products]
   )
 
   const currentCapacity = useMemo(
-    () => Object.keys(products).reduce((prev, id) => prev + products[id], 0),
+    () =>
+      Object.keys(products).reduce(
+        (prev, productId) => prev + products[productId],
+        0
+      ),
     [products]
   )
 
@@ -45,7 +53,6 @@ export default memo(function WarehouseDetailsDialog({
           e.stopPropagation()
           onClose()
         }}
-        // data-test="jobs_applyDialog"
       >
         {item && (
           <div className="flex divide-x divide-border sm:min-h-[200px]">
@@ -63,8 +70,10 @@ export default memo(function WarehouseDetailsDialog({
             </div>
             <div className="pl-4">
               {possibleItemsId.length === 0 ? (
-                <div className="h-[100px] flex items-center justify-center text-center">
-                  {/* <p className="text-muted-foreground">Empty</p> */}
+                <div className="h-full flex items-center justify-center text-center">
+                  <p className="text-muted-foreground">
+                    There are no products on the warehouse
+                  </p>
                 </div>
               ) : (
                 <div className="flex gap-2">

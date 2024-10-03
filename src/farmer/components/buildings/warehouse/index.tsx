@@ -8,22 +8,24 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 
-import { Warehouse } from '../../../types/buildings'
+import { Building, Warehouse } from '../../../types/buildings'
 import WarehouseIcon from '../../../icons/buildings/warehouse'
+import { getActualCapacity } from '@/src/farmer/utils/warehouse'
+import { getBuildingName } from '@/src/farmer/utils/buildings'
 
 export default memo(function WarehouseCell({
   item,
+  warehouseData,
   onClick,
 }: {
-  item: Warehouse
+  item: Building
+  warehouseData: Warehouse
   onClick: () => void
 }) {
-  const { name, products } = item
-
-  const capacity = useMemo(
-    () => Object.keys(products).reduce((prev, id) => prev + products[id], 0),
-    [products]
-  )
+  const { id } = item
+  const { products, capacity } = warehouseData
+  const actualCapacity = useMemo(() => getActualCapacity(products), [products])
+  const name = id ? getBuildingName(id) : ''
 
   return (
     <TooltipProvider delayDuration={300}>
@@ -48,7 +50,7 @@ export default memo(function WarehouseCell({
             <WarehouseIcon size="65%" />
             <div className="flex items-center justify-center absolute bottom-1 right-0 left-0">
               <div className="flex items-center justify-center text-[9px] shadow-sm shadow-gray-200 font-bold bg-background min-w-4 px-1 h-3 rounded-sm">
-                {capacity}/{item.capacity}
+                {actualCapacity}/{capacity}
               </div>
             </div>
           </div>

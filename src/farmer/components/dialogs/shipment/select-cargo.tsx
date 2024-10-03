@@ -1,11 +1,11 @@
 import { useState } from 'react'
+import { IoAdd } from 'react-icons/io5'
 
 import {
   DropdownMenu,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-import IconPlus from '../../../icons/plus'
 import ProductCard, { ProductCardBase } from '../../cards/product'
 
 import DropdownListOfProducts from './products-list'
@@ -39,7 +39,7 @@ export default function SelectCargo({
                 key={slotIndex}
                 onClick={() => setOpenedItem(slotIndex)}
               >
-                <IconPlus fill="#aaaaaa" size={32} />
+                <IoAdd color="#aaaaaa" size={32} />
               </ProductCardBase>
             )}
           </DropdownMenuTrigger>

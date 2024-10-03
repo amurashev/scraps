@@ -5,76 +5,56 @@ import type { Warehouse } from '../types/buildings'
 import type { State } from '../types/state'
 import type { Product } from '../types/products'
 
+const defaultData: Warehouse = {
+  capacity: 100,
+  products: {},
+}
+
 const slice = createSlice({
   name: 'warehouses',
-  initialState: [
-    {
-      id: '1',
-      name: 'City Warehouse',
-      capacity: 100,
-      position: [34, 26],
-      products: {},
-    },
-    // {
-    //   id: '2',
-    //   name: 'Warehouse 1',
-    //   capacity: 100,
-    //   position: [11, 2],
-    //   products: {
-    //     '1': 5,
-    //     '2': 5,
-    //   },
-    // },
-  ] as State['warehouses'],
+  initialState: {
+    'warehouse-1': defaultData,
+  } as State['warehouses'],
   reducers: {
     createWarehouse: (
       state: State['warehouses'],
       action: PayloadAction<{
-        position: Warehouse['position']
+        id: string
       }>
     ) => {
-      const { position } = action.payload
+      const { id } = action.payload
 
-      return [
+      return {
         ...state,
-        {
-          id: '3',
-          name: 'Warehouse',
-          capacity: 100,
-          position,
-          products: {},
-        },
-      ]
+        [id]: defaultData,
+      }
     },
     putToWarehouse: (
       state: State['warehouses'],
       action: PayloadAction<{
-        warehouseId: Warehouse['id']
+        warehouseId: string
         productsToPut: Record<Product['id'], number>
       }>
     ) => {
       const { warehouseId, productsToPut } = action.payload
 
-      return state.map((item) => {
-        if (item.id === warehouseId) {
-          const newProducts = { ...item.products }
-          Object.keys(productsToPut).forEach((productId) => {
-            newProducts[productId] = newProducts[productId]
-              ? newProducts[productId] + productsToPut[productId]
-              : productsToPut[productId]
-          })
-
-          return {
-            ...item,
-            products: {
-              ...item.products,
-              ...newProducts,
-            },
-          } satisfies Warehouse
-        }
-
-        return item
+      const newProducts = { ...state[warehouseId].products }
+      Object.keys(productsToPut).forEach((productId) => {
+        newProducts[productId] = newProducts[productId]
+          ? newProducts[productId] + productsToPut[productId]
+          : productsToPut[productId]
       })
+
+      return {
+        ...state,
+        [warehouseId]: {
+          ...state[warehouseId],
+          products: {
+            ...state[warehouseId].products,
+            ...newProducts,
+          },
+        } satisfies Warehouse,
+      }
     },
     pickUpFromWarehouse: (
       state: State['warehouses'],
@@ -85,33 +65,30 @@ const slice = createSlice({
     ) => {
       const { warehouseId, productsToPickUp } = action.payload
 
-      return state.map((item) => {
-        if (item.id === warehouseId) {
-          const newProducts = { ...item.products }
-          Object.keys(productsToPickUp).forEach((productId) => {
-            let countAfterPickUp = 0
+      const newProducts = { ...state[warehouseId].products }
+      Object.keys(productsToPickUp).forEach((productId) => {
+        let countAfterPickUp = 0
 
-            if (newProducts[productId]) {
-              countAfterPickUp =
-                newProducts[productId] - productsToPickUp[productId]
-            } else {
-              countAfterPickUp = 0
-            }
-
-            newProducts[productId] = countAfterPickUp
-          })
-
-          return {
-            ...item,
-            products: {
-              ...item.products,
-              ...newProducts,
-            },
-          } satisfies Warehouse
+        if (newProducts[productId]) {
+          countAfterPickUp =
+            newProducts[productId] - productsToPickUp[productId]
+        } else {
+          countAfterPickUp = 0
         }
 
-        return item
+        newProducts[productId] = countAfterPickUp
       })
+
+      return {
+        ...state,
+        [warehouseId]: {
+          ...state[warehouseId],
+          products: {
+            ...state[warehouseId].products,
+            ...newProducts,
+          },
+        } satisfies Warehouse,
+      }
     },
   },
 })

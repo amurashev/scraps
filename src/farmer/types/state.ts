@@ -1,14 +1,5 @@
-import { Farm, SimpleBuilding, Warehouse } from './buildings'
-import { Shipment, Transport } from './transport'
-
-export type GridPoint = string
-
-export type CellState = {
-  itemId: string
-  startGrowthTime: number
-  endGrowthTime: number
-}
-export type GridState = Record<GridPoint, CellState | null>
+import { Farm, Building, Warehouse } from './buildings'
+import { Shipment } from './transport'
 
 export type State = {
   time: {
@@ -16,7 +7,6 @@ export type State = {
     isPaused: boolean
   }
   money: number
-  seeds: Record<string, number>
   grid: {
     pointOfView: number[]
     cellSize: number
@@ -25,7 +15,6 @@ export type State = {
     farmDetailsId?: string
     warehouseDetailsId?: string
     shopDetailsId?: string
-    isTransportModal: boolean
     isShipmentModal: boolean
     hasPaths: boolean
   }
@@ -33,9 +22,8 @@ export type State = {
     createItem: 'road' | 'farm' | 'warehouse' | null
   }
   roads: number[][]
-  farms: Farm[]
-  warehouses: Warehouse[]
-  transports: Pick<Transport, 'id' | 'type'>[]
+  farms: Record<string, Farm>
+  warehouses: Record<string, Warehouse>
   shipments: Shipment[]
-  simpleBuildings: SimpleBuilding[]
+  buildings: Building[]
 }
