@@ -84,11 +84,11 @@ export default memo(function Cell({
       {isCenter ? (
         <TooltipProvider delayDuration={300}>
           <Tooltip>
-            <TooltipTrigger className="flex items-center justify-center relative">
+            <TooltipTrigger className="flex w-full h-full items-center justify-center relative">
               <FarmIcon size="65%" />
               {hasWarning && (
                 <div className="absolute right-0 top-0">
-                  <IoWarning size={22} color="#ffca28" />
+                  <IoWarning size={24} color="#ffca28" />
                 </div>
               )}
             </TooltipTrigger>

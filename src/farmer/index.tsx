@@ -17,7 +17,11 @@ import ShipmentLogicController from './controllers/shipmentLogic'
 import { useAppSelector } from './hooks/redux'
 import { getAllSegments } from './utils/grid'
 import { getPossibleRoads } from './utils/roads'
-import { getBuildingsByType, getGridOfObjects } from './utils/buildings'
+import {
+  getBuildingsByType,
+  getGridOfObjects,
+  getNeighboringWarehouses,
+} from './utils/buildings'
 
 function App() {
   const roads = useAppSelector((state) => state.roads)
@@ -40,6 +44,13 @@ function App() {
     [roads, buildings]
   )
 
+  const neighboringWarehouses = useMemo(
+    () =>
+      getNeighboringWarehouses(buildingsByType.farm, buildingsByType.warehouse),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [buildings]
+  )
+
   console.warn('render', gridOfObjects)
 
   return (
@@ -47,10 +58,11 @@ function App() {
       <BuildingsController
         buildingsByType={buildingsByType}
         possibleRoads={possibleRoads}
+        neighboringWarehouses={neighboringWarehouses}
       />
       <PanelController />
       <TimeController />
-      <DialogsController buildingsByType={buildingsByType} />
+      <DialogsController neighboringWarehouses={neighboringWarehouses} />
       <FarmsLogicController />
       <ShopLogicController />
       <ShipmentLogicController

@@ -17,12 +17,12 @@ import {
   toggleShopModal,
 } from '../slices/ui'
 import { addShipment, deleteShipment } from '../slices/shipments'
-import { BuildingsByType } from '../types/buildings'
+import { Building } from '../types/buildings'
 
 export default function DialogsController({
-  buildingsByType,
+  neighboringWarehouses,
 }: {
-  buildingsByType: BuildingsByType
+  neighboringWarehouses: Record<string, Building[]>
 }) {
   const dispatch = useAppDispatch()
   const { farmDetailsId, warehouseDetailsId, shopDetailsId, isShipmentModal } =
@@ -39,7 +39,8 @@ export default function DialogsController({
     : undefined
   const selectedFarm = farmDetailsId ? farms[farmDetailsId] : undefined
 
-  const possibleWarehouses = buildingsByType.warehouse // TODO: Check by farm
+  const possibleWarehouses =
+    selectedFarm && farmDetailsId ? neighboringWarehouses[farmDetailsId] : []
 
   return (
     <>

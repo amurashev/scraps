@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from '../hooks/redux'
 
 import Grid from '../components/grid'
 import Roads from '../components/grid/roads'
-import Paths from '../components/paths'
+import Paths from '../components/grid/paths'
 import EditGrid from '../components/editGrid'
 import ShipmentOnGrid from '../components/grid/shipment'
 import Buildings from '../components/grid/buildings'
@@ -24,14 +24,17 @@ import { GRID_LENGTH } from '../config/main'
 import { createBuildingId, getNumberFromId } from '../utils/buildings'
 
 import type { PossibleRoads } from '../types/grid'
-import type { BuildingsByType } from '../types/buildings'
+import type { Building, BuildingsByType } from '../types/buildings'
+import FarmLinks from '../components/farmLinks'
 
 export default function BuildingsController({
   possibleRoads,
   buildingsByType,
+  neighboringWarehouses,
 }: {
   buildingsByType: BuildingsByType
   possibleRoads: PossibleRoads
+  neighboringWarehouses: Record<string, Building[]>
 }) {
   const dispatch = useAppDispatch()
   const farms = useAppSelector((state) => state.farms)
@@ -171,6 +174,12 @@ export default function BuildingsController({
           {shipments.map((item) => (
             <ShipmentOnGrid key={item.id} item={item} cellSize={cellSize} />
           ))}
+
+          <FarmLinks
+            cellSize={cellSize}
+            farms={buildingsByType.farm}
+            neighboringWarehouses={neighboringWarehouses}
+          />
         </div>
       </div>
     </div>

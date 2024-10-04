@@ -89,3 +89,77 @@ export const getWarehouseRoadPoint = (point: Building['position']): Point => {
 
   return [x + 1, y + warehouseSize]
 }
+
+export const getNeighboringWarehouses = (
+  farms: Building[],
+  warehouses: Building[]
+) => {
+  const warehousesWithFlatPoints: {
+    index: number
+    flatPoints: Point[]
+  }[] = []
+
+  warehouses.forEach((item, index) => {
+    const flatPoints = getFlatPoints(item.position, getBuildingSize(item.type))
+    warehousesWithFlatPoints.push({
+      index,
+      flatPoints,
+    })
+  })
+
+  const DELTA = 0
+  const finalObject: Record<string, Building[]> = {}
+
+  farms.forEach((item, farmIndex) => {
+    const farmFlatPoints = getFlatPoints(
+      item.position,
+      getBuildingSize(item.type)
+    )
+
+    const warehouseIndexes: number[] = []
+    for (let i = 0; i < farmFlatPoints.length; i += 1) {
+      const [fP1, fP2, fP3, fP4] = farmFlatPoints
+      warehousesWithFlatPoints.forEach((warehouse) => {
+        const [wP1, wP2, wP3, wP4] = warehouse.flatPoints
+        let isCloseByY = false
+        let isCloseByX = false
+
+        if (i === 0) {
+          isCloseByY = fP1[1] >= wP3[1] && fP1[1] <= wP3[1] + DELTA
+          isCloseByX =
+            (wP4[0] >= fP1[0] && wP4[0] <= fP2[0]) ||
+            (wP3[0] >= fP1[0] && wP3[0] <= fP2[0])
+        }
+        if (i === 1) {
+          isCloseByX = fP2[0] <= wP1[0] && fP2[0] >= wP1[0] - DELTA
+          isCloseByY =
+            (wP1[1] >= fP2[1] && wP1[1] <= fP3[1]) ||
+            (wP4[1] >= fP2[1] && wP4[1] <= fP3[1])
+        }
+        if (i === 2) {
+          isCloseByY = fP3[1] <= wP2[1] && fP3[1] >= wP2[1] - DELTA
+          isCloseByX =
+            (wP1[0] >= fP4[0] && wP1[0] <= fP3[0]) ||
+            (wP2[0] >= fP4[0] && wP2[0] <= fP3[0])
+        }
+        if (i === 3) {
+          isCloseByX = fP4[0] >= wP2[0] && fP4[0] <= wP2[0] + DELTA
+          isCloseByY =
+            (wP2[1] >= fP1[1] && wP2[1] <= fP4[1]) ||
+            (wP3[1] >= fP1[1] && wP3[1] <= fP4[1])
+        }
+
+        if (isCloseByY && isCloseByX) warehouseIndexes.push(warehouse.index)
+      })
+    }
+
+    finalObject[item.id] = warehouseIndexes.map((wIndex) => warehouses[wIndex])
+
+    return {
+      farmIndex,
+      warehouseIndexes,
+    }
+  })
+
+  return finalObject
+}
