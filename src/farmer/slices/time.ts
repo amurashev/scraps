@@ -12,7 +12,7 @@ const slice = createSlice({
     increaseTime: (state: State['time']) => {
       return {
         ...state,
-        value: state.value + 24,
+        value: state.value + 4,
       }
     },
     togglePause: (state: State['time']) => {

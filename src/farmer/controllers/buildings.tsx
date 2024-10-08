@@ -8,6 +8,7 @@ import Paths from '../components/grid/paths'
 import EditGrid from '../components/editGrid'
 import ShipmentOnGrid from '../components/grid/shipment'
 import Buildings from '../components/grid/buildings'
+import FarmLinks from '../components/farmLinks'
 
 import {
   toggleWarehouseDetailsModal,
@@ -25,7 +26,6 @@ import { createBuildingId, getNumberFromId } from '../utils/buildings'
 
 import type { PossibleRoads } from '../types/grid'
 import type { Building, BuildingsByType } from '../types/buildings'
-import FarmLinks from '../components/farmLinks'
 
 export default function BuildingsController({
   possibleRoads,
@@ -44,7 +44,9 @@ export default function BuildingsController({
   const warehouses = useAppSelector((state) => state.warehouses)
   const buildings = useAppSelector((state) => state.buildings)
   const { cellSize, pointOfView } = useAppSelector((state) => state.grid)
-  const { hasPaths } = useAppSelector((state) => state.ui)
+  const { hasPaths, farmDetailsId, warehouseDetailsId } = useAppSelector(
+    (state) => state.ui
+  )
   const { createItem } = useAppSelector((state) => state.editMode)
 
   const day = Math.floor(hour / 24)
@@ -133,6 +135,9 @@ export default function BuildingsController({
             buildings={buildings}
             cellSize={cellSize}
             day={day}
+            neighboringWarehouses={neighboringWarehouses}
+            selectedFarmId={farmDetailsId}
+            selectedWarehouseId={warehouseDetailsId}
             onWarehouseClick={useCallback(
               (itemId) => {
                 dispatch(toggleWarehouseDetailsModal(itemId))

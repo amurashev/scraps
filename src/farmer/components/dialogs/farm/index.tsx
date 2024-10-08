@@ -1,13 +1,10 @@
 import { useState, memo, useEffect } from 'react'
+import { IoWarning } from 'react-icons/io5'
 
 import { Button } from '@/components/ui/button'
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
+import { DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Sheet, SheetContent } from '@/components/ui/sheet'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
 import FarmIcon from '../../../icons/buildings/farm'
 
@@ -56,11 +53,14 @@ export default memo(function BuildingDetailsDialog({
   onStop,
 }: Props) {
   const [selectedProductId, setSelectedProductId] = useState<string>('')
-  const [selectedWarehouseId, setSelectedWarehouseId] = useState('1')
+  const [selectedWarehouseId, setSelectedWarehouseId] = useState('')
   const [cycles, setCycles] = useState<number | 'inf'>(1)
   const [power, setPower] = useState(1)
 
   const name = id ? getBuildingName(id) : ''
+
+  const canStart = Boolean(selectedWarehouseId && selectedProductId)
+  const hasWarehouses = Boolean(warehouses.length)
 
   const applyProduction = () => {
     const correctCycles = cycles === CYCLES_INF ? undefined : cycles
@@ -84,35 +84,29 @@ export default memo(function BuildingDetailsDialog({
 
   const { producing } = item || {}
 
-  // console.warn('BuildingDetailsDialog', {
-  //   selectedProductId,
-  //   selectedWarehouseId,
-  //   cycles,
-  //   power,
-  //   producing,
-  //   day,
-  // })
-
   return (
-    <Dialog open={isOpen}>
-      <DialogContent
-        className="sm:max-w-[560px]"
-        onClose={onClose}
-        onEscapeKeyDown={(e) => {
-          e.stopPropagation()
-          onClose()
-        }}
-      >
-        <div className="flex divide-x divide-border">
-          <div className="pr-4 flex flex-col items-center">
+    <Sheet open={isOpen} onOpenChange={onClose}>
+      <SheetContent>
+        <div className="flex flex-col 1divide-x divide-border space-y-6">
+          <div className="flex flex-col items-center space-y-4">
             <div className="flex-shrink-0">
               <FarmIcon size={124} />
             </div>
-            <DialogHeader className="font-semibold mt-2">
+            <DialogHeader className="font-semibold">
               <DialogTitle>{name}</DialogTitle>
             </DialogHeader>
+
+            {!hasWarehouses && (
+              <Alert variant="warning">
+                <IoWarning color="#ffffff" size={20} />
+                <AlertTitle>There are no warehouses nearby!</AlertTitle>
+                <AlertDescription>
+                  You have to build one to start producing
+                </AlertDescription>
+              </Alert>
+            )}
           </div>
-          <div className="pl-4 flex-grow">
+          <div className="flex-grow space-y-4">
             {producing ? (
               <div>
                 <ActualProducing day={day} producing={producing} />
@@ -133,25 +127,31 @@ export default memo(function BuildingDetailsDialog({
               />
             )}
           </div>
-        </div>
 
-        <DialogFooter>
-          {!producing && (
-            <Button type="submit" onClick={() => applyProduction()}>
-              Start production
-            </Button>
-          )}
-          {producing && (
-            <Button
-              type="submit"
-              variant="destructive"
-              onClick={() => onStop()}
-            >
-              Stop production
-            </Button>
-          )}
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+          <div>
+            {!producing && (
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={!canStart}
+                onClick={() => applyProduction()}
+              >
+                Start production
+              </Button>
+            )}
+            {producing && (
+              <Button
+                type="submit"
+                className="w-full"
+                variant="destructive"
+                onClick={() => onStop()}
+              >
+                Stop production
+              </Button>
+            )}
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
   )
 }, arePropsEqual)

@@ -23,7 +23,9 @@ type Props = {
   producing?: FarmProducing
   isBeingUsed: boolean
   isCenter: boolean
+  isSelected: boolean
   farmName: string
+  hasNeighboringWarehouses: boolean
   day: Day
   onBaseClick: () => void
 }
@@ -43,6 +45,8 @@ export default memo(function Cell({
   producing,
   isBeingUsed,
   isCenter,
+  isSelected,
+  hasNeighboringWarehouses,
   farmName,
   day,
   onBaseClick,
@@ -60,19 +64,21 @@ export default memo(function Cell({
     iconSize = MIN_ICON_SIZE + ((100 - MIN_ICON_SIZE) * progress) / 100
   }
 
-  const hasWarning = producing
+  const hasProductionError = producing
     ? ['warehouseIsFull'].includes(producing.status)
     : false
+  const hasWarning = hasProductionError || !hasNeighboringWarehouses
 
   return (
     <div
       role="button"
       tabIndex={0}
       className={cn(
-        'h-1/3 w-1/3 flex items-center justify-center relative focus-visible:outline-none',
+        'h-1/3 w-1/3 flex items-center justify-center relative border-[#b4937e] border focus-visible:outline-none',
         {
-          'bg-[#92766c] border-[#b4937e] border': true,
+          'bg-[#92766c]': true,
           'cursor-pointer hover:bg-[#92766c]/80': isCenter,
+          'bg-[#92766c]/80': isSelected && isCenter,
         }
       )}
       onClick={() => {
@@ -83,7 +89,7 @@ export default memo(function Cell({
     >
       {isCenter ? (
         <TooltipProvider delayDuration={300}>
-          <Tooltip>
+          <Tooltip open={isSelected}>
             <TooltipTrigger className="flex w-full h-full items-center justify-center relative">
               <FarmIcon size="65%" />
               {hasWarning && (

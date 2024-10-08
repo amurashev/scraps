@@ -31,12 +31,14 @@ export default function SelectCargo({
             {cargoSlots[slotIndex] ? (
               <ProductCard
                 key={slotIndex}
+                size="sm"
                 itemId={cargoSlots[slotIndex]}
                 onClick={() => onSelectItem(slotIndex, null)}
               />
             ) : (
               <ProductCardBase
                 key={slotIndex}
+                size="sm"
                 onClick={() => setOpenedItem(slotIndex)}
               >
                 <IoAdd color="#aaaaaa" size={32} />

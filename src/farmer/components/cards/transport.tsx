@@ -27,7 +27,7 @@ export function TransportIcon({
 
 type Props = {
   type: number
-  size?: 'md'
+  size?: 'md' | 'sm' | 'xsm'
 }
 
 const TransportCard = forwardRef<HTMLDivElement, Props>(
@@ -39,6 +39,8 @@ const TransportCard = forwardRef<HTMLDivElement, Props>(
           'pr-1 w-[64px] h-[64px] bg-muted border p-2 rounded-sm flex-shrink-0',
           {
             'w-[64px] h-[64px]': size === 'md',
+            'w-[48px] h-[48px] p-2': size === 'sm',
+            'w-[32px] h-[32px] p-1': size === 'xsm',
           }
         )}
       >

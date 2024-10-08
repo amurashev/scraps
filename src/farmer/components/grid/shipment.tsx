@@ -18,7 +18,7 @@ export default memo(function ShipmentOnGrid({
     <Wrapper position={position} cellSize={cellSize} size={1}>
       <div className="flex items-center justify-center p-1 relative">
         <div className="bg-background border-gray-800 border h-full w-full p-[1px] rounded-sm flex items-center justify-center">
-          <TransportIcon id="1" size="100%" />
+          <TransportIcon id={item.transportId} size="100%" />
         </div>
 
         {cargoShipment.length > 0 && (
@@ -26,7 +26,7 @@ export default memo(function ShipmentOnGrid({
             {cargoShipment.map((product, key) => (
               // eslint-disable-next-line react/no-array-index-key
               <div key={key} className="border-gray-400 border rounded-sm">
-                <ProductCard size="xsm" itemId={product.itemId} />
+                <ProductCard size="xxsm" itemId={product.itemId} />
               </div>
             ))}
           </div>

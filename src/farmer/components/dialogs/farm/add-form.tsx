@@ -44,7 +44,7 @@ export default function AddProducingForm({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex gap-2 justify-start">
+      <div className="flex gap-2 justify-center">
         {possibleItemsId.map((itemId) => (
           <ProductCard
             key={itemId}
@@ -56,6 +56,8 @@ export default function AddProducingForm({
           />
         ))}
       </div>
+
+      <Separator />
 
       <ul className="text-sm">
         <li className="flex justify-between">

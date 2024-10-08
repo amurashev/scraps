@@ -16,10 +16,12 @@ import { getBuildingName } from '@/src/farmer/utils/buildings'
 export default memo(function WarehouseCell({
   item,
   warehouseData,
+  isSelected,
   onClick,
 }: {
   item: Building
   warehouseData: Warehouse
+  isSelected: boolean
   onClick: () => void
 }) {
   const { id } = item
@@ -29,7 +31,7 @@ export default memo(function WarehouseCell({
 
   return (
     <TooltipProvider delayDuration={300}>
-      <Tooltip>
+      <Tooltip open={isSelected}>
         <TooltipTrigger className="w-full h-full">
           <div
             role="button"
@@ -39,7 +41,8 @@ export default memo(function WarehouseCell({
               {
                 'border border-gray-400/30 1shadow-sm 1shadow-[#b4937e] rounded-sm':
                   true,
-                'bg-[#c6c6bf]': true,
+                'bg-[#c6c6bf]': !isSelected,
+                'bg-[#c5c4b4]': isSelected,
                 'hover:bg-[#c5c4b4]': true,
               }
             )}

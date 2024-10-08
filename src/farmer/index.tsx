@@ -51,7 +51,7 @@ function App() {
     [buildings]
   )
 
-  console.warn('render', gridOfObjects)
+  console.warn('render', gridOfObjects, neighboringWarehouses)
 
   return (
     <main className="p-0 relative overflow-hidden max-h-[100vh] flex">

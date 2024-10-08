@@ -10,11 +10,15 @@ export default memo(function FarmCell({
   day,
   item,
   farmData,
+  isSelected,
+  hasNeighboringWarehouses,
   onClick,
 }: {
   day: number
   item: Building
   farmData: Farm
+  isSelected: boolean
+  hasNeighboringWarehouses: boolean
   onClick: () => void
 }) {
   const { id } = item
@@ -22,7 +26,7 @@ export default memo(function FarmCell({
   const name = getBuildingName(id)
 
   return (
-    <div className="w-full h-full flex flex-col divide-y-0 divide-[#b4937e] 1shadow-sm 1shadow-[#b4937e] border overflow-hidden border-[#b4937e] rounded-sm">
+    <div className="w-full h-full flex flex-col divide-y-0 divide-[#b4937e] border overflow-hidden border-[#b4937e] rounded-sm">
       <div
         className={cn(
           'h-full relative border-0 border-gray-300 flex flex-wrap overflow-hidden'
@@ -43,6 +47,8 @@ export default memo(function FarmCell({
               farmName={name}
               producing={producing}
               isBeingUsed={isProducingAvailableForCell}
+              isSelected={isSelected}
+              hasNeighboringWarehouses={hasNeighboringWarehouses}
               isCenter={isCenter}
               onBaseClick={onClick}
             />

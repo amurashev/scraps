@@ -20,13 +20,13 @@ export const defaultBuildings = [
   {
     id: '3',
     type: 'house',
-    subType: 2,
+    subType: 1,
     position: [26, 30],
   },
   {
     id: '4',
     type: 'house',
-    subType: 2,
+    subType: 3,
     position: [30, 26],
   },
   {
@@ -38,7 +38,7 @@ export const defaultBuildings = [
   {
     id: '6',
     type: 'house',
-    subType: 2,
+    subType: 1,
     position: [34, 34],
   },
   {
@@ -50,7 +50,7 @@ export const defaultBuildings = [
   {
     id: '8',
     type: 'house',
-    subType: 2,
+    subType: 3,
     position: [26, 34],
   },
 ] as State['buildings']

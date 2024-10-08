@@ -1,17 +1,15 @@
 import { useMemo, memo } from 'react'
 
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
+import { DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Separator } from '@/components/ui/separator'
 
-import WarehouseIcon from '../../icons/buildings/warehouse'
-import ProductCard, { ProductCardCount } from '../cards/product'
+import { Sheet, SheetContent } from '@/components/ui/sheet'
 
-import type { Warehouse } from '../../types/buildings'
-import { getBuildingName } from '../../utils/buildings'
+import WarehouseIcon from '../../../icons/buildings/warehouse'
+import ProductCard, { ProductCardCount } from '../../cards/product'
+
+import type { Warehouse } from '../../../types/buildings'
+import { getBuildingName } from '../../../utils/buildings'
 
 export default memo(function WarehouseDetailsDialog({
   id,
@@ -45,17 +43,10 @@ export default memo(function WarehouseDetailsDialog({
   )
 
   return (
-    <Dialog open={isOpen}>
-      <DialogContent
-        className="sm:max-w-[525px]"
-        onClose={onClose}
-        onEscapeKeyDown={(e) => {
-          e.stopPropagation()
-          onClose()
-        }}
-      >
+    <Sheet open={isOpen} onOpenChange={onClose}>
+      <SheetContent>
         {item && (
-          <div className="flex divide-x divide-border sm:min-h-[200px]">
+          <div className="space-y-4">
             <div className="pr-4 flex flex-col items-center">
               <div className="flex-shrink-0">
                 <WarehouseIcon size={124} />
@@ -68,9 +59,10 @@ export default memo(function WarehouseDetailsDialog({
                 {currentCapacity}/{capacity}
               </div>
             </div>
-            <div className="pl-4">
+            <Separator />
+            <div className="min-h-[200px] flex flex-col">
               {possibleItemsId.length === 0 ? (
-                <div className="h-full flex items-center justify-center text-center">
+                <div className="flex items-center justify-center text-center h-full flex-grow">
                   <p className="text-muted-foreground">
                     There are no products on the warehouse
                   </p>
@@ -85,19 +77,11 @@ export default memo(function WarehouseDetailsDialog({
                 </div>
               )}
             </div>
+
+            <Separator />
           </div>
         )}
-
-        {/* <DialogFooter>
-          <Button
-            type="submit"
-            onClick={() => onClose()}
-            // data-test="jobs_applyDialog_submit"
-          >
-            Close
-          </Button>
-        </DialogFooter> */}
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
   )
 })

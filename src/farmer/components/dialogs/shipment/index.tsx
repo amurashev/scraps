@@ -5,8 +5,8 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
 } from '@/components/ui/dialog'
+
 import {
   Select,
   SelectContent,
@@ -142,26 +142,23 @@ export default memo(function ShipmentsDialog({
   return (
     <Dialog open={isOpen}>
       <DialogContent
-        className="sm:max-w-[725px]"
+        onEscapeKeyDown={onClose}
         onClose={onClose}
-        onEscapeKeyDown={(e) => {
-          e.stopPropagation()
-          onClose()
-        }}
-        // data-test="jobs_applyDialog"
+        onInteractOutside={onClose}
+        className="sm:max-w-[960px]"
       >
-        <div className="flex divide-x divide-border sm:min-h-[200px]">
-          <div className="pr-4 flex flex-col items-center">
+        <div className="space-y-4">
+          <div className="flex flex-row items-center space-x-1">
             <div className="flex-shrink-0">
-              <ShipmentsIcon size={124} />
+              <ShipmentsIcon size={32} />
             </div>
-            <DialogHeader className="font-semibold mt-3">
-              <DialogTitle>Shipments</DialogTitle>
+            <DialogHeader className="font-semibold mt-0">
+              <DialogTitle className="text-2xl">Shipments</DialogTitle>
             </DialogHeader>
           </div>
-          <div className="pl-4 flex-grow">
+          <div>
             {isAddForm && (
-              <div className="mt-2 flex flex-col gap-3">
+              <div className="mt-2 flex flex-col gap-3 py-3">
                 <FormRowWithSelect
                   label="From"
                   value={selectedWarehouseFromId}
@@ -215,13 +212,24 @@ export default memo(function ShipmentsDialog({
               </div>
             )}
             {!isAddForm && (
-              <div>
+              <div className="min-h-[140px] flex flex-col">
                 {shipments.length === 0 ? (
-                  <div className="h-[100px] flex items-center justify-center text-center">
-                    {/* <p className="text-muted-foreground">Empty</p> */}
+                  <div className="flex items-center justify-center text-center h-full flex-grow">
+                    <p className="text-muted-foreground">
+                      There are no active shipments
+                    </p>
                   </div>
                 ) : (
-                  <div className="flex flex-col divide-y divide-border w-full">
+                  <table className="w-full">
+                    <th className="w-full table-row space-x-1">
+                      <td>&nbsp;</td>
+                      <td>From</td>
+                      <td>To</td>
+                      <td>Status</td>
+                      <td>Plan</td>
+                      <td>Cargo</td>
+                      <td className="p-2">&nbsp;</td>
+                    </th>
                     {shipments.map((item) => {
                       return (
                         <ShipmentItem
@@ -232,39 +240,46 @@ export default memo(function ShipmentsDialog({
                         />
                       )
                     })}
-                  </div>
+                  </table>
                 )}
               </div>
             )}
           </div>
-        </div>
-        {isAddForm && (
-          <DialogFooter>
-            <Button variant="secondary" onClick={() => setIsAddForm(false)}>
-              Return to list
-            </Button>
-            <Button
-              onClick={() => {
-                const cargoArray = cargoFromSlotsToArray(cargoSlots)
+          <div className="flex justify-end">
+            {isAddForm && (
+              <div className="flex space-x-2">
+                <Button
+                  className="flex-grow"
+                  variant="secondary"
+                  onClick={() => setIsAddForm(false)}
+                >
+                  Return to list
+                </Button>
+                <Button
+                  className="flex-grow"
+                  onClick={() => {
+                    const cargoArray = cargoFromSlotsToArray(cargoSlots)
 
-                onAddShipment({
-                  from: selectedWarehouseFromId,
-                  to: selectedWarehouseToId,
-                  transportId: selectedTransportId,
-                  cargo: cargoArray,
-                })
-                setIsAddForm(false)
-              }}
-            >
-              Add shipment
-            </Button>
-          </DialogFooter>
-        )}
-        {!isAddForm && (
-          <DialogFooter>
-            <Button onClick={() => setIsAddForm(true)}>Add shipment</Button>
-          </DialogFooter>
-        )}
+                    onAddShipment({
+                      from: selectedWarehouseFromId,
+                      to: selectedWarehouseToId,
+                      transportId: selectedTransportId,
+                      cargo: cargoArray,
+                    })
+                    setIsAddForm(false)
+                  }}
+                >
+                  Add shipment
+                </Button>
+              </div>
+            )}
+            {!isAddForm && (
+              <div>
+                <Button onClick={() => setIsAddForm(true)}>Add shipment</Button>
+              </div>
+            )}
+          </div>
+        </div>
       </DialogContent>
     </Dialog>
   )

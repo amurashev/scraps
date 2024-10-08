@@ -30,6 +30,9 @@ export default function Buildings({
   warehouses,
   buildings,
   cellSize,
+  neighboringWarehouses,
+  selectedFarmId,
+  selectedWarehouseId,
   day,
   onWarehouseClick,
   onFarmClick,
@@ -39,6 +42,9 @@ export default function Buildings({
   warehouses: Record<string, WarehouseType>
   buildings: Building[]
   cellSize: number
+  neighboringWarehouses: Record<string, Building[]>
+  selectedFarmId?: string
+  selectedWarehouseId?: string
   day: number
   onWarehouseClick: (id: string) => void
   onFarmClick: (id: string) => void
@@ -60,6 +66,7 @@ export default function Buildings({
               <Warehouse
                 item={item}
                 warehouseData={warehouses[item.id]}
+                isSelected={item.id === selectedWarehouseId}
                 onClick={() => onWarehouseClick(item.id)}
               />
             )}
@@ -68,6 +75,10 @@ export default function Buildings({
                 day={day}
                 item={item}
                 farmData={farms[item.id]}
+                hasNeighboringWarehouses={Boolean(
+                  neighboringWarehouses[item.id]?.length
+                )}
+                isSelected={item.id === selectedFarmId}
                 onClick={() => onFarmClick(item.id)}
               />
             )}

@@ -3,9 +3,9 @@
 import { useCallback } from 'react'
 
 import FarmDetailsDialog from '../components/dialogs/farm'
-import WarehouseDetailsDialog from '../components/dialogs/warehouse-details-dialog'
+import WarehouseDetailsDialog from '../components/dialogs/warehouse'
 import ShipmentsDialog from '../components/dialogs/shipment'
-import ShopDialog from '../components/dialogs/shop-details-dialog'
+import ShopDialog from '../components/dialogs/shop'
 
 import { useAppSelector, useAppDispatch } from '../hooks/redux'
 

@@ -15,7 +15,7 @@ export default function TimeController() {
       if (!isPaused) {
         dispatch(increaseTime())
       }
-    }, 1000)
+    }, 500)
 
     return () => {
       clearInterval(interval)
