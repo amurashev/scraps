@@ -16,6 +16,8 @@ export default function EmailItem({
   const formattedDate = format(new Date(email.datetime), 'dd MMM HH:mm')
   return (
     <div
+      role="button"
+      tabIndex={0}
       onClick={onClick}
       className={cn(
         'border border-border p-2 rounded-md cursor-pointer flex flex-col gap-2',
@@ -23,7 +25,7 @@ export default function EmailItem({
       )}
     >
       <div className="flex flex-row items-center gap-2">
-        <Avatar size={6} className='flex-shrink-0'>
+        <Avatar size={6} className="flex-shrink-0">
           <AvatarImage src={email.avatarUrl} />
         </Avatar>
         <div className="font-semibold flex-grow truncate">{email.name}</div>

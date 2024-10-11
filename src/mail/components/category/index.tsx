@@ -36,6 +36,8 @@ export default function CategoryItem({
 }) {
   return (
     <div
+      role="button"
+      tabIndex={0}
       onClick={onClick}
       className={cn(
         'p-2 rounded-md cursor-pointer font-semibold text-sm flex items-center gap-2',
