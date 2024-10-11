@@ -19,7 +19,7 @@ function CargoPlan({
   cargoPlan: Cargo[]
 }) {
   return (
-    <div className="flex gap-1">
+    <div className="flex flex-wrap max-w-[140px] gap-1">
       {Array.from({ length: capacity }, (_, i) => i).map((i) => {
         if (cargoPlan[i]) {
           return <ProductCard key={i} itemId={cargoPlan[i].itemId} size="xsm" />
@@ -80,13 +80,13 @@ function ShipmentItem({
       <td className="w-[30%]">
         <StatusText status={item.status} idFrom={item.from} idTo={item.to} />
       </td>
-      <td>
+      <td className="p-1">
         <CargoPlan
           capacity={transportData.capacity}
           cargoPlan={item.cargoPlan}
         />
       </td>
-      <td>
+      <td className="p-1">
         <CargoPlan
           capacity={transportData.capacity}
           cargoPlan={item.cargoShipment}

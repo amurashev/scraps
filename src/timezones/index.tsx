@@ -46,7 +46,9 @@ export default function TimezonesPage() {
     }
   }
 
-  const handleAddItem = () => setItems([...items, items[items.length - 1]])
+  const handleAddItem = () => {
+    setItems([...items, items[items.length - 1]])
+  }
 
   const handleDeleteItem = (itemIndex: number) => {
     setItems((currentItems) =>

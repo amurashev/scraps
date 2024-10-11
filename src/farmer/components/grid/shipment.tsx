@@ -22,7 +22,7 @@ export default memo(function ShipmentOnGrid({
         </div>
 
         {cargoShipment.length > 0 && (
-          <div className="absolute top-[-14px] left-[100%] flex space-x-[1px]">
+          <div className="absolute top-[-14px] left-[100%] flex flex-wrap w-[84px] space-x-[1px]">
             {cargoShipment.map((product, key) => (
               // eslint-disable-next-line react/no-array-index-key
               <div key={key} className="border-gray-400 border rounded-sm">
