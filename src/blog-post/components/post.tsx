@@ -3,10 +3,28 @@
 import Image from 'next/image'
 import { PortableText } from '@portabletext/react'
 import Link from 'next/link'
+import urlBuilder from '@sanity/image-url'
+import { getImageDimensions } from '@sanity/asset-utils'
 
 import { urlFor } from '@/sanity/lib/image'
 import { POST_QUERYResult } from '../../../sanity.types'
 import { blogRoute } from '@/constants/routes'
+
+// Barebones lazy-loaded image component
+function SampleImageComponent({ value }: { value: any }) {
+  const { width, height } = getImageDimensions(value)
+  return (
+    <img
+      src={urlBuilder().image(value).width(800).fit('max').auto('format').url()}
+      alt={value.alt || ' '}
+      loading="lazy"
+      style={{
+        // Avoid jumping around with aspect-ratio CSS property
+        aspectRatio: width / height,
+      }}
+    />
+  )
+}
 
 export function Post({ post }: { post: POST_QUERYResult }) {
   const { title, mainImage, body, publishedAt } = post || {}
@@ -26,7 +44,17 @@ export function Post({ post }: { post: POST_QUERYResult }) {
             alt={title || ''}
           />
         ) : null}
-        {body ? <PortableText value={body} /> : null}
+        {body ? (
+          <PortableText
+            value={body}
+            components={{
+              // ...
+              types: {
+                image: SampleImageComponent,
+              },
+            }}
+          />
+        ) : null}
       </div>
       <div>{publishedAt}</div>
       <Link href={blogUrl} className="text-blue-600">
